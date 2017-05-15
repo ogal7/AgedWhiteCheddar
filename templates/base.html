@@ -22,63 +22,78 @@
     .menu-text{
         background-color:#1A1B41;
         color:#6290C3;
+        font-size:20px;
     }
     .abc{
         background-color:#1A1B41;
-    }
-    .abcd{
-        background-color:#1A1B41;
+        font-size:18px;
     }
     @font-face {
-        font-family: myFirstFont;
-        src: url("../static/amatic/Amatic-Bold.ttf") format("truetype");
+        font-family: Arial, Helvetica, sans-serif;
     }
     a {
         color:#CCE6F4;
-        font-family: myFirstFont;
-        font-size: 30px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
     }
     h1 {
-        font-family: myFirstFont;
+        font-family: Arial, Helvetica, sans-serif;
     }
     body {  
-        background-image:url("../static/img/lala.jpg");
+        font-family: Arial, Helvetica, sans-serif;
         background-attachment: fixed;
         background-position: center;
         background-size: 450px 320px;
         background-repeat: repeat;
-        font-family: myFirstFont;
         font-size: 40px;
     }
     button{
-        font-family: myFirstFont;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 40px;
     }
     {% block style %}
     {% endblock %}
     </style>
 
-    <link rel="shortcut icon" href="../static/iconA.ico" />
-
-
+    <link rel="shortcut icon" href="../static/stuyLogo.ico" />
 </head>
+
+
+
+
 <body>
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">SU Room Reservations</li>
+                <li class="menu-text">
+                    SU Room Reservations
+                </li>
                 <li class = "abc">
                     <a href="/home/">Home</a>
                 </li>
-                <li class="abcd">
-                    <a href="/about/">About</a>
+                <li class="abc">
+                    <a href="/myRooms/">My Rooms</a>
+                </li>
+                <li class="abc">
+                    {% block head %} 
+                    <!--Where Admin Button link will go -->
+                    {% endblock %}
                 </li>
             </ul>
   </div>
+
+
   <div class="top-bar-right">
-        {% block head %}
-        {% endblock %}
-  </div>
+    <ul class="dropdown menu" data-dropdown-menu>
+        <li class="abc">
+            <a href = "/settings/"> Settings </a>
+        </li>
+        <li class = "abc">
+            <a href="/logOut/"> Log Out </a>
+        </li>
+
+          </div>
+    </ul>
 </div>
 
     {% block body %}
