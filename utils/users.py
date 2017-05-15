@@ -1,52 +1,52 @@
 import hashlib
 import sqlite3
-
-#CREATE TABLE users(fname TEXT, lname TEXT, username TEXT, hashedpassword TEXT);
+import os
 
 def hash(x):
 	h = hashlib.sha256()
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(usern, unhashedp, isadmin):
+def createAccount(usern, unhashedp, isAdmin):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	og = db.cursor()
-	insert = "INSERT INTO users2 VALUES ('%s', '%s', '%s', '%s')"%(fn, ln, usern, hashOG(unhashedp))
+	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hash(unhashedp), isAdmin)
 	og.execute(insert)
 	db.commit()
 	db.close()
 
-def checkLogin(userN, pw):
-	hashed = hashOG(pw)
+def checkLogin(usern, pw):
+	hashed = hash(pw)
 	f = "data/data.db"
 	db = sqlite3.connect(f)
-	og = db.cursor()
-	s = "SELECT username, hashedpassword FROM users2 WHERE username =='" + userN + "';"
-	t = og.execute(s)
+	sp = db.cursor()
+	s = "SELECT usern, pw FROM users WHERE usern =='" + usern + "';"
+	t = sp.execute(s)
 	for record in t:
 		if record[1] == hashed:
 			print "hi"
-    			db.close()
-    			return True	
-    		else:
-    			print "hello"
-    			db.close()
-    			return False
+			db.close()
+			return True	
+		else:
+			print "hello"
+			db.close()
+			return False
 	print "hi"
 	db.close()
 	return False
 
 
 
-def checkRegister(userN):
+def checkRegister(usern):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	og = db.cursor()
-	s = "SELECT username FROM users2"
+	s = "SELECT usern FROM users"
 	t = og.execute(s)
 	for record in t:
-		if record[0] == userN:
-    		#username already taken
+		if record[0] == usern:
+			#username already taken
 			return False 
-return True
+	return True
+
