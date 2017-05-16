@@ -10,9 +10,9 @@ def hash(x):
 def createAccount(usern, unhashedp, isAdmin):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
-	og = db.cursor()
+	sp = db.cursor()
 	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hash(unhashedp), isAdmin)
-	og.execute(insert)
+	sp.execute(insert)
 	db.commit()
 	db.close()
 
@@ -41,9 +41,9 @@ def checkLogin(usern, pw):
 def checkRegister(usern):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
-	og = db.cursor()
+	sp = db.cursor()
 	s = "SELECT usern FROM users"
-	t = og.execute(s)
+	t = sp.execute(s)
 	for record in t:
 		if record[0] == usern:
 			#username already taken
