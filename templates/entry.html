@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+
+
+{% block body %}
+
+<center> 
+	<div id="beyonce">
+	<h2>
+		Register
+	</h2>
+
+	
+	<div class="callout">
+		<h5> I am an Admin: </h5>
+			<button type="submit" class="button" id="adminRegister">Register</button>
+		<h5> I am a Student: </h5>
+			<button type="submit" class="button" id="studentRegister">Register</button>
+	</div>
+
+	<center>
+		<h2>
+			Log In
+		</h2>
+	</center>
+
+
+	<div class="callout">
+		<form action="/login/">
+  			<div class="row">
+    			<div class="medium-6 columns">
+      				<label>Club Email
+        				<input type="text" placeholder="debate@gmail.com">
+      				</label>
+    			</div>
+    
+    			<div class="medium-6 columns">
+      				<label>Password
+        				<input type="text" placeholder="resolution123">
+      				</label>
+    			</div>
+  			</div>
+		</form>
+	
+		<button type="submit" class="button" id="login">Log In</button>
+	</div>
+	</div>
+</center>
+
+<script src="static/js/entry.js"></script>
+
+
+{% endblock %}
