@@ -11,6 +11,7 @@ def addentry(usern, email, advisor, advisorEmail):
 	db.commit()
 	db.close()
   	return True
+
 def getData(username):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
@@ -21,14 +22,15 @@ def getData(username):
 	db.commit()
 	db.close()
 	return r
+
 def getName(username):
-	return getdata(Username)[0] 
+	return getdata(username)[0] 
 
 def getEmail(username):
-	return getdata(Username)[1] 
+	return getdata(username)[1] 
 
 def getAdvisor(username):
-	return getdata(Username)[2] 
+	return getdata(username)[2] 
 
 def getAdvisorEmail(username):
-	return getdata(Username)[3] 
+	return getdata(username)[3] 
