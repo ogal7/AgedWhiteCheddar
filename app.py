@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response
-#from utils import
+import hashlib
+import time
+from utils import users, clubInfo
 
 app = Flask(__name__)
 app.secret_key = 'agedwhitecheddar'
 
 @app.route('/')
 @app.route('/home/')
-def home():
+def main():
+    if 'user' in session: 
+        return redirect(url_for("homepage"))
     return render_template("entry.html")
 
 # @app.route('/register/', methods = ['POST'])
@@ -23,14 +27,34 @@ def home():
 #             return render_template("register.html", error = "Admin signup failed. Admin code invalid.")
 #     return 
             
-@app.route('/login/')
-def login_page():
-    if 'username' in request.form:
-        # valid = authenticate(request.form['username'], request.form['password'])
-        # if valid:
-        #     return redirect(url_for('homepage'))
-        return redirect(url_for('homepage'))
-        
+
+@app.route("/auth/", methods = ["POST"])
+def auth():
+    loginResponse = request.form
+    username = loginResponse["user"]
+    password = loginResponse["pw"]
+    formMethod = loginResponse['enter']
+    if formMethod == "Login":
+        if users.checkLogin(username,password) == True:
+            session['user']= username
+            return redirect(url_for("homepage"))
+        else:
+            message = "login failed"
+            if 'user' in session:
+                session.pop('user')
+            return redirect(url_for("main"))
+    if formMethod == "Register":
+        return redirect(url_for("register"))
+         
+@app.route("/clubInfo/", methods =["POST"])
+def clubForm():
+    pass
+
+@app.route("/logout/")
+def logout():
+    session.pop("user")
+    return redirect(url_for("main"))
+
 @app.route('/settings/')
 def settings():
     pass
