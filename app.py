@@ -5,7 +5,8 @@ app.secret_key = 'agedwhitecheddar'
 
 @app.route('/')
 def home():
-    pass
+    return render_template("entry.html")
+
 
 if __name__ == '__main__':
     app.debug = True
