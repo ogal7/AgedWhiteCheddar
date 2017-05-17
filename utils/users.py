@@ -8,12 +8,13 @@ def hash(x):
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(usern, unhashedp):
-	isAdmin = int(whatLevel(usern))
+def createAccount(usern, unhashedp, code):
+	isAdmin = int(code[len(code)-1:len(code)])
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hash(unhashedp), isAdmin)
+	print "yo yo yo"
 	sp.execute(insert)
 	db.commit()
 	db.close()
@@ -39,6 +40,10 @@ def checkLogin(usern, pw):
 	return False
 
 
+def addClub(name, email, advisorName, advisorEmail):
+	return "lalalaala"
+
+
 
 def checkRegister(usern, code):
 	f = "data/data.db"
@@ -49,4 +54,10 @@ def checkRegister(usern, code):
 	if len(t.fetchall()) == 0:
                 return False 
 	return True
+
+
+def isStudent(code):
+	if code[len(code)-1:len(code)]=='0':
+		return True
+	return False
 
