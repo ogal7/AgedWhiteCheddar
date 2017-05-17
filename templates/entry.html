@@ -6,48 +6,74 @@
 
 <center> 
 	<div id="beyonce">
-	<h2>
-		Register
-	</h2>
-
-	
+    <br>
+	<h5> Register </h5>
 	<div class="callout">
-		<h5> I am an Admin: </h5>
-			<button type="submit" class="button" id="adminRegister">Register</button>
-		<h5> I am a Student: </h5>
-			<button type="submit" class="button" id="studentRegister">Register</button>
-	</div>
-
-	<center>
-		<h2>
-			Log In
-		</h2>
-	</center>
-
-
-	<div class="callout">
-		<form action="/login/">
+		
+			
+			<form action="/auth/">
   			<div class="row">
     			<div class="medium-6 columns">
-      				<label>Club Email
-        				<input type="text" placeholder="debate@gmail.com">
+      				<label>Email
+        				<input type="text" name="email" placeholder="debate@gmail.com">
+      				</label>
+    			</div>
+    			
+    			<div class="medium-6 columns">
+      				<label>Code
+        				<input type="text" name="code" placeholder="resolution123">
+      				</label>
+    			</div>
+
+    		</div>
+    		
+    		<div class="row">
+    			<div class="medium-6 columns">
+      				<label>Password
+        				<input type="text" name="pw"placeholder="resolution123">
+      				</label>
+    			</div>
+    	
+
+    		
+    			<div class="medium-6 columns">
+      				<label>Confirm Password
+        				<input type="text" name="pwConfirm" placeholder="resolution123">
+      				</label>
+    			</div>
+    		</div>
+  			
+        <button type="submit" name="enter" class="button" id="register">Register</button>
+        </div>
+		</form>
+	</div>
+
+
+  <h5> Login </h5>
+	<div class="callout">
+		<form action="/auth/">
+      
+  			<div class="row">
+    			<div class="medium-6 columns">
+      				<label>Email
+        				<input type="text" name="email" placeholder="debate@gmail.com">
       				</label>
     			</div>
     
     			<div class="medium-6 columns">
       				<label>Password
-        				<input type="text" placeholder="resolution123">
+        				<input type="text" name="pw" placeholder="resolution123">
       				</label>
     			</div>
   			</div>
 		</form>
 	
-		<button type="submit" class="button" id="login">Log In</button>
+		<button type="submit" name="enter" class="button" id="login">Log In</button>
 	</div>
 	</div>
 </center>
-
+<!--
 <script src="static/js/entry.js"></script>
-
+-->
 
 {% endblock %}

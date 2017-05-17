@@ -31,10 +31,11 @@ def main():
 @app.route("/auth/", methods = ["POST"])
 def auth():
     loginResponse = request.form
-    username = loginResponse["user"]
+    #response = loginResponse['type']#whether it is log in or register
+    username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
-    if formMethod == "Login":
+    if formMethod == "login":
         if users.checkLogin(username,password) == True:
             session['user']= username
             return redirect(url_for("homepage"))
@@ -43,9 +44,18 @@ def auth():
             if 'user' in session:
                 session.pop('user')
             return redirect(url_for("main"))
-    if formMethod == "Register":
+    if formMethod == "register":
+        code = loginResponse['code']
+        #code to verify code + email matching
+        #if the code is valid and the email is valid, and is an admin --> Log right in + add stuff to the database
+        # if the code is valid and the email is valid and is a student --> register
         return redirect(url_for("register"))
          
+@app.route("/register/", methods=["POST"])
+def register():
+    return render_template("clubRegister.html")
+
+
 @app.route("/clubInfo/", methods =["POST"])
 def clubForm():
     pass
