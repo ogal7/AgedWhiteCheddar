@@ -46,7 +46,7 @@ def checkRegister(usern, code):
 	sp = db.cursor()
 	s = "SELECT usern, code FROM accounts WHERE usern=='" + usern + "' AND code =='" + code + "';" 
 	t = sp.execute(s)
-	if len(t.fetchall()) == 0
-			return False 
+	if len(t.fetchall()) == 0:
+                return False 
 	return True
 
