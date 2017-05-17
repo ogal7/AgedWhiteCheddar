@@ -1,98 +1,68 @@
 {% extends "base.html" %}
 
-
-
 {% block body %}
 
 <center>
-	<div id="beyonce">
-<<<<<<< HEAD
-    <br>
-	<h5> Register </h5>
-=======
-	<h2>
-		Register
-	</h2>
-
-
->>>>>>> fc5d368fcb7e01bc23513d2927c1c4395797118a
-	<div class="callout">
-		
-			
-			<form action="/auth/">
-  			<div class="row">
-    			<div class="medium-6 columns">
-      				<label>Email
-        				<input type="text" name="email" placeholder="debate@gmail.com">
-      				</label>
-    			</div>
-    			
-    			<div class="medium-6 columns">
-      				<label>Code
-        				<input type="text" name="code" placeholder="resolution123">
-      				</label>
-    			</div>
-
-    		</div>
-    		
-    		<div class="row">
-    			<div class="medium-6 columns">
-      				<label>Password
-        				<input type="text" name="pw"placeholder="resolution123">
-      				</label>
-    			</div>
-    	
-
-    		
-    			<div class="medium-6 columns">
-      				<label>Confirm Password
-        				<input type="text" name="pwConfirm" placeholder="resolution123">
-      				</label>
-    			</div>
-    		</div>
-  			
-        <button type="submit" name="enter" class="button" id="register">Register</button>
+  <div id="beyonce">
+  <br>
+    <h5> Register </h5>
+    <div class="callout">
+      <form action="/auth/" method="POST">
+        <div class="row">
+          <div class="medium-6 columns">
+            <label>Email
+              <input type="text" name="email" placeholder="debate@gmail.com">
+            </label>
+          </div>
+          <div class="medium-6 columns">
+            <label>Code
+              <input type="text" name="code" placeholder="resolution123">
+            </label>
+          </div>
         </div>
-		</form>
-	</div>
 
+        <div class="row">
+          <div class="medium-6 columns">
+            <label>Password
+              <input type="text" name="pw"placeholder="resolution123">
+            </label>
+          </div>
+          <div class="medium-6 columns">
+            <label>Confirm Password
+              <input type="text" name="pwConfirm" placeholder="resolution123">
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" name="enter" class="button" id="register">Register</button>
+      
+      </form>
+    </div>
+  </div>
 
   <h5> Login </h5>
-	<div class="callout">
-		<form action="/auth/">
-      
-  			<div class="row">
-    			<div class="medium-6 columns">
-      				<label>Email
-        				<input type="text" name="email" placeholder="debate@gmail.com">
-      				</label>
-    			</div>
+  <div class="callout">
+    <form action="/auth/">
+      <div class="row">
+        <div class="medium-6 columns">
+          <label>Email
+            <input type="text" name="email" placeholder="debate@gmail.com">
+          </label>
+        </div>
+        <div class="medium-6 columns">
+          <label>Password
+            <input type="text" name="pw" placeholder="resolution123">
+          </label>
+        </div>
+      </div>
 
-    			<div class="medium-6 columns">
-      				<label>Password
-        				<input type="text" name="pw" placeholder="resolution123">
-      				</label>
-    			</div>
-  			</div>
-		</form>
-<<<<<<< HEAD
-	
-		<button type="submit" name="enter" class="button" id="login">Log In</button>
-	</div>
-	</div>
+      <button type="submit" name="enter" class="button" id="login">Log In</button>
+    </form>
+  </div>
 </center>
-<!--
-<script src="static/js/entry.js"></script>
--->
-=======
 
-		<button type="submit" class="button" id="login">Log In</button>
-	</div>
-	</div>
-</center>
 
 <!-- <script src="/static/js/entry.js"></script> -->
 
->>>>>>> fc5d368fcb7e01bc23513d2927c1c4395797118a
 
 {% endblock %}

@@ -6,12 +6,15 @@ from utils import users, clubInfo
 app = Flask(__name__)
 app.secret_key = 'agedwhitecheddar'
 
+
+
+
 @app.route('/')
 @app.route('/home/')
 def main():
     if 'user' in session: 
         return redirect(url_for("homepage"))
-    return render_template("entry.html")
+    return render_template("homepage.html")
 
 # @app.route('/register/', methods = ['POST'])
 # def register_page():
@@ -31,10 +34,10 @@ def main():
 @app.route("/auth/", methods = ["POST"])
 def auth():
     loginResponse = request.form
-    #response = loginResponse['type']#whether it is log in or register
     username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
+
     if formMethod == "login":
         if users.checkLogin(username,password) == True:
             session['user']= username
@@ -44,25 +47,37 @@ def auth():
             if 'user' in session:
                 session.pop('user')
             return redirect(url_for("main"))
+
     if formMethod == "register":
         code = loginResponse['code']
-        #code to verify code + email matching
-        #if the code is valid and the email is valid, and is an admin --> Log right in + add stuff to the database
-        # if the code is valid and the email is valid and is a student --> register
+        if users.checkRegister(username, code) == True:#code/user match is valid
+            if users.isStudent(code) == True:
+                users.createAccount(username,password,code)
+                return redirect(url_for('register'))
+            else:
+                users.createAccount(username,password,code)
+                session['user']= username
+                return redirect(url_for('homepage'))
         return redirect(url_for("register"))
+
+    return redirect(url_for("main"))
          
 @app.route("/register/", methods=["POST"])
 def register():
     return render_template("clubRegister.html")
 
+@app.route("/home/", methods=["POST"])
+def homepage():
+    return render_template("homepage.html")
 
 @app.route("/clubInfo/", methods =["POST"])
 def clubForm():
     pass
 
-@app.route("/logout/")
+@app.route("/logOut/")
 def logout():
-    session.pop("user")
+    if 'user' in session:
+        session.pop("user")
     return redirect(url_for("main"))
 
 @app.route('/settings/')

@@ -8,8 +8,8 @@ def hash(x):
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(usern, unhashedp):
-	isAdmin = int(whatLevel(usern))
+def createAccount(usern, unhashedp, code):
+	isAdmin = code[len(code)-1:len(code)]
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
@@ -46,7 +46,13 @@ def checkRegister(usern, code):
 	sp = db.cursor()
 	s = "SELECT usern, code FROM accounts WHERE usern=='" + usern + "' AND code =='" + code + "';" 
 	t = sp.execute(s)
-	if len(t.fetchall()) == 0
+	if len(t.fetchall()) == 0:
 			return False 
 	return True
+
+
+def isStudent(code):
+	if code[len(code)-1:len(code)]=='0':
+		return True
+	return False
 
