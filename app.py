@@ -14,7 +14,7 @@ app.secret_key = 'agedwhitecheddar'
 def main():
     if 'user' in session: 
         return redirect(url_for("homepage"))
-    return render_template("homepage.html")
+    return render_template("entry.html")
 
 # @app.route('/register/', methods = ['POST'])
 # def register_page():
@@ -33,10 +33,12 @@ def main():
 
 @app.route("/auth/", methods = ["POST"])
 def auth():
+    print "ugh"
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
+    print formMethod
 
     if formMethod == "login":
         if users.checkLogin(username,password) == True:
@@ -51,28 +53,37 @@ def auth():
     if formMethod == "register":
         code = loginResponse['code']
         if users.checkRegister(username, code) == True:#code/user match is valid
+            print "hi"
             if users.isStudent(code) == True:
+                #print "student"
                 users.createAccount(username,password,code)
-                return redirect(url_for('register'))
+                session['user'] = username
+                return redirect(url_for('register'))#asks for more info from students running clubs
             else:
+                #print "hi again! this is an admin account"
                 users.createAccount(username,password,code)
                 session['user']= username
-                return redirect(url_for('homepage'))
+                return redirect(url_for('homepage'))#admins dont need additional info
         return redirect(url_for("register"))
 
     return redirect(url_for("main"))
          
-@app.route("/register/", methods=["POST"])
+@app.route("/register/", methods=["POST", "GET"])
 def register():
     return render_template("clubRegister.html")
 
-@app.route("/home/", methods=["POST"])
+@app.route("/homepage/", methods=["POST"])
 def homepage():
     return render_template("homepage.html")
 
 @app.route("/clubInfo/", methods =["POST"])
 def clubForm():
-    pass
+    response = request.form
+    clubName = response['clubName'] 
+    adName = response ['adName']
+    adEmail = response ['adEmail']
+    users.addClub(clubName, session['user'], adName, adEmail)
+    return redirect(url_for("main"))
 
 @app.route("/logOut/")
 def logout():

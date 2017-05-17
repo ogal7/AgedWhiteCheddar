@@ -9,11 +9,12 @@ def hash(x):
 	return h.hexdigest()
 
 def createAccount(usern, unhashedp, code):
-	isAdmin = code[len(code)-1:len(code)]
+	isAdmin = int(code[len(code)-1:len(code)])
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hash(unhashedp), isAdmin)
+	print "yo yo yo"
 	sp.execute(insert)
 	db.commit()
 	db.close()
@@ -37,6 +38,10 @@ def checkLogin(usern, pw):
 	print "hi"
 	db.close()
 	return False
+
+
+def addClub(name, email, advisorName, advisorEmail):
+	return "lalalaala"
 
 
 
