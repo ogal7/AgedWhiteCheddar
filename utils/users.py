@@ -1,13 +1,15 @@
 import hashlib
 import sqlite3
 import os
+from accounts import whatLevel
 
 def hash(x):
 	h = hashlib.sha256()
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(usern, unhashedp, isAdmin):
+def createAccount(usern, unhashedp):
+	isAdmin = int(whatLevel(usern))
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
@@ -38,15 +40,13 @@ def checkLogin(usern, pw):
 
 
 
-def checkRegister(usern):
+def checkRegister(usern, code):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
-	s = "SELECT usern FROM users"
+	s = "SELECT usern, code FROM accounts WHERE usern=='" + usern + "' AND code =='" + code + "';" 
 	t = sp.execute(s)
-	for record in t:
-		if record[0] == usern:
-			#username already taken
+	if len(t.fetchall()) == 0
 			return False 
 	return True
 
