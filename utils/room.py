@@ -15,9 +15,10 @@ def getInfoDate(date):
         db.close()
         return info
 
-def getInfoRange(start, end):
-
-    
+'''def getInfoRange(start, end):
+    info=[]
+    startN=int(start[
+   ''' 
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoRoom(room):
