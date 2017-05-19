@@ -72,7 +72,7 @@ def auth():
 def register():
     return render_template("clubRegister.html")
 
-@app.route("/homepage/", methods=["POST"])
+@app.route("/homepage/", methods=["POST","GET"])
 def homepage():
     return render_template("homepage.html")
 
@@ -84,6 +84,11 @@ def clubForm():
     adEmail = response ['adEmail']
     users.addClub(clubName, session['user'], adName, adEmail)
     return redirect(url_for("main"))
+
+@app.route("/roomSched/")
+def sched():
+    #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
+    pass
 
 @app.route("/logOut/")
 def logout():
