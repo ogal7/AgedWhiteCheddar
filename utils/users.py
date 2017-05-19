@@ -41,9 +41,17 @@ def checkLogin(usern, pw):
 
 
 def addClub(name, email, advisorName, advisorEmail):
-	return "lalalaala"
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    c = db.cursor()
 
+    add_club = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
+    c.execute(add_club, (name, email, advisorName, advisorEmail))
 
+    c.close()
+
+    db.commit()
+    db.close()
 
 def checkRegister(usern, code):
 	f = "data/data.db"

@@ -6,14 +6,12 @@ from utils import users, clubInfo
 app = Flask(__name__)
 app.secret_key = 'agedwhitecheddar'
 
-
-
-
-@app.route('/')
-@app.route('/home/')
+@app.route('/', methods = ["GET", "POST"])
+@app.route('/home/', methods = ["GET", "POST"])
 def main():
     if 'user' in session: 
-        return redirect(url_for("homepage"))
+        # return redirect(url_for("homepage"))
+        pass
     return render_template("entry.html")
 
 # @app.route('/register/', methods = ['POST'])
@@ -29,11 +27,9 @@ def main():
 #             registered = register_admin(request.form['email'], request.form['admin_name'], request.form['code'])
 #             return render_template("register.html", error = "Admin signup failed. Admin code invalid.")
 #     return 
-            
 
 @app.route("/auth/", methods = ["POST"])
 def auth():
-    print "ugh"
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
@@ -67,9 +63,11 @@ def auth():
         return redirect(url_for("register"))
 
     return redirect(url_for("main"))
-         
+
+# work on fixing register         
 @app.route("/register/", methods=["POST", "GET"])
 def register():
+    session["user"] = "ok@gmail.com"
     return render_template("clubRegister.html")
 
 @app.route("/homepage/", methods=["POST"])
@@ -80,8 +78,8 @@ def homepage():
 def clubForm():
     response = request.form
     clubName = response['clubName'] 
-    adName = response ['adName']
-    adEmail = response ['adEmail']
+    adName = response['adName']
+    adEmail = response['adEmail']
     users.addClub(clubName, session['user'], adName, adEmail)
     return redirect(url_for("main"))
 
