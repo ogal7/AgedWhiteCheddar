@@ -1,3 +1,5 @@
+#date format: mmddyyyy
+
 def reserve_room(room, date, clubName):
     f = "data/data.db"
     db = sqlite3.connect(f)
