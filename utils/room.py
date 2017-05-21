@@ -11,7 +11,7 @@ def getInfoDate(date):
 	og = db.cursor()
 
         request="SELECT * from rooms"+date[4:]+" WHERE date == "+date+";"
-        info=og.execute(insert)
+        info=og.execute(reqest)
         db.close()
         return info
 
@@ -28,7 +28,7 @@ def getInfoRoom(room):
         ## dd/mm/yyyy format
         date = (time.strftime("%d%m%Y"))
         request="SELECT * from rooms"+date[4:]+" WHERE room == "+room+";"
-        info=og.execute(insert)
+        info=og.execute(request)
         db.close()
         return info
 
@@ -40,6 +40,6 @@ def getInfoClub(clubName):
 	og = db.cursor()
         date = (time.strftime("%d%m%Y"))
         request="SELECT * from rooms"+date[4:]+" WHERE clubName == "+clubName+";"
-        info=og.execute(insert)
+        info=og.execute(request)
         db.close()
         return info
