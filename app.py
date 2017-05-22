@@ -10,8 +10,8 @@ app.secret_key = 'agedwhitecheddar'
 @app.route('/home/', methods = ["GET", "POST"])
 def main():
     if 'user' in session: 
-        # return redirect(url_for("homepage"))
-        pass
+        return redirect(url_for("homepage"))
+        #pass
     return render_template("entry.html")
 
 # @app.route('/register/', methods = ['POST'])
@@ -87,6 +87,11 @@ def clubForm():
 def sched():
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
     pass
+
+@app.route("/homepage/<date>/", methods = ["GET", "POST"])
+def date(date):
+    return render_template("floors.html")
+
 
 @app.route("/logOut/")
 def logout():

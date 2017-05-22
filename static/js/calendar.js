@@ -214,7 +214,7 @@ function numDays(year, month) {
 	}
     }
     for (i = 1; i <= 31; i++) {
-	numTags += "<a href=" + month.toString() + "-" + i.toString() + "> <li> " + i.toString() + "</li> </a>\n";
+	numTags += "<li>" + i.toString() + "</li>\n "
     }
     return numTags;
 }
@@ -224,17 +224,21 @@ function displayDays(year, month) {
     $('.days').append(numDays(year, month));
 }
 
-function activeDay(date) {
+function activeDay(date, month, year) {
+	console.log(year);
+	//var month = date.getMonth();
     $('.days li').each(function(){
-	if ($(this).text() == date){
-	    $(this).html('<span class = "active">' + date + '</span>')
-	}
+	
 	//console.log(parseInt($(this).text()));
 	//console.log(parseInt(date) + 14);
 	if (  parseInt($(this).text()) <= parseInt(date) + 14 && parseInt($(this).text()) >= parseInt(date)) {
-		$(this).html('<font color = green>' + $(this).text() + '</font>')
+		$(this).html('<font color = green> <a href=' + month.toString() + "-" + $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+		//console.log('<a href=' + month.toString() + "-" + $(this).text() + "-" + year.toString() + '>');
+		//<a href=4- 27  -2017>
 	}
-
+	if ($(this).text() == date){
+	    $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+	}
     });
 }
 
@@ -262,8 +266,8 @@ $(document).ready(function(){
     $('.y').html(currentYear);
     displayDays(currentYear, monthNum);
     fixDays(monthNum);
-    activeDay(currentDate);
-    events(currentDate);
+    activeDay(currentDate, monthNum, currentYear);
+    //events(currentDate);
 
     $(document).on("click", ".prev", function(){
 	$('.weekdays').empty();
