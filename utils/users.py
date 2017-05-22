@@ -3,24 +3,24 @@ import sqlite3
 import os
 from accounts import whatLevel
 
-def hash(x):
+def hashp(x):
 	h = hashlib.sha256()
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(usern, unhashedp, code):
+def createAccount(usern, unhashedp, isAdmin):
 	isAdmin = int(code[len(code)-1:len(code)])
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
-	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hash(unhashedp), isAdmin)
+	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hashp(unhashedp), isAdmin)
 	print "yo yo yo"
 	sp.execute(insert)
 	db.commit()
 	db.close()
 
 def checkLogin(usern, pw):
-	hashed = hash(pw)
+	hashed = hashp(pw)
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
@@ -45,8 +45,8 @@ def addClub(name, email, advisorName, advisorEmail):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    add_club = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
-    c.execute(add_club, (name, email, advisorName, advisorEmail))
+  	query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
+    c.execute(query, (name, email, advisorName, advisorEmail))
 
     c.close()
 

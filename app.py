@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response
 import hashlib
 import time
-from utils import users, clubInfo
+from utils import users, clubInfo, register
 
 app = Flask(__name__)
 app.secret_key = 'agedwhitecheddar'
@@ -67,7 +67,11 @@ def auth():
 # work on fixing register         
 @app.route("/register/", methods=["POST", "GET"])
 def register():
-    session["user"] = "ok@gmail.com"
+    if "code" in request.form:
+        code = request.form["code"]
+        if (register.checkCode(code)):
+            
+        #add user/pass/clubname to table
     return render_template("clubRegister.html")
 
 @app.route("/homepage/", methods=["POST","GET"])
