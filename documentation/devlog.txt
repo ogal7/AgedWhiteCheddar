@@ -1,9 +1,17 @@
 OGal7@ May 13th, 2017: 18:32 pm:
 -created database and tables
+
 StivenPeter@May 16th, 2017: 18:00: 
  -Formatted users table
  -Wrote users.py
- StivenPeter@May 17th, 2017: 17:00: 
+
+StivenPeter@May 17th, 2017: 17:00: 
  -Wrote accounts.py
  -Fomatted accounts table
  -Wrote Register check algorithm 
+
+OGal7@ May 23nd, 2017: 1:47:
+ - linked floor buttons with floor maps
+ - made blank files for floor maps
+ 
+ 
