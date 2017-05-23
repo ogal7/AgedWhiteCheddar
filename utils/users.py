@@ -39,19 +39,15 @@ def checkLogin(usern, pw):
 	db.close()
 	return False
 
-
 def addClub(name, email, advisorName, advisorEmail):
-    f = "data/data.db"
-    db = sqlite3.connect(f)
-    c = db.cursor()
-
-  	query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
-    c.execute(query, (name, email, advisorName, advisorEmail))
-
-    c.close()
-
-    db.commit()
-    db.close()
+	f = "data/data.db"
+	db = sqlite3.connect(f)
+	c = db.cursor()
+	query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
+	c.execute(query, (name, email, advisorName, advisorEmail))
+	c.close()
+	db.commit()
+	db.close()
 
 def checkRegister(usern, code):
 	f = "data/data.db"

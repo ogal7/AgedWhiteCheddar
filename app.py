@@ -70,7 +70,7 @@ def register():
     if "code" in request.form:
         code = request.form["code"]
         if (register.checkCode(code)):
-            
+            pass  
         #add user/pass/clubname to table
     return render_template("clubRegister.html")
 
