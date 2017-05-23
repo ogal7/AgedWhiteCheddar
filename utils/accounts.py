@@ -24,9 +24,10 @@ def whatLevel(email):
 	sp = db.cursor()
 	s = "SELECT code FROM accounts WHERE email=='" + email + "';"
 	t = sp.execute(s)
+	res = t.fetchall()
 	db.commit()
 	db.close()
-	return t.fetchall()[0][-1]
+	return res[0][-1]
 
 def codeCheck(code):
     f = "../data/data.db"
