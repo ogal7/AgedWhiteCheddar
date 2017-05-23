@@ -92,9 +92,19 @@ def sched():
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
     pass
 
-@app.route("/homepage/<date>/", methods = ["GET", "POST"])
+@app.route("/homepage/<date>/", methods = ["GET"])
 def date(date):
-    return render_template("floors.html")
+    if 'floor' in request.args:
+        if request.args['floor'] == '2':
+            return render_template("map2.html")
+        if request.args['floor'] == '3':
+            return render_template("map3.html")
+        if request.args['floor'] == '4':
+            return render_template("map4.html")
+    return render_template("floors.html", message=date)
+
+
+
 
 
 @app.route("/logOut/")

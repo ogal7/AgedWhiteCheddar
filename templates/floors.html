@@ -1,16 +1,30 @@
 {% extends "base.html" %}
 
 
+{% block head1 %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/floors.js"></script>
+{% endblock %}
+
 {% block body %}
 <br> 
 <center>
 <h3> Select a Floor to Reserve a Room </h3>
 
 <br> 
-<form action="/homepage/<date>/">
-<button type="button" value="2" class="button large">2</button>
-<button type="button" value="3" class="button large">3</button>
-<button type="button" value="4" class="button large">4</button>
+<form id="shawty" methods="GET">
+<button type="submit" name="floor" value="2" class="button large">2</button>
+<button type="submit" name="floor" value="3" class="button large">3</button>
+<button type="submit" name="floor" value="4" class="button large">4</button>
 </center>
+</form>
 
 {% endblock %}
+
+{% block bottom %}
+    <script type="text/javascript" src="/static/js/floors.js"></script>
+{% endblock %}
+

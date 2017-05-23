@@ -21,7 +21,7 @@ def createAccount(usern, unhashedp, isAdmin):
 
 def checkLogin(usern, pw):
 	hashed = hashp(pw)
-	f = "../data/data.db"
+	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	s = "SELECT usern, pw FROM users WHERE usern =='" + usern + "';"
