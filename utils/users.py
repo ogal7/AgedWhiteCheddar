@@ -10,7 +10,7 @@ def hashp(x):
 
 def createAccount(usern, unhashedp, isAdmin):
 	isAdmin = int(code[len(code)-1:len(code)])
-	f = "data/data.db"
+	f = "../sdata/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	insert = "INSERT INTO users VALUES ('%s', '%s', '%d')"%(usern, hashp(unhashedp), isAdmin)
@@ -21,7 +21,7 @@ def createAccount(usern, unhashedp, isAdmin):
 
 def checkLogin(usern, pw):
 	hashed = hashp(pw)
-	f = "data/data.db"
+	f = "../data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	s = "SELECT usern, pw FROM users WHERE usern =='" + usern + "';"
@@ -40,7 +40,7 @@ def checkLogin(usern, pw):
 	return False
 
 def addClub(name, email, advisorName, advisorEmail):
-	f = "data/data.db"
+	f = "../data/data.db"
 	db = sqlite3.connect(f)
 	c = db.cursor()
 	query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
@@ -49,15 +49,6 @@ def addClub(name, email, advisorName, advisorEmail):
 	db.commit()
 	db.close()
 
-def checkRegister(usern, code):
-	f = "data/data.db"
-	db = sqlite3.connect(f)
-	sp = db.cursor()
-	s = "SELECT usern, code FROM accounts WHERE usern=='" + usern + "' AND code =='" + code + "';" 
-	t = sp.execute(s)
-	if len(t.fetchall()) == 0:
-                return False 
-	return True
 
 
 def isStudent(code):

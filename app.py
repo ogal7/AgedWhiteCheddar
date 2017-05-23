@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response
 import hashlib
 import time
-from utils import users, clubInfo, register
+from utils import users, clubInfo, accounts
 
 app = Flask(__name__)
 app.secret_key = 'agedwhitecheddar'
