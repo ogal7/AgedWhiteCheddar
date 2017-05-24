@@ -53,7 +53,7 @@ def checkRegister(email, code):
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 
-	query = "SELECT email, code FROM accounts WHERE email = '" + email + "' AND code = '" + code + "';"
+	query = "SELECT email, code FROM codes WHERE email = '" + email + "' AND code = '" + code + "';"
 	t = sp.execute(query)
 
 	res = t.fetchall()[0]
@@ -85,7 +85,7 @@ def storeCode(email, isAdmin):
 	while codeCheck(code):
                 code = generateCode(isAdmin)
 
-	insert = "INSERT INTO accounts VALUES ('%s', '%s')" % (email, code)
+	insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
 	sp.execute(insert)
 
 	db.commit()
@@ -105,7 +105,7 @@ def getAdminLevel(email):
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 
-	s = "SELECT code FROM accounts WHERE email ='" + email + "';"
+	s = "SELECT code FROM codes WHERE email ='" + email + "';"
         t = sp.execute(s)
 
 	res = t.fetchall()
@@ -123,7 +123,7 @@ def codeUsed(code):
         db = sqlite3.connect(f)
         gt = db.cursor()
 
-        request = "SELECT code FROM accounts;"
+        request = "SELECT code FROM codes;"
         codes = gt.execute(request).fetchall()
 
         for usedCode in codes:
