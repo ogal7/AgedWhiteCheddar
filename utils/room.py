@@ -13,7 +13,10 @@ def getInfoDate(date):
         request="SELECT * from rooms"+date[4:]+" WHERE date == "+date+";"
         info=og.execute(reqest)
         db.close()
-        return info
+        l=[]
+        for thing in info:
+                l.append(thing[0],thing[1],thing[2])
+        return l
 
 '''def getInfoRange(start, end):
     info=[]
@@ -30,6 +33,9 @@ def getInfoRoom(room):
         request="SELECT * from rooms"+date[4:]+" WHERE room == "+room+";"
         info=og.execute(request)
         db.close()
+        l=[]
+        for thing in info:
+                l.append(thing[0],thing[1],thing[2])
         return info
 
 #gets all the rooms, clubs, for a specific date
@@ -42,4 +48,7 @@ def getInfoClub(clubName):
         request="SELECT * from rooms"+date[4:]+" WHERE clubName == "+clubName+";"
         info=og.execute(request)
         db.close()
-        return info
+        l=[]
+        for thing in info:
+                l.append(thing[0],thing[1],thing[2])
+        return l
