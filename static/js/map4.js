@@ -2,7 +2,11 @@ var container = document.getElementById("vimage");
 var x1 = container.getAttribute("width")/2;
 var y1 = container.getAttribute("height")/2;
 
+buttonDiv = document.getElementById("roomButtons");
 
+//<svg height="210" width="500">
+//  <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />
+//</svg>
 
 var drawMap = function () {
 	var x = 0;
@@ -52,6 +56,131 @@ var drawMap = function () {
 	container.appendChild(escalator1);
 
 	//var label = document.createElementNS("http://www.w3.org/2000/svg", "text")
+
+}
+
+
+var drawMap = function() {
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
+	var line = document.createElementNS("http:http://www.w3.org/2000/svg", "line");
+	line.setAttribute("x1", );
+	line.setAttribute("y1", );
+	line.setAttribute("x2", );
+	line.setAttribute("y2", );
 
 }
 
