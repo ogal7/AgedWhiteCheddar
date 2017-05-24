@@ -14,7 +14,10 @@ app.secret_key = os.urandom(32)
 @app.route('/', methods = ["GET", "POST"])
 def main():
     if 'user' in session:
-        return redirect(url_for("homepage"))
+        if users.signup_completed(session['user']):
+            return redirect(url_for("homepage"))
+        else:
+            return redirect(url_for("enter_club_info"))
     return render_template("entry.html")
 
 # =====================
@@ -44,7 +47,7 @@ def auth():
         if True:
             if users.isStudent(code):
                 #print "student"
-                users.createAccount(username,password,code)
+                users.createAccount(username, password, code)
                 session['user'] = username
                 return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
             else:
@@ -62,9 +65,15 @@ def auth():
 # =====================
 @app.route("/clubInfo/", methods = ["GET", "POST"])
 def enter_club_info():
+    if 'user' not in session:
+        return redirect(url_for("main"))
+
+    # Prevents users from completing form twice
+    if 'user' in session and users.signup_completed(session['user']):
+        return redirect(url_for("homepage"))
+    
     response = request.form
-    print request.form
-    if 'clubname' in response and 'adName' in response and 'adEmail' in response:
+    if 'clubName' in response and 'adName' in response and 'adEmail' in response:
         print "ok"
         clubName = response['clubName']
         adName = response['adName']
@@ -79,15 +88,34 @@ def enter_club_info():
 # =====================
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
+    if 'user' not in session:
+        return redirect(url_for("main"))
+    
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+
     return render_template("homepage.html")
 
 @app.route("/roomSched/")
 def sched():
+    if 'user' not in session:
+        return redirect(url_for("main"))
+    
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
-    pass
+
+    return render_template("calendar.html")
 
 @app.route("/homepage/<date>/", methods = ["GET"])
 def date(date):
+    if 'user' not in session:
+        return redirect(url_for("main"))
+    
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+        
     if 'floor' in request.args:
         if request.args['floor'] == '2':
             return render_template("map2.html")
