@@ -2,25 +2,27 @@
 
 {% block body %}
 <br>
-<center> <h6> Club Information </h6> </center>
+<center> <h4> Club Information </h4>
+<h6> To complete signup, please fill out the form below.  </h6>
+</center>
 
 <div class="callout">
 	<form action="/clubInfo/" method="POST">
 		<div class="row">
 			<label>Club Name
-				<input type="text" name="clubName" placeholder="Beyonce Fan Club" required>
+				<input type="text" name="clubName" placeholder="Enter club name..." required>
 			</label>
 		</div>
 
 		<div class="row">
 			<label>Advisor Name
-				<input type="text" name="adName" placeholder="Jim Cocoros" required>
+				<input type="text" name="adName" placeholder="Enter advisor name..." required>
 			</label>
 		</div>
 
 		<div class="row">
 			<label>Advisor Email
-				<input type="email" name="adEmail" placeholder="coco@gmail.com" required>
+				<input type="email" name="adEmail" placeholder="Enter advisor's email..." required>
 			</label>
 		</div>
 		<center>
