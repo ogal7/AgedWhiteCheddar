@@ -9,24 +9,10 @@ app.secret_key = 'agedwhitecheddar'
 @app.route('/', methods = ["GET", "POST"])
 @app.route('/home/', methods = ["GET", "POST"])
 def main():
-    if 'user' in session: 
+    if 'user' in session:
         return redirect(url_for("homepage"))
         #pass
     return render_template("entry.html")
-
-# @app.route('/register/', methods = ['POST'])
-# def register_page():
-#     if 'email' in request.form:
-#         if 'club_name' in request.form and 'admin' not in request.form:
-#             registered = register_club(request.form['email'], request.form['club_name'], request.form['code'])
-#             if registered:
-#                 return redirect(url_for('homepage'))
-#             else:
-#                 return render_template("register.html", error = "Club signup failed. Club code invalid.")
-#         elif 'admin' in request.form:
-#             registered = register_admin(request.form['email'], request.form['admin_name'], request.form['code'])
-#             return render_template("register.html", error = "Admin signup failed. Admin code invalid.")
-#     return 
 
 @app.route("/auth/", methods = ["POST"])
 def auth():
@@ -48,7 +34,7 @@ def auth():
 
     if formMethod == "register":
         code = loginResponse['code']
-        if users.checkRegister(username, code) == True:#code/user match is valid
+        if users.checkRegister(username, code) == True: #code/user match is valid
             print "hi"
             if users.isStudent(code) == True:
                 #print "student"
@@ -64,13 +50,13 @@ def auth():
 
     return redirect(url_for("main"))
 
-# work on fixing register         
+# work on fixing register
 @app.route("/register/", methods=["POST", "GET"])
 def register():
     if "code" in request.form:
         code = request.form["code"]
         if (register.checkCode(code)):
-            pass  
+            pass
         #add user/pass/clubname to table
     return render_template("clubRegister.html")
 
@@ -81,7 +67,7 @@ def homepage():
 @app.route("/clubInfo/", methods =["POST"])
 def clubForm():
     response = request.form
-    clubName = response['clubName'] 
+    clubName = response['clubName']
     adName = response['adName']
     adEmail = response['adEmail']
     users.addClub(clubName, session['user'], adName, adEmail)
@@ -102,10 +88,6 @@ def date(date):
         if request.args['floor'] == '4':
             return render_template("map4.html")
     return render_template("floors.html", message=date)
-
-
-
-
 
 @app.route("/logOut/")
 def logout():
