@@ -59,7 +59,7 @@
     h1 {
         font-family: Arial, Helvetica, sans-serif;
     }
-    body {  
+    body {
         font-family: Arial, Helvetica, sans-serif;
         background-attachment: fixed;
         background-position: center;
@@ -88,8 +88,9 @@
                     SU Room Reservations
                 </li>
                 <li class = "abc">
-                    <a href="/home/">Home</a>
+                    <a href="/">Home</a>
                 </li>
+		{% if session.user %}
                 <li class="abc">
                     <a href="/myRooms/">My Rooms</a>
                 </li>
@@ -97,10 +98,11 @@
                     <a href="/roomSched/">Room Schedule</a>
                 </li>
                 <li class="abc">
-                    {% block head %} 
+                    {% block head %}
                     <!--Where Admin Button link will go -->
                     {% endblock %}
                 </li>
+		{% endif %}
 
             </ul>
   </div>
@@ -108,12 +110,14 @@
 
   <div class="top-bar-right">
     <ul class="dropdown menu" data-dropdown-menu>
+      {% if session.user %}
         <li class="abc">
             <a href = "/settings/"> Settings </a>
         </li>
         <li class = "abc">
-            <a href="/logOut/"> Log Out </a>
+            <a href="/logout/"> Log Out </a>
         </li>
+	{% endif %}
 
           </div>
     </ul>

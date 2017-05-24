@@ -8,7 +8,7 @@ def hashp(x):
 	h.update(x)
 	return h.hexdigest()
 
-def createAccount(user, password, isAdmin):
+def createAccount(user, password, code):
 	isAdmin = int(code[-1])
 	f = "data/data.db"
 	db = sqlite3.connect(f)
@@ -56,8 +56,8 @@ def checkRegister(email, code):
 	query = "SELECT email, code FROM codes WHERE email = '" + email + "' AND code = '" + code + "';"
 	t = sp.execute(query)
 
-	res = t.fetchall()[0]
-	if len(res) == 0:
+	res = t.fetchone()
+	if res is None:
                 db.commit()
                 db.close()
                 return False
@@ -140,6 +140,3 @@ def codeUsed(code):
 
 def isStudent(code):
 	return int(code[-1]) == 0
-
-def isAdmin(code):
-	return int(code[-1]) == 1 or int(code[-1]) == 2

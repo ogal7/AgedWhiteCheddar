@@ -2,15 +2,16 @@ from flask import Flask, render_template, request, session, redirect, url_for, R
 import hashlib
 import time
 from utils import users, club, room, reserve
+import os
 
 app = Flask(__name__)
-app.secret_key = 'agedwhitecheddar'
+# app.secret_key = 'agedwhitecheddar'
+app.secret_key = os.urandom(32)
 
 # =====================
 # main page
 # =====================
 @app.route('/', methods = ["GET", "POST"])
-@app.route('/home/', methods = ["GET", "POST"])
 def main():
     if 'user' in session:
         return redirect(url_for("homepage"))
@@ -19,13 +20,16 @@ def main():
 # =====================
 # authentication
 # =====================
+
+# TODO - check if password and confirm password matches as well - for later
+# TODO - should display an auth error message on entry page - possibly by flashing messages
 @app.route("/auth/", methods = ["POST"])
 def auth():
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
-    print formMethod
+    print "Form method: " + formMethod
 
     if formMethod == "login":
         if users.checkLogin(username, password):
@@ -33,27 +37,42 @@ def auth():
             return redirect(url_for("homepage"))
         else:
             message = "login failed"
-            if 'user' in session:
-                session.pop('user')
-            return redirect(url_for("main"))
 
     if formMethod == "register":
         code = loginResponse['code']
-        if users.checkRegister(username, code): #code/user match is valid
-            print "hi"
+        # users.checkRegister(username, code): # code/email match is valid
+        if True:
             if users.isStudent(code):
                 #print "student"
                 users.createAccount(username,password,code)
                 session['user'] = username
-                return redirect(url_for('register'))#asks for more info from students running clubs
+                return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
             else:
-                #print "hi again! this is an admin account"
+                #print "admin"
                 users.createAccount(username,password,code)
                 session['user']= username
-                return redirect(url_for('homepage'))#admins dont need additional info
-        return redirect(url_for("register"))
+                return redirect(url_for('homepage')) # admins dont need additional info
+        else:
+            message = "register failed"
 
     return redirect(url_for("main"))
+
+# =====================
+# enter club info
+# =====================
+@app.route("/clubInfo/", methods = ["GET", "POST"])
+def enter_club_info():
+    response = request.form
+    print request.form
+    if 'clubname' in response and 'adName' in response and 'adEmail' in response:
+        print "ok"
+        clubName = response['clubName']
+        adName = response['adName']
+        adEmail = response['adEmail']
+        club.addClub(clubName, session['user'], adName, adEmail)
+        return redirect(url_for("homepage"))
+    else:
+        return render_template("clubRegister.html")
 
 # =====================
 # logged in users
@@ -61,15 +80,6 @@ def auth():
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
     return render_template("homepage.html")
-
-@app.route("/clubInfo/", methods =["POST"])
-def clubForm():
-    response = request.form
-    clubName = response['clubName']
-    adName = response['adName']
-    adEmail = response['adEmail']
-    users.addClub(clubName, session['user'], adName, adEmail)
-    return redirect(url_for("main"))
 
 @app.route("/roomSched/")
 def sched():
