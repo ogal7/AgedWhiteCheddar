@@ -97,7 +97,7 @@ def homepage():
     return render_template("homepage.html")
 
 @app.route("/roomSched/")
-def sched():
+def schedule():
     if 'user' not in session:
         return redirect(url_for("main"))
     
@@ -109,7 +109,7 @@ def sched():
     return render_template("calendar.html")
 
 @app.route("/homepage/<date>/", methods = ["GET"])
-def date(date):
+def find_floor(date):
     if 'user' not in session:
         return redirect(url_for("main"))
     
@@ -125,8 +125,8 @@ def date(date):
             return render_template("map4.html")
     return render_template("floors.html", message=date)
 
-@app.route('/floors/')
-def choose_floor():
+@app.route('/myRooms/')
+def my_rooms():
     pass
 
 @app.route('/settings/')
