@@ -1,6 +1,14 @@
 // the previously commented out calendar javascript
 // is in calendar.js.old
 
+// =======================================
+// DATE VARIABLE
+// =======================================
+var d = new Date();
+
+// =======================================
+// FUNCTIONS
+// =======================================
 function getMonthName(month) {
     var monthName = "";
     switch(month){
@@ -44,36 +52,11 @@ function getMonthName(month) {
     return monthName;
 }
 
-function fixDays(monthNum){
-    if(monthNum == 1){
-	$('.days li').each(function(){
-	    if($(this).text() >= 29){
-		$(this).hide();
-	    } 
-	});
-    } else if(monthNum == 3 || monthNum == 5 || monthNum == 8 || monthNum == 10){
-	$('.days li').each(function(){
-	    if($(this).text() == 31){
-		$(this).hide();
-	    } 
-	    if($(this).text() == 29 || $(this).text() == 30){
-		$(this).show();
-	    } 
-	});
-    } else {
-	$('.days li').each(function(){
-	    if($(this).text() >= 29){
-		$(this).show();
-	    } 
-	});
-    }
-}
-
 function weekdays() {
     var dayTags = "<li>Su</li>\n" +
 	"<li>Mo</li>\n" +
 	"<li>Tu</li>\n" +
-	"<li>We</li>\n" + 
+	"<li>We</li>\n" +
 	"<li>Th</li>\n" +
 	"<li>Fr</li>\n" +
         "<li>Sa</li>\n"
@@ -83,17 +66,18 @@ function weekdays() {
 function numDays(year, month) {
     var numTags = "";
     var firstDay = new Date(year, month, 1);
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
     // getDay() returns 0 if the day is Sunday, so we make sure that
     // we do not prepend a placeholder if the day is Sunday
     // Otherwise, there would be an extra <li> prepended, messing up
     // the layout of the calendar
     dayNum = firstDay.getDay();
     if (dayNum != 0) {
-	for(i = 0; i < dayNum; i++) { 
+	for(i = 0; i < dayNum; i++) {
 	    numTags += "<li></li>\n";
 	}
     }
-    for (i = 1; i <= 31; i++) {
+    for (i = 1; i <= daysInMonth; i++) {
 	numTags += "<li>" + i.toString() + "</li>\n "
 	dayNum++;
 	if (dayNum == 7) {
@@ -104,51 +88,43 @@ function numDays(year, month) {
     return numTags;
 }
 
-function displayDays(year, month) {    
+function displayDays(year, month) {
     $('.weekdays').append(weekdays());
     $('.days').append(numDays(year, month));
 }
 
 function manageDates(date, month, year) {
-    console.log(year);
-    $('.days li').each(function(){
-	
-	if (parseInt($(this).text()) <= parseInt(date)) {
-	    $(this).html('<a style="color: #2ba6cb;" href=' + month.toString() + "-" + $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a>\n')
-	} else if ($(this).text() == date){
-	    $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-	} else if ($(this).text() > date) {
-	    $(this).html('<p style="color: lightgray;" href=' + month.toString() + "-" + $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</p>\n');
-	}
-    });
-}
+    // var daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 
-function events(date) {
-    li = document.getElementsByClassName("days")[0].childNodes;
-    for (i in li) {
-	if (i in document.getElementsByTagName("li")) {
-	    i.addEventListener("click", launch);
-	}
+    if (year === d.getFullYear() &&
+	(month === d.getMonth() || month === d.getMonth() + 1))
+    {
+	$('.days li').each(function(){
+	    if (parseInt($(this).text()) <= parseInt(date) + 14 &&
+		parseInt($(this).text()) >= parseInt(date)) {
+		$(this).html('<a style="color:#2ba6cb;" href=' + month.toString() + "-" +
+			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+	    }
+	    if ($(this).text() == d.getDate() && month === d.getMonth()) {
+		$(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+	    }
+	});
     }
 }
 
-var launch = function(e) {
-    console.log("hi");
-}
-
-var d = new Date();
-var monthNum = parseInt(d.getMonth());
-var currentYear = parseInt(d.getFullYear());
-var currentDate = parseInt(d.getDate());
-var currentMonth = getMonthName(monthNum);
+// =======================================
+// ON DOCUMENT READY
+// =======================================
 
 $(document).ready(function(){
+    var monthNum = parseInt(d.getMonth());
+    var currentYear = parseInt(d.getFullYear());
+    var currentDate = parseInt(d.getDate());
+    var currentMonth = getMonthName(monthNum);
     $('.m').html(currentMonth);
     $('.y').html(currentYear);
     displayDays(currentYear, monthNum);
-    fixDays(monthNum);
     manageDates(currentDate, monthNum, currentYear);
-    //events(currentDate);
 
     $(".prev").on("click", function(){
 	console.log("what");
@@ -162,7 +138,6 @@ $(document).ready(function(){
 	displayDays(currentYear, monthNum);
 	manageDates(currentDate, monthNum, currentYear);
 	currentMonth = getMonthName(monthNum);
-	fixDays(monthNum);
 	$('.m').html(currentMonth);
 	$('.y').html(currentYear);
     });
@@ -178,7 +153,6 @@ $(document).ready(function(){
 	displayDays(currentYear, monthNum);
 	manageDates(currentDate, monthNum, currentYear);
 	currentMonth = getMonthName(monthNum);
-	fixDays(monthNum);
 	$('.m').html(currentMonth);
 	$('.y').html(currentYear);
     });
