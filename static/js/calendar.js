@@ -138,10 +138,10 @@ function manageDates(date, month, year) {
     {
 		$('.days li').each(function(){
 	    
-			if ( $(this).id == "w" ) {
-				$(this).html('<font-color:#D63E3E>' +  $(this).text() + '</font>\n')
-	   	 	}
-	    	else if( parseInt($(this).text()) <= parseInt(date) + 14 &&
+			//if ( $(this).id == "w" ) {
+			//	$(this).html('<font-color:#D63E3E>' +  $(this).text() + '</font>\n')
+	   	 	//}
+	    	if( parseInt($(this).text()) <= parseInt(date) + 14 &&
 			parseInt($(this).text()) >= parseInt(date) ) {
 			$(this).html('<a style="color:#2ba6cb;" href=' + month.toString() + "-" +
 			$(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
