@@ -2,6 +2,7 @@ import hashlib
 import sqlite3
 import os
 import random
+from approve import sendEmail
 
 def hashp(x):
     h = hashlib.sha256()
@@ -110,9 +111,9 @@ def storeCode(email, isAdmin):
 
     insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
     sp.execute(insert)
-
     db.commit()
     db.close()
+    approve.sendEmail(email)
 
 def generateCode(isAdmin):
     return str(int(random.random()*10000)) + str(isAdmin)
