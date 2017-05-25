@@ -63,6 +63,36 @@ function weekdays() {
     return dayTags;
 }
 
+function weekends(startDay, monthLength) {
+	var weekendList = []
+	if (startDay == 0){
+		var i = 1;
+		while (i <= monthLength) {
+			weekendList.push(i);
+			i += 6;
+		}
+		i = 8;
+		while (i <= monthLength) {
+			weekendList.push(i)
+			i+=6;
+		}
+		return weekendList; //list of days that are weekends
+	}
+	else {
+		var i = 7 - startDay;
+		while (i <= monthLength) {
+			weekendList.push(i);
+			i+=7;
+		}
+		var i = 8 - startDay;
+		while (i <= monthLength) {
+			weekendList.push(i);
+		}
+		return weekendList;
+	}
+}
+
+
 function numDays(year, month) {
     var numTags = "";
     var firstDay = new Date(year, month, 1);
@@ -72,14 +102,21 @@ function numDays(year, month) {
     // Otherwise, there would be an extra <li> prepended, messing up
     // the layout of the calendar
     dayNum = firstDay.getDay();
+    redList = weekends(dayNum, daysInMonth);
     if (dayNum != 0) {
 	for(i = 0; i < dayNum; i++) {
 	    numTags += "<li></li>\n";
 	}
     }
     for (i = 1; i <= daysInMonth; i++) {
-	numTags += "<li>" + i.toString() + "</li>\n "
-	dayNum++;
+    	if (i in redList) {
+			numTags += "<li id=w>" + i.toString() + "</li>\n "
+			dayNum++;
+		}
+		else {
+			numTags += "<li>" + i.toString() + "</li>\n "
+			dayNum++;
+		}
 	if (dayNum == 7) {
 	    numTags += "<br/>";
 	    dayNum = 0;
@@ -99,15 +136,22 @@ function manageDates(date, month, year) {
     if (year === d.getFullYear() &&
 	(month === d.getMonth() || month === d.getMonth() + 1))
     {
-	$('.days li').each(function(){
-	    if (parseInt($(this).text()) <= parseInt(date) + 14 &&
-		parseInt($(this).text()) >= parseInt(date)) {
-		$(this).html('<a style="color:#2ba6cb;" href=' + month.toString() + "-" +
-			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+		$('.days li').each(function(){
+	    
+			if ( $(this).id == "w" ) {
+				$(this).html('<font-color:#D63E3E>' +  $(this).text() + '</font>\n')
+	   	 	}
+	    	else if( parseInt($(this).text()) <= parseInt(date) + 14 &&
+			parseInt($(this).text()) >= parseInt(date) ) {
+			$(this).html('<a style="color:#2ba6cb;" href=' + month.toString() + "-" +
+			$(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
 	    }
+
 	    if ($(this).text() == d.getDate() && month === d.getMonth()) {
 		$(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
 	    }
+
+
 	});
     }
 }
