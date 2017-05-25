@@ -20,5 +20,3 @@ def sendEmail(clubuser):
 	text = msg.as_string()
 	server.sendmail(sender, clubuser, text)
 	server.quit()
-
-sendEmail("stivenpeter@gmail.com")
