@@ -129,6 +129,10 @@ def find_floor(date):
 def my_rooms():
     pass
 
+@app.route('/reserve/')
+def reserve():
+    pass
+
 @app.route('/settings/')
 def settings():
     pass
