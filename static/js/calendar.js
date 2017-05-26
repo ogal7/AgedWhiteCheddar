@@ -109,12 +109,13 @@ function numDays(year, month) {
 	}
     }
     for (i = 1; i <= daysInMonth; i++) {
-    	// if (i in redList) {
-	//     numTags += "<li id=w>" + i.toString() + "</li>\n "
-	//     dayNum++;
-	// } else {}
-	numTags += "<li>" + i.toString() + "</li>\n "
+    	if (dayNum == 0 || dayNum == 6) {
+	    numTags += "<li class='closed'>" + i.toString() + "</li>\n "
+	} else {
+	    numTags += "<li>" + i.toString() + "</li>\n "
+	}
 	dayNum++;
+
 	if (dayNum == 7) {
 	    numTags += "<br/>";
 	    dayNum = 0;
@@ -132,16 +133,13 @@ function manageDates(date, month, year) {
     // var daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 
     $('.days li').each(function(){
-	
-	//if ( $(this).id == "w" ) {
-	//	$(this).html('<font-color:#D63E3E>' +  $(this).text() + '</font>\n')
-	//}
 	if( parseInt($(this).text()) <= parseInt(date) + 14 &&
 	    parseInt($(this).text()) >= parseInt(date) ) {
-	    $(this).html('<a style="color:#2ba6cb;" href=' + month.toString() + "-" +
+	    $(this).html('<a class="open" href=' + month.toString() + "-" +
 			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
 	}
-
+	// implement 14 days or more and prevent from selecting weekends
+	
 	if ($(this).text() == d.getDate() && month === d.getMonth()) {
 	    $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
 	}
@@ -164,34 +162,34 @@ $(document).ready(function(){
     displayDays(currentYear, monthNum);
     manageDates(currentDate, monthNum, currentYear);
 
-    // $(".prev").on("click", function(){
-    // 	console.log("what");
-    // 	$('.weekdays').empty();
-    // 	$('.days').empty();
-    // 	monthNum -= 1;
-    // 	if (monthNum == -1) {
-    // 	    monthNum = 11;
-    // 	    currentYear -= 1;
-    // 	}
-    // 	displayDays(currentYear, monthNum);
-    // 	manageDates(currentDate, monthNum, currentYear);
-    // 	currentMonth = getMonthName(monthNum);
-    // 	$('.m').html(currentMonth);
-    // 	$('.y').html(currentYear);
-    // });
+    $(".prev").on("click", function(){
+    	console.log("what");
+    	$('.weekdays').empty();
+    	$('.days').empty();
+    	monthNum -= 1;
+    	if (monthNum == -1) {
+    	    monthNum = 11;
+    	    currentYear -= 1;
+    	}
+    	displayDays(currentYear, monthNum);
+    	manageDates(currentDate, monthNum, currentYear);
+    	currentMonth = getMonthName(monthNum);
+    	$('.m').html(currentMonth);
+    	$('.y').html(currentYear);
+    });
 
-    // $(".next").on("click", function() {
-    // 	$('.weekdays').empty();
-    // 	$('.days').empty();
-    // 	monthNum += 1;
-    // 	if (monthNum == 12) {
-    // 	    monthNum = 0;
-    // 	    currentYear += 1;
-    // 	}
-    // 	displayDays(currentYear, monthNum);
-    // 	manageDates(currentDate, monthNum, currentYear);
-    // 	currentMonth = getMonthName(monthNum);
-    // 	$('.m').html(currentMonth);
-    // 	$('.y').html(currentYear);
-    // });
+    $(".next").on("click", function() {
+    	$('.weekdays').empty();
+    	$('.days').empty();
+    	monthNum += 1;
+    	if (monthNum == 12) {
+    	    monthNum = 0;
+    	    currentYear += 1;
+    	}
+    	displayDays(currentYear, monthNum);
+    	manageDates(currentDate, monthNum, currentYear);
+    	currentMonth = getMonthName(monthNum);
+    	$('.m').html(currentMonth);
+    	$('.y').html(currentYear);
+    });
 });
