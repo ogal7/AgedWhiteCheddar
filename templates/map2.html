@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
  	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/map2.js"></script>
+
 {% endblock %}
 
 
@@ -17,8 +17,25 @@
 </center>
 
 
-<div id="roomButtons">
+<center>
+	<br> 
+	<h6> Click A Room to Reserve It! </h6>
+<div id="roomButtons"> <form id="whichRoom" action="/reserve/" methods="GET">
+	<button type="submit" name="room" value="229" class="success button">229</button>
+	<button type="submit" name="room" value="231" class="success button">231</button>
+	<button type="submit" name="room" value="233" class="success button">233</button>
+	<button type="submit" name="room" value="235" class="success button">235</button>
+	<button type="submit" name="room" value="237" class="success button">237</button>
+	<button type="submit" name="room" value="251" class="success button">251</button>
+</div> </form>
+</center>
+<br>
+{% endblock %}
 
-</div>
+
+
+{% block bottom %}
+
+<script type="text/javascript" src="/static/js/map2.js"></script>
 
 {% endblock %}
