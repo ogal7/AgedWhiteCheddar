@@ -131,7 +131,17 @@ def my_rooms():
 
 @app.route('/reserve/')
 def reserve():
-    pass
+    if 'user' not in session:
+        return redirect(url_for("main"))
+    
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+
+    date=request.form['date']
+    room=request.form['room']
+    
+    reserve.reserve_room(room,date,session['user'])
+    return redirect(url_for("homepage"))
 
 @app.route('/settings/')
 def settings():
