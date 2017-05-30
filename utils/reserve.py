@@ -2,17 +2,24 @@ import sqlite3
 #date format: mmddyyyy
 
 def reserve_room(room, date, clubName):
-    f = "data/data.db"
+    f = "data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
-
-    add_reservation = "INSERT INTO rooms2017 (room, date, clubName) VALUES(?, ?, ?)"
-    c.execute(add_reservation, (room, date, clubName))
-    print "room reserved" + room + "for " + date + "by " + clubName
+    check = "SELECT clubName FROM rooms2017 WHERE  room = ? AND date = ?"
+    auth = c.execute(check, (room, date)).fetchone()
+    if auth is None and auth[0] != "N/A":
+    	add_reservation = "INSERT INTO rooms2017 (room, date, clubName) VALUES(?, ?, ?)"
+    	c.execute(add_reservation, (room, date, clubName))
+    	print "room reserved" + room + " for " + date + " by " + clubName
+    	c.close()
+    	db.commit()
+    	db.close()
+    	return True
     c.close()
-
     db.commit()
     db.close()
+    print "Failed to Reserve" 
+    return False
 
 # can unreserve if the club that reserved the room
 def unreserve_room_club(room, date, clubName):
@@ -42,6 +49,5 @@ def block_room(room, date):
     c.execute(block_reservation, (room, date, "N/A"))
 
     c.close()
-
     db.commit()
     db.close()
