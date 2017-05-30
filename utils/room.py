@@ -6,17 +6,16 @@ import time
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoDate(date):
-    	f = "data/data.db"
-	db = sqlite3.connect(f)
-	og = db.cursor()
-
-        request="SELECT * from rooms"+date[4:]+" WHERE date == "+date+";"
-        info=og.execute(reqest)
-        db.close()
-        l=[]
-        for thing in info:
-                l.append(thing[0],thing[1],thing[2])
-        return l
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    og = db.cursor()
+    request="SELECT * from rooms"+date[4:]+" WHERE date == "+date+";"
+    info=og.execute(request)
+    db.close()
+    l=[]
+    for thing in info:
+        l.append(thing[0],thing[1],thing[2])
+    return l
 
 '''def getInfoRange(start, end):
     info=[]
