@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, Response
+from flask import Flask, render_template, request, session, redirect, url_for, Response, flash
 import hashlib
 import time
 from utils import users, club, room, reserve, myRooms
@@ -23,9 +23,6 @@ def main():
 # =====================
 # authentication
 # =====================
-
-# TODO - check if password and confirm password matches as well - for later
-# TODO - should display an auth error message on entry page - possibly by flashing messages
 @app.route("/auth/", methods = ["POST"])
 def auth():
     loginResponse = request.form
@@ -39,10 +36,15 @@ def auth():
             session['user'] = username
             return redirect(url_for("homepage"))
         else:
-            message = "login failed"
+            flash("Login failed. Username not recognized or password is incorrect.")
 
     if formMethod == "register":
         code = loginResponse['code']
+        pwConfirm = loginResponse["pwConfirm"]
+        if pwConfirm != password:
+            flash("Please confirm passwords match.")
+            return redirect(url_for("main"))            
+            
         # users.checkRegister(username, code): # code/email match is valid
         if True:
             if users.isStudent(code):
@@ -56,7 +58,7 @@ def auth():
                 session['user']= username
                 return redirect(url_for('homepage')) # admins dont need additional info
         else:
-            message = "register failed"
+            flash("Register failed. Email not approved yet.")
 
     return redirect(url_for("main"))
 
