@@ -133,15 +133,13 @@ function manageDates(date, month, year) {
     // var daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 
     $('.days li').each(function(){
-	if( parseInt($(this).text()) <= parseInt(date) + 14 &&
-	    parseInt($(this).text()) >= parseInt(date) ) {
-	    $(this).html('<a class="open" href=' + month.toString() + "-" +
+	if( month < 10) {
+	    $(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
 			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
 	}
 
-    if( parseInt($(this).text()) <= parseInt(date) + 14 &&
-        parseInt($(this).text()) >= parseInt(date) && month < 10) {
-        $(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
+    else {
+        $(this).html('<a class="open" href=' + month.toString() + "-" +
              $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
     }
 	// implement 14 days or more and prevent from selecting weekends

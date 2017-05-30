@@ -106,7 +106,7 @@ def schedule():
 
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
 
-    return render_template("calendar.html")
+    return render_template("roomSchedule.html")
 
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
