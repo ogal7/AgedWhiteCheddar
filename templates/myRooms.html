@@ -4,9 +4,23 @@
 
 
 
-{% for entry in message %}
-  {{ entry }}
-{% endfor %}
+<table>
+  <thead>
+    <tr>
+      <th >Room Number</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for entry in message %}
+  		<tr> 
+  			<td> {{entry[0]}} </td>
+  			<td> {{entry[1]}} </td>
+  		</tr>
+  	{% endfor %}
+  </tbody>
+ </table>
 
 
+  
 {% endblock %}

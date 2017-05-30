@@ -132,10 +132,10 @@ def my_rooms():
         date= (time.strftime("%d/%m/%Y"))
         print date
         data = myRooms.getRooms(user, date[6:])
-        print user
-        print date
-        print data
-        print "HI"
+        for li in data:
+            li[1] = li[1][:2] + "/" + li[1][2:4] + "/" + li[1][4:]
+            print li[1]
+
         return render_template("myRooms.html", message=data)
     else:
         return redirect(url_for("main"))

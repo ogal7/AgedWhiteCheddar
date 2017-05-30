@@ -140,9 +140,15 @@ function manageDates(date, month, year) {
 	}
 	// implement 14 days or more and prevent from selecting weekends
 	
-	if ($(this).text() == d.getDate() && month === d.getMonth()) {
-	    $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10) {
+        console.log("ugh");
+	    $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
 	}
+
+    if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
+        console.log("hi");
+        $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+    }
 
 
     });
