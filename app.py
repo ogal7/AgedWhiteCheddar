@@ -129,18 +129,22 @@ def find_floor(date):
 def my_rooms():
     pass
 
-@app.route('/reserve/')
-def reserve():
+@app.route("/reserve/<date>/", methods=["GET"])
+def reserveR(date):
     if 'user' not in session:
         return redirect(url_for("main"))
-    
+
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
 
-    date=request.form['date']
-    room=request.form['room']
-    
-    reserve.reserve_room(room,date,session['user'])
+    print "ughHH"
+    d = date.split("-");
+    d2 = ""
+    for i in d:
+        d2 += str(i)
+    #date=request.form['date']
+    room=request.args['room']
+    reserve.reserve_room(room,d2,session['user'])
     return redirect(url_for("homepage"))
 
 @app.route('/settings/')

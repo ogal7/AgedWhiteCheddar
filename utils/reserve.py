@@ -1,3 +1,4 @@
+import sqlite3
 #date format: mmddyyyy
 
 def reserve_room(room, date, clubName):
@@ -7,7 +8,7 @@ def reserve_room(room, date, clubName):
 
     add_reservation = "INSERT INTO rooms2017 (room, date, clubName) VALUES(?, ?, ?)"
     c.execute(add_reservation, (room, date, clubName))
-
+    print "room reserved" + room + "for " + date + "by " + clubName
     c.close()
 
     db.commit()

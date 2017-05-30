@@ -5,6 +5,17 @@ buttonDiv = document.getElementById("roomButtons");
 whichRoom = document.getElementById("whichRoom");
 
 
+var link = window.location['href']
+console.log(link);
+
+var apple = link.split("/")
+var date = apple[apple.length-2];
+console.log(date)
+
+var actionLink =  "/reserve/" + date + "/"
+whichRoom.setAttribute("action", actionLink);
+console.log(actionLink);
+
 var drawMap = function() {
 	//outgrowth where 411 and 413 are
 	var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
