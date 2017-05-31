@@ -2,6 +2,10 @@ import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
+
+
+
+
 def sendEmail(clubuser):
 	sender = "suclubscheduling@gmail.com"
 
