@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
+
 {% block body %}
 
 
-<form action="/unreserve/">
 <table>
   <thead>
     <tr>
       <th width="100">Room Number</th>
-      <th width="100">Date</th>
-      <th width="100"> Unreserve</th>
+      <th width="100">Club Name</th>
     </tr>
   </thead>
   <tbody>
@@ -17,12 +16,10 @@
   		<tr> 
   			<td> {{entry[0]}} </td>
   			<td> {{entry[1]}} </td>
-        <td> <center> <button type="submit" name="room" value='{{entry[0]}}' class="alert button">Unreserve</button> </center></td>
   		</tr>
   	{% endfor %}
   </tbody>
  </table>
-</form>
 
-  
+
 {% endblock %}

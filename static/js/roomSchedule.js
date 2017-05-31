@@ -134,29 +134,49 @@ function manageDates(date, month, year) {
 
     $('.days li').each(function(){
 	if( month < 10) {
-	    $(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
-			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-	}
-
+        d1 = new Date(year, month, $(this).text(),);
+        //console.log(d1);
+        //console.log($(this).text() + " " + d1.getDay());
+        if (d1.getDay() != 0 && d1.getDay() != 6) { 
+	       $(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
+	       $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+        }
+    }
     else {
-        $(this).html('<a class="open" href=' + month.toString() + "-" +
-             $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+        d1 = new Date(year, month, $(this).text(),);
+        //console.log(d1);
+        //console.log($(this).text() + " " + d1.getDay());
+        if (d1.getDay() != 0 && d1.getDay() != 6) { 
+            $(this).html('<a class="open" href=' + month.toString() + "-" +
+            $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+        }
     }
 	// implement 14 days or more and prevent from selecting weekends
 	
-	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10) {
-        console.log("ugh");
-	    $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10 ) {
+        d1 = new Date(year, month, $(this).text(),);
+        //console.log(d1);
+        //console.log($(this).text() + " " + d1.getDay());
+        if (d1.getDay() != 0 && d1.getDay() != 6) { 
+            console.log("ugh");
+	       $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+        }   
 	}
 
     if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
         console.log("hi");
-        $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+        d1 = new Date(year, month, $(this).text(),);
+        //console.log(d1);
+        //console.log($(this).text() + " " + d1.getDay());
+        if (d1.getDay() != 0 && d1.getDay() != 6) { 
+            $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+        }
     }
 
 
     });
 }
+
 
 // =======================================
 // ON DOCUMENT READY
