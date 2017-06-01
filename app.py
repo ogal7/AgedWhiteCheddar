@@ -46,13 +46,13 @@ def auth():
             return redirect(url_for("main"))            
             
         # users.checkRegister(username, code): # code/email match is valid
-        if True:
+        if users.validCred(username,code):
             if users.isStudent(code):
                 #print "student"
                 users.createAccount(username, password, code)
                 session['user'] = username
                 return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
-            else:
+            else: 
                 #print "admin"
                 users.createAccount(username,password,code)
                 session['user']= username
