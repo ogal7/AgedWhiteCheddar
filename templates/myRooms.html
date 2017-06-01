@@ -3,7 +3,7 @@
 {% block body %}
 
 
-<form action="/unreserve/">
+<!--<form action="/unreserve/"> -->
 <table>
   <thead>
     <tr>
@@ -14,15 +14,16 @@
   </thead>
   <tbody>
   	{% for entry in message %}
-  		<tr> 
+  		<tr id="{{entry[0]}}/{{user}}"> 
   			<td> {{entry[0]}} </td>
   			<td> {{entry[1]}} </td>
-        <td> <center> <button type="submit" name="room" value='{{entry[0]}}' class="alert button">Unreserve</button> </center></td>
+        <td> <center> <button type="submit" id='{{entry[0]}}/{{user}}'name="room" value='{{entry[0]}}' class="alert button">Unreserve</button> </center></td>
   		</tr>
   	{% endfor %}
   </tbody>
  </table>
-</form>
+<!--</form>-->
 
-  
+
+<script type="text/javascript" src="/static/js/myRooms.js"></script>
 {% endblock %}

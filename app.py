@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response, flash
 import hashlib
 import time
-from utils import users, club, room, reserve, myRooms
+from utils import users, club, room, reserve, myRooms, dayRooms
 import os
 
 app = Flask(__name__)
@@ -110,6 +110,22 @@ def schedule():
 
     return render_template("roomSchedule.html")
 
+@app.route("/roomSched/<date>/")
+def daySchedule(date):
+    if 'user' not in session:
+        return redirect(url_for("main"))
+    
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+
+    d2 = date.split("-")
+    date1 = ""
+    for i in d2:
+        date1+=i
+    data = dayRooms.getRooms(date1)
+    return render_template("dayRooms.html", message=data)
+
+
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
     if 'user' not in session:
@@ -138,7 +154,7 @@ def my_rooms():
             li[1] = li[1][:2] + "/" + li[1][2:4] + "/" + li[1][4:]
             print li[1]
 
-        return render_template("myRooms.html", message=data)
+        return render_template("myRooms.html", message=data, user=session['user'])
     else:
         return redirect(url_for("main"))
 
