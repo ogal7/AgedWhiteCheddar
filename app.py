@@ -136,11 +136,11 @@ def find_floor(date):
         
     if 'floor' in request.args:
         if request.args['floor'] == '2':
-            return render_template("map2.html")
+            return render_template("map2.html") #, floor = "2", date = date)
         if request.args['floor'] == '3':
-            return render_template("map3.html")
+            return render_template("map3.html") #, floor = "3", date = date)
         if request.args['floor'] == '4':
-            return render_template("map4.html")
+            return render_template("map4.html") #, floor = "4", date = date)
     return render_template("floors.html", message=date)
 
 @app.route('/myRooms/')
@@ -158,7 +158,7 @@ def my_rooms():
     else:
         return redirect(url_for("main"))
 
-@app.route("/reserve/<date>/", methods=["GET"])
+@app.route("/reserve/<date>/", methods=["POST"])
 def reserveR(date):
     if 'user' not in session:
         return redirect(url_for("main"))
@@ -166,19 +166,23 @@ def reserveR(date):
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
 
-    print "ughHH"
-    d = date.split("-");
+    d = date.strip().split("-")
     d2 = ""
     for i in d:
-        d2 += str(i)
-    #date=request.form['date']
-    room=request.args['room']
-    reserve.reserve_room(room,d2,session['user'])
-    return redirect(url_for("homepage"))
+        d2 += str(i).zfill(2)
+
+    room = request.args['room']
+    reserve.reserve_room(room, d2 ,session['user'])
+    return redirect(url_for("my_rooms"))
+
+@app.route('/approve/', methods=["POST"])
+def approve_clubs():
+    if 'admin_level' in request.form and 'clubEmail' in request.form:
+        storeCode(request.form['clubEmail'], request.form['admin_level']
+    return redirect(url_for('homepage'))
 
 @app.route('/settings/')
 def settings():
-    pass
 
 # =====================
 # log out
