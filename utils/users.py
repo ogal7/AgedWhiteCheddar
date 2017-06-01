@@ -106,7 +106,7 @@ def storeCode(email, isAdmin):
     sp = db.cursor()
     code = generateCode(isAdmin)
 
-    while codeCheck(code):
+    while codeUsed(code):
         code = generateCode(isAdmin)
 
     insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
@@ -124,6 +124,7 @@ def generateCode(isAdmin):
 '''
 Gets an admin level for a specific user.
 '''
+
 def getAdminLevel(email):
     f = "data/data.db"
     db = sqlite3.connect(f)
@@ -138,6 +139,7 @@ def getAdminLevel(email):
     db.close()
 
     return res[0][-1]
+
 
 '''
 Checks if a code was used.
@@ -159,8 +161,22 @@ def codeUsed(code):
 
     db.commit()
     db.close()
+    return False 
 
-    return False
+def validCred(email,code):
+	f = "data/data.db"
+	db = sqlite3.connect(f)
+	sp = db.cursor()
+	s = "SELECT email, code FROM codes WHERE email = ? and code = ?"
+	t = sp.execute(s, (email, code)).fetchone()
+	if t is None:
+		db.commit()
+		db.close()   
+		return False
+	else:
+		db.commit()
+		db.close()
+		return True
 
 def isStudent(code):
-    return int(code[-1]) == 0
+	return int(code[-1]) == 0
