@@ -1,0 +1,8 @@
+-unreserve rooms [front end]
+-prevent users from reserving rooms that have already have been reserved [back-end]
+-allow dates in calendar in next month [back end]
+
+-admin: block rooms
+-add polazzo's account and link approval function to account
+
+-change password function (settings)
