@@ -49,8 +49,8 @@ def auth():
         pwConfirm = loginResponse["pwConfirm"]
         if pwConfirm != password:
             flash("Please confirm passwords match.")
-            return redirect(url_for("main"))            
-            
+            return redirect(url_for("main"))
+
         # users.checkRegister(username, code): # code/email match is valid
         if users.validCred(username,code):
             if users.isStudent(code):
@@ -58,7 +58,7 @@ def auth():
                 users.createAccount(username, password, code)
                 session['user'] = username
                 return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
-            else: 
+            else:
                 #print "admin"
                 users.createAccount(username,password,code)
                 session['user']= username
@@ -86,7 +86,7 @@ def enter_club_info():
     # Prevents users from completing form twice
     if 'user' in session and users.signup_completed(session['user']):
         return redirect(url_for("homepage"))
-    
+
     response = request.form
     if 'clubName' in response and 'adName' in response and 'adEmail' in response:
         print "ok"
@@ -106,7 +106,7 @@ def homepage():
     if 'user' not in session:
         print "ugh"
         return redirect(url_for("main"))
-    
+
     if 'user' in session and not users.signup_completed(session['user']):
         print "hi"
         return redirect(url_for("enter_club_info"))
@@ -125,7 +125,7 @@ def homepage():
 def schedule():
     if 'user' not in session:
         return redirect(url_for("main"))
-    
+
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
 
@@ -137,7 +137,7 @@ def schedule():
 def daySchedule(date):
     if 'user' not in session:
         return redirect(url_for("main"))
-    
+
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
 
@@ -153,10 +153,10 @@ def daySchedule(date):
 def find_floor(date):
     if 'user' not in session:
         return redirect(url_for("main"))
-    
+
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
-        
+
     if 'floor' in request.args:
         if request.args['floor'] == '2':
             return render_template("map2.html") #, floor = "2", date = date)
@@ -209,8 +209,6 @@ def approve_clubs():
         print "yes"
     else:
         return redirect(url_for('addClubz'))
-
-    return redirect(url_for('homepage'))
 
 @app.route('/settings/')
 def settings():

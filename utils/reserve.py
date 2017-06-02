@@ -1,8 +1,8 @@
 import sqlite3
-#date format: mmddyyyy                                                                          
+#date format: mmddyyyy
 
 def reserve_room(room, date, clubName):
-    f = "data.db"
+    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
     t=time.strftime("%Y")
@@ -24,7 +24,7 @@ def reserve_room(room, date, clubName):
     print "Failed to Reserve"
     return False
 
-# can unreserve if the club that reserved the room                                              
+# can unreserve if the club that reserved the room
 def unreserve_room_club(room, date, clubName):
     f = "data/data.db"
     db = sqlite3.connect(f)
@@ -38,8 +38,8 @@ def unreserve_room_club(room, date, clubName):
     db.commit()
     db.close()
 
-# if room is being blocked, kick out people who already made a reservation                      
-# prevent clubs from reserving room again                                                       
+# if room is being blocked, kick out people who already made a reservation
+# prevent clubs from reserving room again
 def block_room(room, date):
     f = "data/data.db"
     db = sqlite3.connect(f)
