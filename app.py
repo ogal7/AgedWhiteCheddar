@@ -115,11 +115,19 @@ def homepage():
         print "matt"
         message = '/addClub/'
         message2 = 'Add a Club'
-    else:
+        action="Click a Date to Block or Reserve a Room"
+
+    if 'admin' in session:
+        message=""
+        message2=""
+        action="Click a Date to Block or Reserve a Room"
+    
+    if 'admin' not in session and 'master' not in session:
         message = ""
         message2=""
+        action ="Click a Date to Reserve a Room"
 
-    return render_template("homepage.html", message=message, message2=message2)
+    return render_template("homepage.html", message=message, message2=message2, action=action)
 
 @app.route("/roomSched/")
 def schedule():
@@ -156,6 +164,14 @@ def find_floor(date):
 
     if 'user' in session and not users.signup_completed(session['user']):
         return redirect(url_for("enter_club_info"))
+
+    if 'floor' in request.args and ('admin' in session or 'master' in session):
+        if request.args['floor'] == '2':
+            return render_template("map2A.html") #, floor = "2", date = date)
+        if request.args['floor'] == '3':
+            return render_template("map3A.html") #, floor = "3", date = date)
+        if request.args['floor'] == '4':
+            return render_template("map4A.html") #, floor = "4", date = date)
 
     if 'floor' in request.args:
         if request.args['floor'] == '2':
