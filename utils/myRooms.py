@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def getRooms(club, date):
+def getRooms(club):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	og = db.cursor()
