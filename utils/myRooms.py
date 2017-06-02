@@ -10,6 +10,13 @@ def getRooms(club, date):
     	info = og.execute(request)
     	li=[]
     	for thing in info:
-       		li.append([thing[0],thing[1],thing[2]])
+       		li.append([thing[0],thing[1],thing[2], thing[3], thing[4]])
+                #print thing[0]
+                #print thing[1]
+                #print thing[2]
+                #print thing[3]
+                #print thing[4]
+            
+
     	db.close()
     	return li

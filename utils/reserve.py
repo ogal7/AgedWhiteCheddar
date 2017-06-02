@@ -1,4 +1,5 @@
 import sqlite3
+import time
 #date format: mmddyyyy
 
 def reserve_room(room, date, clubName):
@@ -6,11 +7,11 @@ def reserve_room(room, date, clubName):
     db = sqlite3.connect(f)
     c = db.cursor()
     t=time.strftime("%Y")
-    check = "SELECT clubName FROM rooms WHERE  room = ? AND day = ? and month = ? and year = ?"
+    check = "SELECT club FROM rooms WHERE  room = ? AND day = ? and month = ? and year = ?"
     auth = c.execute(check, (room, int(date[2:4]), int(date[:2]), int(date[4:]))).fetchone()
-    if auth is None and auth[0] != "N/A":
-        add_reservation = "INSERT INTO rooms (room, clubName, month, day, year) VALUES(?, ?, ?)\
-"
+    if auth is None or auth[0] != "N/A":
+        add_reservation = "INSERT INTO rooms (room, club, month, day, year) VALUES(?, ?, ?, ?, ?)\
+        "
         c.execute(add_reservation, (room, clubName, int(date[0:2]), int(date[2:4]), int(date[4:\
 ])))
         print "room reserved" + room + " for " + date + " by " + clubName

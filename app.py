@@ -166,16 +166,36 @@ def find_floor(date):
             return render_template("map4.html") #, floor = "4", date = date)
     return render_template("floors.html", message=date)
 
+@app.route("/unreserve/", methods=["POST"])
+def unRes():
+    #for i in request.form:
+    #    print i + " " + str(request.form[i])
+    data = request.form['room']
+    data = data.split("/")
+    #print data
+    if int(data[2]) < 10:
+        data[2] = "0" + data[2]
+    if int(data[1]) < 10:
+        data[1] = "0" + data[1]
+
+    date = data[1] + data[2] + data[3]
+    print date
+    #431/5/8/2017
+    reserve.unreserve_room_club(data[0], date, session['user'] )
+
+    return redirect(url_for("my_rooms"))
+
+
 @app.route('/myRooms/')
 def my_rooms():
     if 'user' in session:
         user = session['user']
         date= (time.strftime("%d/%m/%Y"))
-        print date
+        #print date
         data = myRooms.getRooms(user, date[6:])
-        for li in data:
-            li[1] = li[1][:2] + "/" + li[1][2:4] + "/" + li[1][4:]
-            print li[1]
+        #for li in data:
+        #    li[1] = li[1][:2] + "/" + li[1][2:4] + "/" + li[1][4:]
+            #print li[1]
 
         return render_template("myRooms.html", message=data, user=session['user'])
     else:
