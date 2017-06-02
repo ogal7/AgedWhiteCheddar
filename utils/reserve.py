@@ -1,24 +1,28 @@
 import sqlite3
+import time
 #date format: mmddyyyy
 
 def reserve_room(room, date, clubName):
-    f = "data.db"
+    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
-    check = "SELECT clubName FROM rooms2017 WHERE  room = ? AND date = ?"
-    auth = c.execute(check, (room, date)).fetchone()
-    if auth is None and auth[0] != "N/A":
-    	add_reservation = "INSERT INTO rooms2017 (room, date, clubName) VALUES(?, ?, ?)"
-    	c.execute(add_reservation, (room, date, clubName))
-    	print "room reserved" + room + " for " + date + " by " + clubName
-    	c.close()
-    	db.commit()
-    	db.close()
-    	return True
+    t=time.strftime("%Y")
+    check = "SELECT club FROM rooms WHERE  room = ? AND day = ? and month = ? and year = ?"
+    auth = c.execute(check, (room, int(date[2:4]), int(date[:2]), int(date[4:]))).fetchone()
+    if auth is None or auth[0] != "N/A":
+        add_reservation = "INSERT INTO rooms (room, club, month, day, year) VALUES(?, ?, ?, ?, ?)\
+        "
+        c.execute(add_reservation, (room, clubName, int(date[0:2]), int(date[2:4]), int(date[4:\
+])))
+        print "room reserved" + room + " for " + date + " by " + clubName
+        c.close()
+        db.commit()
+        db.close()
+        return True
     c.close()
     db.commit()
     db.close()
-    print "Failed to Reserve" 
+    print "Failed to Reserve"
     return False
 
 # can unreserve if the club that reserved the room
@@ -27,8 +31,8 @@ def unreserve_room_club(room, date, clubName):
     db = sqlite3.connect(f)
     c = db.cursor()
 
-    unreserve = "DELETE FROM rooms2017 WHERE room = ? and date = ?"
-    c.execute(unreserve, (room, date))
+    unreserve = "DELETE FROM rooms WHERE room = ? and day = ? and month = ? and year = ?"
+    c.execute(unreserve, (room, int(date[2:4]), int(date[:2]), int(date[4:])))
 
     c.close()
 
@@ -41,12 +45,13 @@ def block_room(room, date):
     f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
+    kick_out_reserved = "DELETE FROM rooms WHERE room = ? and month = ? and day = ? and year = \
+?"
+    execute(kick_out_reserved, (room, int(date[0:2]), int(date[2:4]), int(date[4:])))
 
-    kick_out_reserved = "DELETE FROM rooms2017 WHERE room = ? and date = ?"
-    c.execute(kick_out_reserved, (room, date))
-
-    block_reservation = "INSERT INTO rooms2017 (room, date, clubName) VALUES(?, ?, ?)"
-    c.execute(block_reservation, (room, date, "N/A"))
+    block_reservation = "INSERT INTO rooms (room, clubName, month, day, year) VALUES(?, ?, ?, ?\
+, ?)"
+    c.execute(block_reservation, (room, "N/A", int(date[2:4]), int(date[:2]), int(date[4:])))
 
     c.close()
     db.commit()

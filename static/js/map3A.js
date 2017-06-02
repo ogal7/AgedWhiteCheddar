@@ -17,6 +17,22 @@ var actionLink =  "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);
 console.log(actionLink);
 
+
+
+
+whichRoomBlock = document.getElementById("whichRoomBlock");
+var linkA = window.location['href']
+//console.log(link);
+
+var appleA = linkA.split("/")
+//console.log(apple);
+var dateA = appleA[appleA.length-2];
+
+
+var actionLinkA =  "/block/" + dateA + "/"
+whichRoomBlock.setAttribute("action", actionLinkA);
+//console.log(actionLink);
+
 var drawMap = function() {
 	//outgrowth where 411 and 413 are
 	var line = document.createElementNS("http://www.w3.org/2000/svg", "line");

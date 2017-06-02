@@ -2,11 +2,7 @@ import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
-
-
-
-
-def sendEmail(clubuser):
+def sendEmail(clubuser, code):
 	sender = "suclubscheduling@gmail.com"
 
 	msg = MIMEMultipart()
@@ -14,7 +10,7 @@ def sendEmail(clubuser):
 	msg['To'] = clubuser
 	msg['Subject'] = "Your Club is Approved"
  
-	body = "YOUR MESSAGE HERE"
+	body = "Congratulations, your club has been approvved use the code:" + code + "To register your club"
 	msg.attach(MIMEText(body, 'plain'))
  
 	server = smtplib.SMTP('smtp.gmail.com',587)

@@ -1,6 +1,6 @@
 var container = document.getElementById("vimage");
-var x = container.getAttribute("width")/2;
-var y = container.getAttribute("height")/2;
+var x1 = container.getAttribute("width")/2;
+var y1 = container.getAttribute("height")/2;
 buttonDiv = document.getElementById("roomButtons");
 whichRoom = document.getElementById("whichRoom");
 
@@ -9,35 +9,49 @@ var link = window.location['href']
 console.log(link);
 
 var apple = link.split("/")
-console.log(apple);
 var date = apple[apple.length-2];
+console.log(date)
 
-
-var actionLink =  "/reserve/" + date + "/"
+var actionLink = "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);
 console.log(actionLink);
+
+
+
+whichRoom = document.getElementById("whichRoom");
+var link = window.location['href']
+console.log(link);
+
+var apple = link.split("/")
+var date = apple[apple.length-2];
+console.log(date)
+
+var actionLink = "/reserve/" + date + "/"
+whichRoom.setAttribute("action", actionLink);
+console.log(actionLink);
+
 
 var drawMap = function() {
 	//outgrowth where 411 and 413 are
 	var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-	line.setAttribute("x1", 290);
+	line.setAttribute("x1", 340);
 	line.setAttribute("y1", 0);
-	line.setAttribute("x2", 290);
+	line.setAttribute("x2", 340);
 	line.setAttribute("y2", 60);
 	line.setAttribute("style","stroke:black;stroke-width:2");
 	container.appendChild(line);
 
 	var room = document.createElementNS("http://www.w3.org/2000/svg", "text");
-	room.setAttribute("x", 310);
+	room.setAttribute("x", 364);
 	room.setAttribute("y", 30);
-	room.innerHTML = "313";
+	room.innerHTML = "411";
 	room.setAttribute("fill", "blue");
 	room.setAttribute("font-size", "16px");
 	container.appendChild(room);
 
 	var roomBox = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 	roomBox.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
-	roomBox.setAttribute("x", 297)
+	roomBox.setAttribute("x", 350)
 	roomBox.setAttribute("y", 10)
 	roomBox.setAttribute("rx", 5)
 	roomBox.setAttribute("ry", 5)
@@ -47,24 +61,24 @@ var drawMap = function() {
 
 	
 	var line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-	line1.setAttribute("x1", 290);
+	line1.setAttribute("x1", 340);
 	line1.setAttribute("y1", 60);
-	line1.setAttribute("x2", 440);
+	line1.setAttribute("x2", 480);
 	line1.setAttribute("y2", 60);
 	line1.setAttribute("style","stroke:black;stroke-width:2");
 	container.appendChild(line1);
 	
 	var room1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
-	room1.setAttribute("x", 380);
+	room1.setAttribute("x", 430);
 	room1.setAttribute("y", 30);
-	room1.innerHTML = "315";
+	room1.innerHTML = "413";
 	room1.setAttribute("fill", "blue");
 	room1.setAttribute("font-size", "16px");
 	container.appendChild(room1);
 
 	var roomBox1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 	roomBox1.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
-	roomBox1.setAttribute("x", 370)
+	roomBox1.setAttribute("x", 420)
 	roomBox1.setAttribute("y", 10)
 	roomBox1.setAttribute("rx", 5)
 	roomBox1.setAttribute("ry", 5)
@@ -74,16 +88,12 @@ var drawMap = function() {
 
 	
 	var line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-	line2.setAttribute("x1", 440);
+	line2.setAttribute("x1", 480);
 	line2.setAttribute("y1", 60);
-	line2.setAttribute("x2", 440);
+	line2.setAttribute("x2", 480);
 	line2.setAttribute("y2", 0);
 	line2.setAttribute("style","stroke:black;stroke-width:2");
 	container.appendChild(line2);
-
-
-
-
 
 	//two boxy things
 	var escalator = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -104,12 +114,31 @@ var drawMap = function() {
 
 
 
+	//404
+	var room2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	room2.setAttribute("x", 10);
+	room2.setAttribute("y", 50);
+	room2.innerHTML = "404";
+	room2.setAttribute("fill", "blue");
+	room2.setAttribute("font-size", "16px");
+	container.appendChild(room2);
+
+	var roomBox2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	roomBox2.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
+	roomBox2.setAttribute("x", 1)
+	roomBox2.setAttribute("y", 27)
+	roomBox2.setAttribute("rx", 5)
+	roomBox2.setAttribute("ry", 5)
+	roomBox2.setAttribute("width", 50);
+	roomBox2.setAttribute("height", 40);
+	container.appendChild(roomBox2);
+
 
 	//403
 	var room3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	room3.setAttribute("x", 66);
 	room3.setAttribute("y", 20);
-	room3.innerHTML = "303";
+	room3.innerHTML = "403";
 	room3.setAttribute("fill", "blue");
 	room3.setAttribute("font-size", "16px");
 	container.appendChild(room3);
@@ -129,7 +158,7 @@ var drawMap = function() {
 	var room4 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	room4.setAttribute("x", 119);
 	room4.setAttribute("y", 20);
-	room4.innerHTML = "305";
+	room4.innerHTML = "405";
 	room4.setAttribute("fill", "blue");
 	room4.setAttribute("font-size", "16px");
 	container.appendChild(room4);
@@ -145,12 +174,30 @@ var drawMap = function() {
 	container.appendChild(roomBox4);
 
 
+	//407
+	var room5 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	room5.setAttribute("x", 177);
+	room5.setAttribute("y", 20);
+	room5.innerHTML = "407";
+	room5.setAttribute("fill", "blue");
+	room5.setAttribute("font-size", "16px");
+	container.appendChild(room5);
+
+	var roomBox5 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	roomBox5.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
+	roomBox5.setAttribute("x", 167)
+	roomBox5.setAttribute("y", 1)
+	roomBox5.setAttribute("rx", 5)
+	roomBox5.setAttribute("ry", 5)
+	roomBox5.setAttribute("width", 50);
+	roomBox5.setAttribute("height", 40);
+	container.appendChild(roomBox5);
 
 	//440
 	var room6 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	room6.setAttribute("x", 539);
 	room6.setAttribute("y", 95);
-	room6.innerHTML = "Photo Room";
+	room6.innerHTML = "440";
 	room6.setAttribute("fill", "blue");
 	room6.setAttribute("font-size", "16px");
 	container.appendChild(room6);
@@ -161,15 +208,15 @@ var drawMap = function() {
 	roomBox6.setAttribute("y", 68)
 	roomBox6.setAttribute("rx", 5)
 	roomBox6.setAttribute("ry", 5)
-	roomBox6.setAttribute("width", 105);
+	roomBox6.setAttribute("width", 50);
 	roomBox6.setAttribute("height", 40);
 	container.appendChild(roomBox6);
 
 	//loop for the others
-	var starter = 325;
-	var xS = 450;
-	var xT = 445;
-	for (i = 0; i < 8; i++) {
+	var starter = 427;
+	var xS = 500;
+	var xT = 485;
+	for (i = 0; i < 7; i++) {
 		var room5 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 		room5.setAttribute("x", xS );
 		room5.setAttribute("y", 25);
@@ -185,18 +232,18 @@ var drawMap = function() {
 		roomBox3.setAttribute("y", 5)
 		roomBox3.setAttribute("rx", 5)
 		roomBox3.setAttribute("ry", 5)
-		roomBox3.setAttribute("width", 45);
+		roomBox3.setAttribute("width", 48);
 		roomBox3.setAttribute("height", 40);
 		container.appendChild(roomBox3);
-		xS += 51;
-		xT += 51;
+		xS += 50;
+		xT += 52;
 	}
 
 	//450
 	var room7 = document.createElementNS("http://www.w3.org/2000/svg", "text");
 	room7.setAttribute("x", 565);
 	room7.setAttribute("y", 330);
-	room7.innerHTML = "351";
+	room7.innerHTML = "450";
 	room7.setAttribute("fill", "blue");
 	room7.setAttribute("font-size", "16px");
 	container.appendChild(room7);
@@ -211,26 +258,44 @@ var drawMap = function() {
 	roomBox7.setAttribute("height", 40);
 	container.appendChild(roomBox7);
 
-	//ATRIUM SIGN
-	var atrium = document.createElementNS("http://www.w3.org/2000/svg", "text");
-	atrium.setAttribute("x", 95);
-	atrium.setAttribute("y", 300);
-	atrium.innerHTML = "Atrium 	&#8711;";
-	atrium.setAttribute("fill", "blue");
-	atrium.setAttribute("font-size", "20px");
-	container.appendChild(atrium);
 
-	//GYM SIGN
-	var gym = document.createElementNS("http://www.w3.org/2000/svg", "text");
-	gym.setAttribute("x", 30);
-	gym.setAttribute("y", 255);
-	gym.innerHTML = "&#8826 Gym";
-	gym.setAttribute("fill", "blue");
-	gym.setAttribute("font-size", "20px");
-	container.appendChild(gym);
+	//451
+	var room8 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	room8.setAttribute("x", 645);
+	room8.setAttribute("y", 330);
+	room8.innerHTML = "451";
+	room8.setAttribute("fill", "blue");
+	room8.setAttribute("font-size", "16px");
+	container.appendChild(room8);
 
+	var roomBox8 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	roomBox8.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
+	roomBox8.setAttribute("x", 638)
+	roomBox8.setAttribute("y", 305)
+	roomBox8.setAttribute("rx", 5)
+	roomBox8.setAttribute("ry", 5)
+	roomBox8.setAttribute("width", 50);
+	roomBox8.setAttribute("height", 40);
+	container.appendChild(roomBox8);
 
+	//453
+	var room9 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+	room9.setAttribute("x", 705);
+	room9.setAttribute("y", 330);
+	room9.innerHTML = "453";
+	room9.setAttribute("fill", "blue");
+	room9.setAttribute("font-size", "16px");
+	container.appendChild(room9);
 
+	var roomBox9 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	roomBox9.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
+	roomBox9.setAttribute("x", 695)
+	roomBox9.setAttribute("y", 305)
+	roomBox9.setAttribute("rx", 5)
+	roomBox9.setAttribute("ry", 5)
+	roomBox9.setAttribute("width", 50);
+	roomBox9.setAttribute("height", 40);
+	container.appendChild(roomBox9);
 }
 
 

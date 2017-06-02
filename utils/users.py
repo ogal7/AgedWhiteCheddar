@@ -125,8 +125,8 @@ def storeCode(email, isAdmin):
     sp.execute(insert)
     db.commit()
     db.close()
-    approve.sendEmail(email)
-
+    sendEmail(email, code)
+    
 def generateCode(isAdmin):
     return str(int(random.random()*10000)) + str(isAdmin)
 
