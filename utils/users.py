@@ -44,6 +44,18 @@ def checkLogin(usern, pw):
         db.close()
             
         return True
+    
+def changePassword(usern,pw) 
+    hashed = hash(pw)
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    sp = db.cursor()
+    s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(pw,usern)
+    sp.execute(s)
+    db.commit()
+    db.close()
+    
+
 
 '''
 If true is returned, that means that the user
