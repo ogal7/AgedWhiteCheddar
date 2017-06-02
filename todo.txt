@@ -8,3 +8,4 @@ CHECK-add polazzo's account and link approval function to account
 -allow dates in calendar in next month [back end]
 -admin(both polazzo + teachers): block rooms
 -change password function (settings)
+- color blocked and reserved rooms red in Map (js)
