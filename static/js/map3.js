@@ -9,8 +9,9 @@ var link = window.location['href']
 console.log(link);
 
 var apple = link.split("/")
+console.log(apple);
 var date = apple[apple.length-2];
-console.log(date)
+
 
 var actionLink =  "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);

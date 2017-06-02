@@ -1,1 +1,0 @@
-unreserveButtons = document.getElementsByTagName('button');

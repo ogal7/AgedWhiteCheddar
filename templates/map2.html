@@ -20,8 +20,7 @@
 <center>
 	<br> 
 	<h6> Click A Room to Reserve It! </h6>
-	{% set form_action = "/reserve/" + date + "/" %}
-	<div id="roomButtons"> <form action="{{form_action}}" id="whichRoom" methods="POST">
+	<div id="roomButtons"> <form id="whichRoom" method="get">
 	<button type="submit" name="room" value="229" class="success button">229</button>
 	<button type="submit" name="room" value="231" class="success button">231</button>
 	<button type="submit" name="room" value="233" class="success button">233</button>

@@ -1,24 +1,39 @@
-{% extends "base.html %}
+{% extends "base.html" %}
+
+{% block style %}
+label {
+  font-size:16px;
+}
+{% endblock %}
 
 
 {% block body %}
 
+<br>
+<center>
+  <h5> Add a Club </h5>
+</center>
 
-<h5> Add a Club </h5>
 <div class="callout">
-	<form>
-		<div class="row">
-          <div class="medium-6 columns">
-            <label>Club Email
-              <input type="email" name="email" placeholder="Enter club email..." required>
-            </label>
-            <label>Admin Level (choose 1 or 2)
-              <input type="email" name="email" placeholder="Enter club email..." required>
-            </label>
-          </div>
-          
-          <button type="submit" name="enter" class="button" value="add">Add</button>
-	</form>
+  <form action="/approve/" method="POST">
+    <div class="row">
+        <label> <center> Club Email
+          <input type="email" name="clubEmail" placeholder="Enter club email..." required>
+        <center> </label>
+    </div>
+      <div class="row">
+        <br>
+        <label><center> Choose an Admin Level</label><br><br>
+
+          <input type="radio" name="admin_level" value="0" id="x"><label for="x">0 (for students and clubs)</label>
+          <input type="radio" name="admin_level" value="1" id="y"><label for="y">1 (for teachers and other administrators)</label>   
+          </center>
+      </div>
+    <center>
+      <button type="submit" name="enter" class="button" value="add">Add</button>
+    </center>
+  </form>
 </div>
+
 
 {% endblock %}

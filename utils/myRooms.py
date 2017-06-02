@@ -6,7 +6,7 @@ def getRooms(club, date):
 	db = sqlite3.connect(f)
 	og = db.cursor()
 
-	request = "SELECT * from rooms"+date+" WHERE clubName == '%s';" %(club)
+	request = "SELECT * from rooms WHERE club == '%s';" %(club)
     	info = og.execute(request)
     	li=[]
     	for thing in info:

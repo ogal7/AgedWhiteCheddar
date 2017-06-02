@@ -34,6 +34,12 @@ def auth():
     if formMethod == "login":
         if users.checkLogin(username, password):
             session['user'] = username
+            adminLevel = users.getAdminLevel(username)[-1]
+            if adminLevel == '2':
+                print "UGHHH"
+                session['master'] = "true"
+            if adminLevel == '1':
+                session['admin'] = "true"
             return redirect(url_for("homepage"))
         else:
             flash("Login failed. Username not recognized or password is incorrect.")
@@ -56,6 +62,13 @@ def auth():
                 #print "admin"
                 users.createAccount(username,password,code)
                 session['user']= username
+                adminLevel = users.getAdminLevel(username)[-1]
+                if adminLevel == '2':
+                    session['master'] = "true"
+                    print "a"
+                if adminLevel == '1':
+                    session['admin'] = "true"
+                    print "b"
                 return redirect(url_for('homepage')) # admins dont need additional info
         else:
             flash("Register failed. Email not approved yet.")
@@ -91,12 +104,22 @@ def enter_club_info():
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
     if 'user' not in session:
+        print "ugh"
         return redirect(url_for("main"))
     
     if 'user' in session and not users.signup_completed(session['user']):
+        print "hi"
         return redirect(url_for("enter_club_info"))
 
-    return render_template("homepage.html")
+    if 'master' in session:
+        print "matt"
+        message = '/addClub/'
+        message2 = 'Add a Club'
+    else:
+        message = ""
+        message2=""
+
+    return render_template("homepage.html", message=message, message2=message2)
 
 @app.route("/roomSched/")
 def schedule():
@@ -158,7 +181,7 @@ def my_rooms():
     else:
         return redirect(url_for("main"))
 
-@app.route("/reserve/<date>/", methods=["POST"])
+@app.route("/reserve/<date>/", methods=["GET"])
 def reserveR(date):
     if 'user' not in session:
         return redirect(url_for("main"))
@@ -175,15 +198,23 @@ def reserveR(date):
     reserve.reserve_room(room, d2 ,session['user'])
     return redirect(url_for("my_rooms"))
 
+@app.route("/addClub/")
+def addClubz():
+    return render_template("codes.html")
+
 @app.route('/approve/', methods=["POST"])
 def approve_clubs():
     if 'admin_level' in request.form and 'clubEmail' in request.form:
-        storeCode(request.form['clubEmail'], request.form['admin_level']
+        users.storeCode(request.form['clubEmail'], request.form['admin_level'])
+        print "yes"
+    else:
+        return redirect(url_for('addClubz'))
+
     return redirect(url_for('homepage'))
 
 @app.route('/settings/')
 def settings():
-
+    pass
 # =====================
 # log out
 # =====================
