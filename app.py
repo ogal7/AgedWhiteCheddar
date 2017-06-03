@@ -267,7 +267,7 @@ def approve_clubs():
 
 @app.route('/settings/')
 def settings():
-    pass
+    return render_template("settings.html")
 # =====================
 # log out
 # =====================
