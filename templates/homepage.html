@@ -126,6 +126,13 @@ color: #D63E3E;
        <tr id = "5thWeek"> </tr> 
      </table> -->
      <br>
+<center>
+{% with message = get_flashed_messages() %}
+    {% if message %}
+    <p style="font-size:20px;">{{ message[0] }}</p>
+    {% endif %}
+    {% endwith %}
+</center>
 <h5><center> {{action}} </h5> </center>
 <br>
 <center>

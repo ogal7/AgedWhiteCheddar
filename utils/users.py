@@ -45,12 +45,12 @@ def checkLogin(usern, pw):
             
         return True
     
-def changePassword(usern,pw) 
+def changePassword(usern,pw):
     hashed = hash(pw)
     f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
-    s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(pw,usern)
+    s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(hashed,usern)
     sp.execute(s)
     db.commit()
     db.close()
@@ -112,20 +112,20 @@ To be used by the person in charge of the room reservation
 website so that clubs can create accounts.
 '''
 def storeCode(email, isAdmin):
-    f = "data/data.db"
-    db = sqlite3.connect(f)
+	if emailUsed(email):
+		return "email already approved"
+	f = "data/data.db"
+	db = sqlite3.connect(f)
+	sp = db.cursor()
+	code = generateCode(isAdmin)
+	while codeUsed(code):
+		code = generateCode(isAdmin)
 
-    sp = db.cursor()
-    code = generateCode(isAdmin)
-
-    while codeUsed(code):
-        code = generateCode(isAdmin)
-
-    insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
-    sp.execute(insert)
-    db.commit()
-    db.close()
-    sendEmail(email, code)
+	insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
+	sp.execute(insert)
+	db.commit()
+	db.close()
+	sendEmail(email, code)
     
 def generateCode(isAdmin):
     return str(int(random.random()*10000)) + str(isAdmin)
@@ -166,6 +166,25 @@ def codeUsed(code):
 
     for usedCode in codes:
         if usedCode[0] == code:
+            db.commit()
+            db.close()
+            
+            return True
+
+    db.commit()
+    db.close()
+    return False 
+
+def emailUsed(email):
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    gt = db.cursor()
+
+    request = "SELECT email FROM codes;"
+    codes = gt.execute(request).fetchall()
+
+    for usedEmail in codes:
+        if usedEmail[0] == email:
             db.commit()
             db.close()
             

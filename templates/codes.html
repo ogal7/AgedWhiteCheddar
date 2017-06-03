@@ -9,8 +9,14 @@ label {
 
 {% block body %}
 
+
 <br>
 <center>
+{% with message = get_flashed_messages() %}
+    {% if message %}
+    <p style="font-size:15px;">{{ message[0] }}</p>
+    {% endif %}
+    {% endwith %}
   <h5> Add a Club </h5>
 </center>
 

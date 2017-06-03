@@ -10,7 +10,7 @@ def sendEmail(clubuser, code):
 	msg['To'] = clubuser
 	msg['Subject'] = "Your Club is Approved"
  
-	body = "Congratulations, your club has been approvved use the code:" + code + "To register your club"
+	body = "Congratulations, your club has been approved use the code:" + code + " To register your club"
 	msg.attach(MIMEText(body, 'plain'))
  
 	server = smtplib.SMTP('smtp.gmail.com',587)

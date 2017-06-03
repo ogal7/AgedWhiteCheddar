@@ -208,11 +208,7 @@ def my_rooms():
         user = session['user']
         date= (time.strftime("%d/%m/%Y"))
         #print date
-        data = myRooms.getRooms(user, date[6:])
-        #for li in data:
-        #    li[1] = li[1][:2] + "/" + li[1][2:4] + "/" + li[1][4:]
-            #print li[1]
-
+        data = myRooms.getRooms(user)
         return render_template("myRooms.html", message=data, user=session['user'])
     else:
         return redirect(url_for("main"))
@@ -231,8 +227,11 @@ def reserveR(date):
         d2 += str(i).zfill(2)
 
     room = request.args['room']
-    reserve.reserve_room(room, d2 ,session['user'])
-    return redirect(url_for("my_rooms"))
+    if (reserve.reserve_room(room, d2 ,session['user'])):
+        flash('Room Sucessfully Reserved')
+        return redirect(url_for("my_rooms"))
+    flash("Unable to Reserve Room. Please Make Another Selection")
+    return redirect(url_for('main'))
 
 @app.route("/addClub/")
 def addClubz():
@@ -242,8 +241,10 @@ def addClubz():
 def approve_clubs():
     if 'admin_level' in request.form and 'clubEmail' in request.form:
         users.storeCode(request.form['clubEmail'], request.form['admin_level'])
-        print "yes"
+        flash('User Approved!')
+        return redirect(url_for('addClubz'))
     else:
+        flash("Unable to Approve User")
         return redirect(url_for('addClubz'))
 
 @app.route('/settings/')
