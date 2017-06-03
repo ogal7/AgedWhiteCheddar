@@ -265,8 +265,23 @@ def approve_clubs():
         flash("Unable to Approve User")
         return redirect(url_for('addClubz'))
 
-@app.route('/settings/')
+@app.route('/settings/', methods = ['GET',"POST"])
 def settings():
+    return render_template("settings.html")
+
+@app.route('/change/', methods = ["POST"])
+def change():
+    loginResponse = request.form
+    old =  users.hashp(request.form['oldpass'])
+    new = request.form['newpass']
+    conf = request.form['confpass']
+    print users.getPass(session['user'])[0]
+    print old
+    print new
+    print conf
+    if users.getPass(session['user'])[0] == old and new == conf:
+        users.changePassword(session['user'],new)
+        return redirect(url_for("main"))
     return render_template("settings.html")
 # =====================
 # log out

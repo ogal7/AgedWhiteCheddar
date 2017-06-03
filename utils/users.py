@@ -44,9 +44,18 @@ def checkLogin(usern, pw):
         db.close()
             
         return True
+
+def getPass(usern):
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    sp = db.cursor()
+
+    s = "SELECT pw FROM users WHERE usern = '%s' "%(usern)
+    t = sp.execute(s).fetchone()
+    return t
     
 def changePassword(usern,pw):
-    hashed = hash(pw)
+    hashed = hashp(pw)
     f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
