@@ -150,10 +150,8 @@ def daySchedule(date):
         return redirect(url_for("enter_club_info"))
 
     d2 = date.split("-")
-    date1 = ""
-    for i in d2:
-        date1+=i
-    data = dayRooms.getRooms(date1)
+    data = room.getInfoDate(str(int(d2[0]) + 1),d2[1],d2[2])
+    print data
     return render_template("dayRooms.html", message=data)
 
 
@@ -283,6 +281,11 @@ def change():
         users.changePassword(session['user'],new)
         return redirect(url_for("main"))
     return render_template("settings.html")
+
+@app.route('/archive/')
+def seeRooms():
+    return render_template('seeRoom.html', message = room.getInfoYear('2017'))
+
 # =====================
 # log out
 # =====================
