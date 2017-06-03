@@ -233,6 +233,24 @@ def reserveR(date):
     flash("Unable to Reserve Room. Please Make Another Selection")
     return redirect(url_for('main'))
 
+@app.route("/block/<date>/", methods=["GET"])
+def blockR(date):
+    if 'user' not in session:
+        return redirect(url_for("main"))
+
+    if 'user' in session and not users.signup_completed(session['user']):
+        return redirect(url_for("enter_club_info"))
+
+    d = date.strip().split("-")
+    d2 = ""
+    for i in d:
+        d2 += str(i).zfill(2)
+
+    room = request.args['room']
+    reserve.block_room(room, d2)
+    flash('Room Blocked')
+    return redirect(url_for("main"))
+
 @app.route("/addClub/")
 def addClubz():
     return render_template("codes.html")
