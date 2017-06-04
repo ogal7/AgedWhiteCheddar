@@ -4,8 +4,8 @@
 // =======================================
 // DATE VARIABLE
 // =======================================
-var d = new Date();
-
+var d = new Date(2017, 5, 30);
+console.log(d);
 // =======================================
 // FUNCTIONS
 // =======================================
@@ -63,36 +63,6 @@ function weekdays() {
     return dayTags;
 }
 
-// function weekends(startDay, monthLength) {
-//     var weekendList = []
-//     if (startDay == 0){
-// 	var i = 1;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	    i += 6;
-// 	}
-// 	i = 8;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i)
-// 	    i+=6;
-// 	}
-// 	return weekendList; //list of days that are weekends
-//     }
-//     else {
-// 	var i = 7 - startDay;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	    i+=7;
-// 	}
-// 	var i = 8 - startDay;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	}
-// 	return weekendList;
-//     }
-// }
-
-
 function numDays(year, month) {
     var numTags = "";
     var firstDay = new Date(year, month, 1);
@@ -134,45 +104,49 @@ function manageDates(date, month, year) {
 
     $('.days li').each(function(){
 	if( month < 10) {
-        d1 = new Date(year, month, $(this).text(),);
-        //console.log(d1);
-        //console.log($(this).text() + " " + d1.getDay());
-        if (d1.getDay() != 0 && d1.getDay() != 6) { 
-	       $(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
-	       $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-    }
-    else {
-        d1 = new Date(year, month, $(this).text(),);
-        //console.log(d1);
-        //console.log($(this).text() + " " + d1.getDay());
-        if (d1.getDay() != 0 && d1.getDay() != 6) { 
-            $(this).html('<a class="open" href=' + month.toString() + "-" +
-            $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-    }
+            d1 = new Date(year, month, $(this).text(),);
+            //console.log(d1);
+            //console.log($(this).text() + " " + d1.getDay());
+            if (d1.getDay() != 0 && d1.getDay() != 6) { 
+		$(this).html('<a class="open" href=' + "0" + month.toString() + "-" +
+			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+            }
+	}
+	else {
+            d1 = new Date(year, month, $(this).text(),);
+            //console.log(d1);
+            //console.log($(this).text() + " " + d1.getDay());
+            if (d1.getDay() != 0 && d1.getDay() != 6) { 
+		$(this).html('<a class="open" href=' + month.toString() + "-" +
+			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+            }
+	}
 	// implement 14 days or more and prevent from selecting weekends
+	var lastDate = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+	var diffDate = parseInt(lastDate.getDate()) - parseInt(d.getDate()) + 1;
+	console.log(diffDate);
 	
-	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10 ) {
-        d1 = new Date(year, month, $(this).text(),);
-        //console.log(d1);
-        //console.log($(this).text() + " " + d1.getDay());
-        if (d1.getDay() != 0 && d1.getDay() != 6) { 
-            console.log("ugh");
-	       $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }   
+	if ( (parseInt($(this).text()) == parseInt(d.getDate()) && parseInt(month) == parseInt(d.getMonth())) ||
+	    (parseInt($(this).text()) <= 14 - diffDate && parseInt(month) == parseInt(d.getMonth()) + 1) &&
+	    month < 10 ) {
+            d1 = new Date(year, month, $(this).text(),);
+            //console.log(d1);
+            //console.log($(this).text() + " " + d1.getDay());
+            if (d1.getDay() != 0 && d1.getDay() != 6) { 
+		console.log("ugh");
+		$(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+            }   
 	}
 
-    if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
-        console.log("hi");
-        d1 = new Date(year, month, $(this).text(),);
-        //console.log(d1);
-        //console.log($(this).text() + " " + d1.getDay());
-        if (d1.getDay() != 0 && d1.getDay() != 6) { 
-            $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }
-    }
-
+	if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
+            console.log("hi");
+            d1 = new Date(year, month, $(this).text(),);
+            //console.log(d1);
+            //console.log($(this).text() + " " + d1.getDay());
+            if (d1.getDay() != 0 && d1.getDay() != 6) { 
+		$(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
+            }
+	}
 
     });
 }
