@@ -4,7 +4,7 @@
 // =======================================
 // DATE VARIABLE
 // =======================================
-var d = new Date();
+var d = new Date(2017, 5, 27);
 
 // =======================================
 // FUNCTIONS
@@ -92,6 +92,11 @@ function weekdays() {
 //     }
 // }
 
+function daysInMonth(iMonth, iYear){
+    d3 = new Date(iYear, iMonth - 1, 32)
+    x = d3.getDate()
+    return 32 - x;
+}
 
 function numDays(year, month) {
     var numTags = "";
@@ -178,10 +183,38 @@ function manageDates(date, month, year) {
         }
     }
 
+    if (month > d.getMonth() || month < d.getMonth()) {
+        console.log(month)
+        console.log(d.getMonth())
+        if (month == d.getMonth() + 1) {
+            //console.log("spill")
+            //if this two week span goes into the next month
+            if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
+                
+                var daysIntoNewMonth = 14 - (daysInMonth(d.getMonth()) - 14);
+                //console.log($(this).text())
+                console.log(daysInMonth)
+                if (parseInt($(this).text()) <= daysIntoNewMonth) {
+                    console.log("ugh")
+                    $(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
+                    ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+                }
+                else {
+                    $(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
+                }
+            }
+        }
+        else {
+           $(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
+        }
+    }
+
+
 
     });
-}
 
+
+    }
 // =======================================
 // ON DOCUMENT READY
 // =======================================

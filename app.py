@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response, flash
 import hashlib
 import time
-from utils import users, club, room, reserve, myRooms, dayRooms
+from utils import users, club, room, reserve, myRooms
 import os
 
 app = Flask(__name__)
