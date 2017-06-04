@@ -4,7 +4,7 @@
 // =======================================
 // DATE VARIABLE
 // =======================================
-var d = new Date(2017, 5, 27);
+var d = new Date();
 
 // =======================================
 // FUNCTIONS
@@ -189,11 +189,12 @@ function manageDates(date, month, year) {
         if (month == d.getMonth() + 1) {
             //console.log("spill")
             //if this two week span goes into the next month
+            //onsole.log(daysInMonth(year, d.getMonth()))
             if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
                 
-                var daysIntoNewMonth = 14 - (daysInMonth(d.getMonth()) - 14);
-                //console.log($(this).text())
-                console.log(daysInMonth)
+                var daysIntoNewMonth = 14 - (daysInMonth(year, d.getMonth()) - d.getDate());
+                console.log($(this).text())
+                console.log("days into new month" + daysIntoNewMonth)
                 if (parseInt($(this).text()) <= daysIntoNewMonth) {
                     console.log("ugh")
                     $(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
