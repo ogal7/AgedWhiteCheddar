@@ -1,11 +1,11 @@
 CHECK-unreserve rooms [front end]
 CHECK-prevent users from reserving rooms that have already have been reserved [back-end]
 CHECK-add polazzo's account and link approval function to account
+CHECK- Title homepage to indicate that it's for reservations (for students)
+CHECK- Title admin homepage with Blocks + reservations
+CHECK-change password function (settings)
 
-- Title homepage to indicate that it's for reservations (for students)
-- Title admin homepage with Blocks + reservations
 - add buttons/form for blocks on admin floor pages
--allow dates in calendar in next month [back end]
--admin(both polazzo + teachers): block rooms
--change password function (settings)
+- allow dates in calendar in next month [back end]
+- admin(both polazzo + teachers): block rooms
 - color blocked and reserved rooms red in Map (js)

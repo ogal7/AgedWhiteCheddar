@@ -117,10 +117,11 @@
                     <a href="/archive/">Archive</a>
                 </li>
                 <li class="abc">
-                    {% block head %}
-                    <a href='{{message}}'>{{message2}}</a>
-                    <!--Where Admin Button link will go -->
-                    {% endblock %}
+                  {% block head %}
+		  {% if session.master %}
+                  <a href='/addClub/'>Add a Club</a>
+		  {% endif %}
+                  {% endblock %}
                 </li>
 		{% endif %}
 

@@ -29,17 +29,22 @@ def auth():
     username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
-    print "Form method: " + formMethod
+    # print "Form method: " + formMethod
 
     if formMethod == "login":
         if users.checkLogin(username, password):
             session['user'] = username
             adminLevel = users.getAdminLevel(username)[-1]
             if adminLevel == '2':
-                print "UGHHH"
-                session['master'] = "true"
-            if adminLevel == '1':
-                session['admin'] = "true"
+                session['master'] = True
+            elif adminLevel == '1':
+                session['admin'] = True
+            else:
+                if 'master' in session:
+                    session.pop("master")
+                if 'admin' in session:
+                    session.pop("admin")
+
             return redirect(url_for("homepage"))
         else:
             flash("Login failed. Username not recognized or password is incorrect.")
@@ -51,24 +56,27 @@ def auth():
             flash("Please confirm passwords match.")
             return redirect(url_for("main"))
 
-        # users.checkRegister(username, code): # code/email match is valid
         if users.validCred(username,code):
             if users.isStudent(code):
-                #print "student"
                 users.createAccount(username, password, code)
                 session['user'] = username
                 return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
             else:
-                #print "admin"
                 users.createAccount(username,password,code)
                 session['user']= username
                 adminLevel = users.getAdminLevel(username)[-1]
                 if adminLevel == '2':
-                    session['master'] = "true"
-                    print "a"
-                if adminLevel == '1':
-                    session['admin'] = "true"
-                    print "b"
+                    session['master'] = True
+                    print "Admin level: 2"
+                elif adminLevel == '1':
+                    session['admin'] = True
+                    print "Admin level: 1"
+                else:
+                    if 'master' in session:
+                        session.pop("master")
+                    if 'admin' in session:
+                        session.pop("admin")
+
                 return redirect(url_for('homepage')) # admins dont need additional info
         else:
             flash("Register failed. Email not approved yet.")
@@ -89,7 +97,6 @@ def enter_club_info():
 
     response = request.form
     if 'clubName' in response and 'adName' in response and 'adEmail' in response:
-        print "ok"
         clubName = response['clubName']
         adName = response['adName']
         adEmail = response['adEmail']
@@ -104,30 +111,21 @@ def enter_club_info():
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
     if 'user' not in session:
-        print "ugh"
         return redirect(url_for("main"))
 
     if 'user' in session and not users.signup_completed(session['user']):
-        print "hi"
         return redirect(url_for("enter_club_info"))
 
     if 'master' in session:
-        print "matt"
-        message = '/addClub/'
-        message2 = 'Add a Club'
         action="Click a Date to Block or Reserve a Room"
 
     if 'admin' in session:
-        message=""
-        message2=""
-        action="Click a Date to Block or Reserve a Room"
-    
+        action = "Click a Date to Block or Reserve a Room"
+
     if 'admin' not in session and 'master' not in session:
-        message = ""
-        message2=""
         action ="Click a Date to Reserve a Room"
 
-    return render_template("homepage.html", message=message, message2=message2, action=action)
+    return render_template("homepage.html", action = action)
 
 @app.route("/roomSched/")
 def schedule():
@@ -293,6 +291,10 @@ def seeRooms():
 def logout():
     if 'user' in session:
         session.pop("user")
+    if 'master' in session:
+        session.pop("master")
+    if 'admin' in session:
+        session.pop("admin")
     return redirect(url_for("main"))
 
 # =====================
