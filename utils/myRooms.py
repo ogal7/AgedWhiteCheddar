@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def getRooms(club):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
@@ -16,7 +15,7 @@ def getRooms(club):
                 #print thing[2]
                 #print thing[3]
                 #print thing[4]
-            
+
 
     	db.close()
     	return li

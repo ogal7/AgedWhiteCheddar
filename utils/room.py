@@ -4,7 +4,6 @@ import os
 import time
 import collections
 
-
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getMonthName(num):
@@ -52,12 +51,12 @@ def getInfoRangeYear(year1,year2):
         dic[str(yr1)] = getInfoYear(str(yr1))
         yr1 = yr1 + 1
     dic[year2] = getInfoYear(year2)
-    return dic 
-    
+    return dic
+
 '''def getInfoRange(start, end):
     info=[]
     startN=int(start[
-   ''' 
+   '''
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoRoom(room):
@@ -68,7 +67,7 @@ def getInfoRoom(room):
     date = (time.strftime("%d%m%Y"))
     request="SELECT * from rooms WHERE day = ? and month = ? and year = ? and room = ?;"
     info=og.execute(request, (int(date[2:4]), int(date[:2]), int(date[4:]), room))
-    
+
     de()
     l=[]
     for thing in info:

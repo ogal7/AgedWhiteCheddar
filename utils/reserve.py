@@ -47,7 +47,19 @@ def block_room(room, date):
     c.execute(kick_out_reserved, (room, int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
 
     block_reservation = "INSERT INTO rooms (room, club, month, day, year) VALUES(?, ?, ?, ?, ?) "
-    c.execute(block_reservation, (room, "N/A", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
+    c.execute(block_reservation, (room, "Blocked", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
+
+    c.close()
+    db.commit()
+    db.close()
+
+def unblock_room(room, date);
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    unblock_reservation = "DELETE FROM rooms WHERE room = ? AND month = ? AND day = ? AND year = ?"
+    c.execute(block_reservation, (room, "Blocked", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
 
     c.close()
     db.commit()
