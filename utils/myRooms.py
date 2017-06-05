@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 def getRooms(club):
 	f = "data/data.db"
@@ -24,15 +25,16 @@ def getBlockedRooms():
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	og = db.cursor()
+        date = time.strftime("%d%m%Y")
+        club = "N/A"
+        request = "SELECT * from rooms WHERE club = ? and year >= ?"
+        info = og.execute(request, (club,date[4:]))
 
-        club = "Blocked"
-	request = "SELECT * from rooms WHERE club = ?"
-    	info = og.execute(request, (club,))
+        blocked_rooms = []
+        for room in info:
+            # print room
+            if room[2]>=int(date[:2]) or (room[4]>int(date[4:]) and room[2]<int(date[:2])):
+                blocked_rooms.append([room[0],room[1],room[2], room[3], room[4]])
 
-    	blocked_rooms = []
-    	for room in info:
-                # print room
-       		blocked_rooms.append([room[0],room[1],room[2], room[3], room[4]])
-
-    	db.close()
-    	return blocked_rooms
+        db.close()
+        return blocked_rooms
