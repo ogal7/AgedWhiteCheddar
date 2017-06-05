@@ -131,8 +131,7 @@ function displayDays(year, month) {
     $('.days').append(numDays(year, month));
 }
 
-function withinTwoWeeks(year, month, date) {
-    var d2 = new Date(year, month, date);
+function withinTwoWeeks(d2) {
     var diff = d2.getTime() - d.getTime();
     var diffDays = diff / (1000 * 60 * 60 * 24);
 
@@ -148,8 +147,9 @@ function manageDates(month, year) {
 	
 	var monthPadding = "";
 	var datePadding = "";
-	
-	if ( withinTwoWeeks(year, month, $(this).text())) {
+
+	var d2 = new Date(year, month, $(this).text());
+	if ( withinTwoWeeks(d2)) {
 	    if (month < 10) {
 		monthPadding = "0";
 	    }
@@ -157,8 +157,14 @@ function manageDates(month, year) {
             if (parseInt($(this).text()) < 10) {
 		datePadding = "0";
             }
-	    $(this).html('<a class="open" href=' + monthPadding + month.toString() + "-" + datePadding +
-			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
+
+	    if (parseInt(d2.getDay()) == 0 || parseInt(d2.getDay()) == 6) {
+		$(this).html('<p class="closed" href=' + monthPadding + month.toString() + "-" + datePadding +
+			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</p> </font>\n');
+	    } else {
+		$(this).html('<a class="open" href=' + monthPadding + month.toString() + "-" + datePadding +
+			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
+	    }
 	}
 	
 	// HIGHLIGHT CURRENT DATE
