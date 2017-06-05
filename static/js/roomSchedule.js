@@ -4,8 +4,8 @@
 // =======================================
 // DATE VARIABLE
 // =======================================
-var d = new Date(2017, 5, 30);
-console.log(d);
+var d = new Date();
+
 // =======================================
 // FUNCTIONS
 // =======================================
@@ -121,14 +121,8 @@ function manageDates(date, month, year) {
 			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
             }
 	}
-	// implement 14 days or more and prevent from selecting weekends
-	var lastDate = new Date(d.getFullYear(), d.getMonth() + 1, 0);
-	var diffDate = parseInt(lastDate.getDate()) - parseInt(d.getDate()) + 1;
-	console.log(diffDate);
 	
-	if ( (parseInt($(this).text()) == parseInt(d.getDate()) && parseInt(month) == parseInt(d.getMonth())) ||
-	    (parseInt($(this).text()) <= 14 - diffDate && parseInt(month) == parseInt(d.getMonth()) + 1) &&
-	    month < 10 ) {
+	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10) {
             d1 = new Date(year, month, $(this).text(),);
             //console.log(d1);
             //console.log($(this).text() + " " + d1.getDay());
