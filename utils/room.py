@@ -22,6 +22,15 @@ def getInfoMonth(month, year):
     db.close()
     return l
 
+def getInfoYear(year):
+    l = []
+    for i in range(1,13):
+        l.append(getInfoMonth(i,year))
+    dic = collections.OrderedDict()
+    for i in range(1,13):
+        dic[getMonthName(i)] = l[i-1]
+    return dic
+
 def getInfoDate(month,day, year):
     f = "data/data.db"
     db = sqlite3.connect(f)
@@ -34,14 +43,6 @@ def getInfoDate(month,day, year):
             l.append(entry)
     db.close()
     return l
-def getInfoYear(year):
-    l = []
-    for i in range(1,13):
-        l.append(getInfoMonth(i,year))
-    dic = collections.OrderedDict()
-    for i in range(1,13):
-        dic[getMonthName(i)] = l[i-1]
-    return dic
 
 def getInfoRangeYear(year1,year2):
     dic = collections.OrderedDict()

@@ -19,3 +19,20 @@ def getRooms(club):
 
     	db.close()
     	return li
+
+def getBlockedRooms():
+	f = "data/data.db"
+	db = sqlite3.connect(f)
+	og = db.cursor()
+
+        club = "Blocked"
+	request = "SELECT * from rooms WHERE club = ?"
+    	info = og.execute(request, (club,))
+
+    	blocked_rooms = []
+    	for room in info:
+                # print room
+       		blocked_rooms.append([room[0],room[1],room[2], room[3], room[4]])
+
+    	db.close()
+    	return blocked_rooms
