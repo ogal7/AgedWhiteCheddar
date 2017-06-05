@@ -5,6 +5,7 @@
 // DATE VARIABLE
 // =======================================
 var d = new Date();
+d.setHours(0, 0, 0, 0);
 
 // =======================================
 // FUNCTIONS
@@ -92,11 +93,11 @@ function weekdays() {
 //     }
 // }
 
-function daysInMonth(iMonth, iYear){
-    d3 = new Date(iYear, iMonth - 1, 32)
-    x = d3.getDate()
-    return 32 - x;
-}
+// function daysInMonth(iMonth, iYear){
+//     d3 = new Date(iYear, iMonth - 1, 32)
+//     x = d3.getDate()
+//     return 32 - x;
+// }
 
 function numDays(year, month) {
     var numTags = "";
@@ -114,11 +115,7 @@ function numDays(year, month) {
 	}
     }
     for (i = 1; i <= daysInMonth; i++) {
-    	if (dayNum == 0 || dayNum == 6) {
-	    numTags += "<li class='closed'>" + i.toString() + "</li>\n "
-	} else {
-	    numTags += "<li>" + i.toString() + "</li>\n "
-	}
+	numTags += "<li>" + i.toString() + "</li>\n "
 	dayNum++;
 
 	if (dayNum == 7) {
@@ -134,88 +131,86 @@ function displayDays(year, month) {
     $('.days').append(numDays(year, month));
 }
 
-function manageDates(date, month, year) {
-    // var daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+function withinTwoWeeks(year, month, date) {
+    var d2 = new Date(year, month, date);
+    var diff = d2.getTime() - d.getTime();
+    var diffDays = diff / (1000 * 60 * 60 * 24);
+
+    return diffDays >= 0 && diffDays <= 13;
+}
+
+function manageDates(month, year) {
+    var curDate = d.getDate();
+    var curMonth = d.getMonth();
 
     $('.days li').each(function(){
-	if( parseInt($(this).text()) <= parseInt(date) + 14 &&
-	    parseInt($(this).text()) >= parseInt(date) && month >= 10 ) {
-
-        if (parseInt($(this).text()) < 10) {
-	    $(this).html('<a class="open" href=' + month.toString() + "-0" +
-			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-        else {
-        $(this).html('<a class="open" href=' + month.toString() + "-" +
-             $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-	}
-
-    if( parseInt($(this).text()) <= parseInt(date) + 14 &&
-        parseInt($(this).text()) >= parseInt(date) && month < 10) {
-        
-        if (parseInt($(this).text()) < 10) {
-        $(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
-             ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-        else {
-            $(this).html('<a class="open" href=' + '0' + month.toString() + "-" +
-             ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        }
-    }
-	// implement 14 days or more and prevent from selecting weekends
+	// DISPLAY ALL DATES FOR RESERVING ROOMS
 	
-	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10) {
-        if (parseInt(d.getDate()) < 10) {
-	       $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-0" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }
-        else {
-           $(this).html('<span class = "active"> <a href=' + "0" + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }
+	var monthPadding = "";
+	var datePadding = "";
+	
+	if ( withinTwoWeeks(year, month, $(this).text())) {
+	    if (month < 10) {
+		monthPadding = "0";
+	    }
+
+            if (parseInt($(this).text()) < 10) {
+		datePadding = "0";
+            }
+	    $(this).html('<a class="open" href=' + monthPadding + month.toString() + "-" + datePadding +
+			 $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
+	}
+	
+	// HIGHLIGHT CURRENT DATE
+
+	monthPadding = "";
+	datePadding = "";
+	
+	if ($(this).text() == curDate && month === curMonth) {
+	    if (month < 10) {
+		monthPadding = "0";
+	    }
+
+            if (parseInt($(this).text()) < 10) {
+		datePadding = "0";
+            }
+	    
+	    $(this).html('<span class = "active"> <a href=' + monthPadding + month.toString() + "-" + datePadding + $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </span>\n');
 	}
 
-    if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
-        if (parseInt(d.getDate()) < 10) {
-            $(this).html('<span class = "active"> <a href=' + month.toString() + "-0" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }
-        else {
-            $(this).html('<span class = "active"> <a href=' + month.toString() + "-" + date + "-" + year.toString() + '>' + date + '</a> </span>\n')
-        }
-    }
-
-    if (month > d.getMonth() || month < d.getMonth()) {
-        console.log(month)
-        console.log(d.getMonth())
-        if (month == d.getMonth() + 1) {
-            //console.log("spill")
-            //if this two week span goes into the next month
-            //onsole.log(daysInMonth(year, d.getMonth()))
-            if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
-                
-                var daysIntoNewMonth = 14 - (daysInMonth(year, d.getMonth()) - d.getDate());
-                console.log($(this).text())
-                console.log("days into new month" + daysIntoNewMonth)
-                if (parseInt($(this).text()) <= daysIntoNewMonth) {
-                    console.log("ugh")
-                    $(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
-                    ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-                }
-                else {
-                    $(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
-                }
-            }
-        }
-        else {
-           $(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
-        }
-    }
+	// if (month > d.getMonth() || month < d.getMonth()) {
+        //     console.log(month)
+        //     console.log(d.getMonth())
+        //     if (month == d.getMonth() + 1) {
+	// 	//console.log("spill")
+	// 	//if this two week span goes into the next month
+	// 	//onsole.log(daysInMonth(year, d.getMonth()))
+	// 	if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
+        
+        //             var daysIntoNewMonth = 14 - (daysInMonth(year, d.getMonth()) - d.getDate());
+        //             console.log($(this).text())
+        //             console.log("days into new month" + daysIntoNewMonth)
+        //             if (parseInt($(this).text()) <= daysIntoNewMonth) {
+	// 		console.log("ugh")
+	// 		$(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
+	// 			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
+        //             }
+        //             else {
+	// 		$(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
+        //             }
+	// 	}
+        //     }
+        //     else {
+	// 	$(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
+        //     }
+	// }
 
 
 
     });
 
 
-    }
+}
 // =======================================
 // ON DOCUMENT READY
 // =======================================
@@ -223,12 +218,11 @@ function manageDates(date, month, year) {
 $(document).ready(function(){
     var monthNum = parseInt(d.getMonth());
     var currentYear = parseInt(d.getFullYear());
-    var currentDate = parseInt(d.getDate());
     var currentMonth = getMonthName(monthNum);
     $('.m').html(currentMonth);
     $('.y').html(currentYear);
     displayDays(currentYear, monthNum);
-    manageDates(currentDate, monthNum, currentYear);
+    manageDates(monthNum, currentYear);
 
     $(".prev").on("click", function(){
     	console.log("what");
@@ -240,7 +234,7 @@ $(document).ready(function(){
     	    currentYear -= 1;
     	}
     	displayDays(currentYear, monthNum);
-    	manageDates(currentDate, monthNum, currentYear);
+    	manageDates(monthNum, currentYear);
     	currentMonth = getMonthName(monthNum);
     	$('.m').html(currentMonth);
     	$('.y').html(currentYear);
@@ -255,7 +249,7 @@ $(document).ready(function(){
     	    currentYear += 1;
     	}
     	displayDays(currentYear, monthNum);
-    	manageDates(currentDate, monthNum, currentYear);
+    	manageDates(monthNum, currentYear);
     	currentMonth = getMonthName(monthNum);
     	$('.m').html(currentMonth);
     	$('.y').html(currentYear);
