@@ -137,7 +137,7 @@ def schedule():
 
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
 
-    return render_template("roomSchedule.html")
+    return render_template("roomSchedule.html", action = "Rooms Previously or Currently Being Reserved")
 
 @app.route("/roomSched/<date>/")
 def daySchedule(date):
@@ -202,10 +202,9 @@ def unRes():
 def my_rooms():
     if 'user' in session:
         user = session['user']
-        date= (time.strftime("%d/%m/%Y"))
-        #print date
-        data = myRooms.getRooms(user)
-        return render_template("myRooms.html", message=data, user=session['user'])
+        data = myRooms.getRoomsNow(user)
+        data2 = myRooms.getPreviousRooms(user)
+        return render_template("myRooms.html", message = data, message2 = data2, user=session['user'])
     else:
         return redirect(url_for("main"))
 

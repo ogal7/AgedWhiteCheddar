@@ -1,22 +1,39 @@
 import sqlite3
 import time
+import datetime
 
-def getRooms(club):
+def getRoomsNow(club):
 	f = "data/data.db"
 	db = sqlite3.connect(f)
 	og = db.cursor()
 
-	request = "SELECT * from rooms WHERE club == '%s';" %(club)
-    	info = og.execute(request)
-    	li=[]
-    	for thing in info:
-       		li.append([thing[0],thing[1],thing[2], thing[3], thing[4]])
-                #print thing[0]
-                #print thing[1]
-                #print thing[2]
-                #print thing[3]
-                #print thing[4]
+	request = "SELECT * from rooms WHERE club = ?"
+    	info = og.execute(request, (club,))
+    	li = []
 
+        d = time.strftime("%d/%m/%Y").split("/")
+
+    	for rooms in info:
+                if datetime.date(int(d[2]), int(d[1]), int(d[0])) < datetime.date(rooms[4], rooms[3], rooms[2]):
+                        li.append([rooms[0], rooms[1], rooms[2], rooms[3], rooms[4]])
+
+    	db.close()
+    	return li
+
+def getPreviousRooms(club):
+	f = "data/data.db"
+	db = sqlite3.connect(f)
+	og = db.cursor()
+
+	request = "SELECT * from rooms WHERE club = ?"
+    	info = og.execute(request, (club,))
+    	li = []
+
+        d = time.strftime("%d/%m/%Y").split("/")
+
+    	for rooms in info:
+                if datetime.date(int(d[2]), int(d[1]), int(d[0])) >= datetime.date(rooms[4], rooms[3], rooms[2]):
+                        li.append([rooms[0], rooms[1], rooms[2], rooms[3], rooms[4]])
 
     	db.close()
     	return li

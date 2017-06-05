@@ -4,8 +4,9 @@ CHECK-add polazzo's account and link approval function to account
 CHECK- Title homepage to indicate that it's for reservations (for students)
 CHECK- Title admin homepage with Blocks + reservations
 CHECK-change password function (settings)
+CHECK- allow dates in calendar in next month [back end]
 
 - add buttons/form for blocks on admin floor pages
-- allow dates in calendar in next month [back end]
 - admin(both polazzo + teachers): block rooms
+- prevent from unblocking after date has passed
 - color blocked and reserved rooms red in Map (js)
