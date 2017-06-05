@@ -53,7 +53,7 @@ def block_room(room, date):
     db.commit()
     db.close()
 
-def unblock_room(room, date);
+def unblock_room(room, date):
     f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
