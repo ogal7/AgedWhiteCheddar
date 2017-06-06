@@ -144,8 +144,7 @@ def storeCode(email, isAdmin):
 
 	insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
 	sp.execute(insert)
-
-        sp.close()
+	sp.close()
 	db.commit()
 	db.close()
 
@@ -184,10 +183,10 @@ Checks if a code was used.
 def codeUsed(code):
     f = "data/data.db"
     db = sqlite3.connect(f)
-    gt = db.cursor()
+    sp = db.cursor()
 
     request = "SELECT code FROM codes;"
-    codes = gt.execute(request).fetchall()
+    codes = sp.execute(request).fetchall()
 
     for usedCode in codes:
         if usedCode[0] == code:
@@ -206,10 +205,10 @@ def codeUsed(code):
 def emailUsed(email):
     f = "data/data.db"
     db = sqlite3.connect(f)
-    gt = db.cursor()
+    sp = db.cursor()
 
     request = "SELECT email FROM codes;"
-    codes = gt.execute(request).fetchall()
+    codes = sp.execute(request).fetchall()
 
     for usedEmail in codes:
         if usedEmail[0] == email:
