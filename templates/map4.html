@@ -38,7 +38,9 @@
 	<button type="submit" name="room" value="440" class="success button">440</button>
 	<button type="submit" name="room" value="451" class="success button">451</button>
 	<button type="submit" name="room" value="453" class="success button">453</button>
-</div> </form>
+	</div> </form>
+	{% block roomblock %}
+	{% endblock %}
 </center>
 <br>
 {% endblock %}
@@ -48,5 +50,7 @@
 {% block bottom %}
 
 <script type="text/javascript" src="/static/js/map4.js"></script>
+{% block script_block %}
+{% endblock %}
 
 {% endblock %}

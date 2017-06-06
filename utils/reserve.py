@@ -6,14 +6,11 @@ def reserve_room(room, date, clubName):
     f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
-    t=time.strftime("%Y")
     check = "SELECT club FROM rooms WHERE  room = ? AND month = ? and day = ? and year = ?"
     auth = c.execute(check, (room, int(date[0:2]) + 1, int(date[2:4]), int(date[4:]))).fetchone()
-    print auth
     if auth is None:
         add_reservation = "INSERT INTO rooms (room, club, month, day, year) VALUES(?, ?, ?, ?, ?) "
         c.execute(add_reservation, (room, clubName, int(date[0:2]) + 1 , int(date[2:4]), int(date[4:])))
-        print "room reserved" + room + " for " + date + " by " + clubName
         c.close()
         db.commit()
         db.close()
@@ -47,7 +44,7 @@ def block_room(room, date):
     c.execute(kick_out_reserved, (room, int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
 
     block_reservation = "INSERT INTO rooms (room, club, month, day, year) VALUES(?, ?, ?, ?, ?) "
-    c.execute(block_reservation, (room, "Blocked", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
+    c.execute(block_reservation, (room, "Not Available", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
 
     c.close()
     db.commit()
@@ -59,7 +56,7 @@ def unblock_room(room, date):
     c = db.cursor()
 
     unblock_reservation = "DELETE FROM rooms WHERE room = ? AND month = ? AND day = ? AND year = ?"
-    c.execute(block_reservation, (room, "Blocked", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
+    c.execute(block_reservation, (room, "Not Available", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
 
     c.close()
     db.commit()

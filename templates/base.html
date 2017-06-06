@@ -106,20 +106,20 @@
                 <li class = "abc">
                     <a href="/">Home</a>
                 </li>
+                <li class = "abc">
+                    <a href="/archive/">Archive</a>
+                </li>
+                <li class="abc">
+                    <a href="/roomSched/">Room Schedule</a>
+                </li>
 		{% if session.user %}
                 <li class="abc">
                     <a href="/myRooms/">My Rooms</a>
                 </li>
                 <li class="abc">
-                    <a href="/roomSched/">Room Schedule</a>
-                </li>
-                <li class = "abc">
-                    <a href="/archive/">Archive</a>
-                </li>
-                <li class="abc">
                   {% block head %}
 		  {% if session.master %}
-                  <a href='/addClub/'>Add a Club</a>
+                  <a href='/addClub/'>Approve a Club</a>
 		  {% endif %}
                   {% endblock %}
                 </li>

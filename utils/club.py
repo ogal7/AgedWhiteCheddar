@@ -24,6 +24,7 @@ def getClub(username):
 
 	r = c.fetchone()
 
+        c.close()
 	db.commit()
 	db.close()
 

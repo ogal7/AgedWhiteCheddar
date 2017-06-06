@@ -129,29 +129,15 @@ def homepage():
 
 @app.route("/roomSched/")
 def schedule():
-    if 'user' not in session:
-        return redirect(url_for("main"))
-
-    if 'user' in session and not users.signup_completed(session['user']):
-        return redirect(url_for("enter_club_info"))
-
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
-
     return render_template("roomSchedule.html", action = "Rooms Previously or Currently Being Reserved")
 
 @app.route("/roomSched/<date>/")
 def daySchedule(date):
-    if 'user' not in session:
-        return redirect(url_for("main"))
-
-    if 'user' in session and not users.signup_completed(session['user']):
-        return redirect(url_for("enter_club_info"))
-
     d2 = date.split("-")
     data = room.getInfoDate(str(int(d2[0]) + 1),d2[1],d2[2])
-    print data
-    return render_template("dayRooms.html", message=data)
 
+    return render_template("dayRooms.html", message=data)
 
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
@@ -203,8 +189,7 @@ def my_rooms():
     if 'user' in session:
         user = session['user']
         data = myRooms.getRoomsNow(user)
-        data2 = myRooms.getPreviousRooms(user)
-        return render_template("myRooms.html", message = data, message2 = data2, user=session['user'])
+        return render_template("myRooms.html", message = data, user=session['user'])
     else:
         return redirect(url_for("main"))
 

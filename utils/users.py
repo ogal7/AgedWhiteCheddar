@@ -18,6 +18,7 @@ def createAccount(user, password, code):
     insert = "INSERT INTO users VALUES ('%s', '%s', '%d')" % (user, hashp(password), isAdmin)
     sp.execute(insert)
 
+    sp.close()
     db.commit()
     db.close()
 
@@ -35,14 +36,16 @@ def checkLogin(usern, pw):
     t = sp.execute(s, (usern, hashed)).fetchone()
 
     if t is None:
+        sp.close()
         db.commit()
         db.close()
-            
+
         return False
     else:
+        sp.close()
         db.commit()
         db.close()
-            
+
         return True
 
 def getPass(usern):
@@ -52,8 +55,13 @@ def getPass(usern):
 
     s = "SELECT pw FROM users WHERE usern = '%s' "%(usern)
     t = sp.execute(s).fetchone()
+
+    sp.close()
+    db.commit()
+    db.close()
+
     return t
-    
+
 def changePassword(usern,pw):
     hashed = hashp(pw)
     f = "data/data.db"
@@ -61,10 +69,10 @@ def changePassword(usern,pw):
     sp = db.cursor()
     s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(hashed,usern)
     sp.execute(s)
+
+    sp.close()
     db.commit()
     db.close()
-    
-
 
 '''
 If true is returned, that means that the user
@@ -80,10 +88,13 @@ def checkRegister(email, code):
 
     res = t.fetchone()
     if res is None:
+        sp.close()
         db.commit()
         db.close()
+
         return False
 
+    sp.close()
     db.commit()
     db.close()
 
@@ -95,11 +106,11 @@ def signup_completed(user):
     sp = db.cursor()
 
     admin_level_query = "SELECT isAdmin from users WHERE usern = ?"
-    r = sp.execute(admin_level_query, (user,)).fetchone()        
-    
+    r = sp.execute(admin_level_query, (user,)).fetchone()
+
     signed_up_query = "SELECT email from clubs WHERE email = ?"
     r2 = sp.execute(signed_up_query, (user,)).fetchone()
-    
+
     signed_up = False
     if r != None: # student signed up
         if int(r[0]) > 0:
@@ -107,6 +118,7 @@ def signup_completed(user):
         if int(r[0]) == 0 and r2 != None: # signed up the club
             signed_up = True
 
+    sp.close()
     db.commit()
     db.close()
 
@@ -132,10 +144,13 @@ def storeCode(email, isAdmin):
 
 	insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
 	sp.execute(insert)
+
+        sp.close()
 	db.commit()
 	db.close()
+
 	sendEmail(email, code)
-    
+
 def generateCode(isAdmin):
     return str(int(random.random()*10000)) + str(isAdmin)
 
@@ -156,6 +171,7 @@ def getAdminLevel(email):
 
     res = t.fetchall()
 
+    sp.close()
     db.commit()
     db.close()
 
@@ -175,14 +191,17 @@ def codeUsed(code):
 
     for usedCode in codes:
         if usedCode[0] == code:
+            sp.close()
             db.commit()
             db.close()
-            
+
             return True
 
+    sp.close()
     db.commit()
     db.close()
-    return False 
+
+    return False
 
 def emailUsed(email):
     f = "data/data.db"
@@ -194,14 +213,17 @@ def emailUsed(email):
 
     for usedEmail in codes:
         if usedEmail[0] == email:
+            sp.close()
             db.commit()
             db.close()
-            
+
             return True
 
+    sp.close()
     db.commit()
     db.close()
-    return False 
+
+    return False
 
 def validCred(email,code):
 	f = "data/data.db"
@@ -210,13 +232,17 @@ def validCred(email,code):
 	s = "SELECT email, code FROM codes WHERE email = ? and code = ?"
 	t = sp.execute(s, (email, code)).fetchone()
 	if t is None:
-		db.commit()
-		db.close()   
-		return False
+            sp.close()
+            db.commit()
+            db.close()
+
+            return False
 	else:
-		db.commit()
-		db.close()
-		return True
+            sp.close()
+            db.commit()
+            db.close()
+
+            return True
 
 def isStudent(code):
 	return int(code[-1]) == 0

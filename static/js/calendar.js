@@ -144,7 +144,7 @@ function manageDates(month, year) {
 
     $('.days li').each(function(){
 	// DISPLAY ALL DATES FOR RESERVING ROOMS
-	
+
 	var monthPadding = "";
 	var datePadding = "";
 
@@ -158,20 +158,22 @@ function manageDates(month, year) {
 		datePadding = "0";
             }
 
+	    console.log($(this).text());
+
 	    if (parseInt(d2.getDay()) == 0 || parseInt(d2.getDay()) == 6) {
 		$(this).html('<p class="closed" href=' + monthPadding + month.toString() + "-" + datePadding +
-			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</p> </font>\n');
+			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</p> </font>\n');
 	    } else {
 		$(this).html('<a class="open" href=' + monthPadding + month.toString() + "-" + datePadding +
-			     $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
+			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
 	    }
 	}
-	
+
 	// HIGHLIGHT CURRENT DATE
 
 	monthPadding = "";
 	datePadding = "";
-	
+
 	if ($(this).text() == curDate && month === curMonth) {
 	    if (month < 10) {
 		monthPadding = "0";
@@ -180,8 +182,8 @@ function manageDates(month, year) {
             if (parseInt($(this).text()) < 10) {
 		datePadding = "0";
             }
-	    
-	    $(this).html('<span class = "active"> <a href=' + monthPadding + month.toString() + "-" + datePadding + $(this).text() + "-" + year.toString() + '>' + $(this).text() + '</a> </span>\n');
+
+	    $(this).html('<span class = "active"> <a href="' + monthPadding + month.toString() + "-" + datePadding + ($(this).text()).trim() + "-" + year.toString() + '">' + ($(this).text()) + '</a> </span>\n');
 	}
 
 	// if (month > d.getMonth() || month < d.getMonth()) {
@@ -192,7 +194,7 @@ function manageDates(month, year) {
 	// 	//if this two week span goes into the next month
 	// 	//onsole.log(daysInMonth(year, d.getMonth()))
 	// 	if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
-        
+
         //             var daysIntoNewMonth = 14 - (daysInMonth(year, d.getMonth()) - d.getDate());
         //             console.log($(this).text())
         //             console.log("days into new month" + daysIntoNewMonth)

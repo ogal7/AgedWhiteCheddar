@@ -33,7 +33,7 @@ whichRoomBlock.setAttribute("action", actionLinkA);
 
 
 var drawMap = function() {
-	
+
 
 	//three boxy things
 	var escalator = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -71,7 +71,7 @@ var drawMap = function() {
 
 
 
-	
+
 
 	//loop for the others
 	var starter = 229;
@@ -86,7 +86,7 @@ var drawMap = function() {
 		room5.setAttribute("font-size", "16px");
 		container.appendChild(room5);
 		starter += 2;
-		
+
 		var roomBox3 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 		roomBox3.setAttribute("style", "fill:white;fill-opacity:0;stroke:black;stroke-width");
 		roomBox3.setAttribute("x", xT)

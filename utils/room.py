@@ -19,6 +19,9 @@ def getInfoMonth(month, year):
     if info is not None:
         for entry in info:
             l.append(entry)
+
+    og.close()
+    db.commit()
     db.close()
     return l
 
@@ -41,6 +44,9 @@ def getInfoDate(month,day, year):
     if info is not None:
         for entry in info:
             l.append(entry)
+
+    og.close()
+    db.commit()
     db.close()
     return l
 
@@ -73,6 +79,11 @@ def getInfoRoom(room):
     l=[]
     for thing in info:
         print thing
+
+    og.close()
+    db.commit()
+    db.close()
+
     return info
 
 #gets all the rooms, clubs, for a specific date
@@ -84,8 +95,12 @@ def getInfoClub(clubName):
     date = (time.strftime("%d%m%Y"))
     request="SELECT * from rooms WHERE day = ? and month = ? and year = ? and clubName = ?;"
     info=og.execute(request, (int(date[2:4]), int(date[:2]), int(date[4:]), clubName))
-    db.close()
     l=[]
     for thing in info:
         l.append(thing[0],thing[1],thing[2])
+
+    og.close()
+    db.commit()
+    db.close()
+
     return l
