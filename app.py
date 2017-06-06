@@ -183,6 +183,24 @@ def unRes():
 
     return redirect(url_for("my_rooms"))
 
+@app.route("/unblock/", methods=["POST"])
+def unBlock():
+    #for i in request.form:
+    #    print i + " " + str(request.form[i])
+    data = request.form['room']
+    data = data.split("/")
+    #print data
+    if int(data[2]) < 10:
+        data[2] = "0" + data[2]
+    if int(data[1]) < 10:
+        data[1] = "0" + data[1]
+
+    date = data[1] + data[2] + data[3]
+    print date
+    #431/5/8/2017
+    reserve.unblock_room(data[0], date)
+
+    return redirect(url_for("block_rooms"))
 
 @app.route('/myRooms/')
 def my_rooms():
@@ -192,6 +210,16 @@ def my_rooms():
         return render_template("myRooms.html", message = data, user=session['user'])
     else:
         return redirect(url_for("main"))
+
+@app.route('/blockRooms/')
+def block_rooms():
+    if 'user' not in session or ('admin' not in session and 'master' not in session):
+        return redirect(url_for("main"))
+    else:
+        user = session['user']
+        data = myRooms.getBlockedRooms()
+        return render_template("blockedRooms.html", message = data, user=session['user'])
+
 
 @app.route("/reserve/<date>/", methods=["GET"])
 def reserveR(date):

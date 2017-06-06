@@ -116,6 +116,11 @@
                 <li class="abc">
                     <a href="/myRooms/">My Rooms</a>
                 </li>
+		{% if session.admin or session.master %}
+                <li class="abc">
+                    <a href="/blockRooms/">Block Rooms</a>
+                </li>
+		{% endif %}
                 <li class="abc">
                   {% block head %}
 		  {% if session.master %}

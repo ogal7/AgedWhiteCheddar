@@ -43,21 +43,4 @@ def getPreviousRooms(club):
     	return li
 
 def getBlockedRooms():
-	f = "data/data.db"
-	db = sqlite3.connect(f)
-	og = db.cursor()
-        date = time.strftime("%d%m%Y")
-        club = "Not Available"
-        request = "SELECT * from rooms WHERE club = ? and year >= ?"
-        info = og.execute(request, (club,date[4:]))
-
-        blocked_rooms = []
-        for room in info:
-            # print room
-            if room[2]>=int(date[:2]) or (room[4]>int(date[4:]) and room[2]<int(date[:2])):
-                blocked_rooms.append([room[0],room[1],room[2], room[3], room[4]])
-
-        og.close()
-        db.commit()
-        db.close()
-        return blocked_rooms
+        return getRoomsNow("Not Available")

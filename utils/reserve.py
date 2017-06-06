@@ -55,8 +55,10 @@ def unblock_room(room, date):
     db = sqlite3.connect(f)
     c = db.cursor()
 
+    print date
+
     unblock_reservation = "DELETE FROM rooms WHERE room = ? AND month = ? AND day = ? AND year = ?"
-    c.execute(block_reservation, (room, "Not Available", int(date[0:2]) + 1, int(date[2:4]), int(date[4:])))
+    c.execute(unblock_reservation, (room, int(date[0:2]), int(date[2:4]), int(date[4:])))
 
     c.close()
     db.commit()
