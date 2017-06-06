@@ -1,9 +1,10 @@
 import sqlite3
 import time
 #date format: mmddyyyy
+f = os.path.dirname("data/data/db") or '.' 
+f += "/"
 
 def reserve_room(room, date, clubName):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
     check = "SELECT club FROM rooms WHERE  room = ? AND month = ? and day = ? and year = ?"
@@ -23,7 +24,6 @@ def reserve_room(room, date, clubName):
 
 # can unreserve if the club that reserved the room
 def unreserve_room_club(room, date, clubName):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
     unreserve = "DELETE FROM rooms WHERE room = ? and month = ? and day = ? and year = ?"
@@ -37,7 +37,6 @@ def unreserve_room_club(room, date, clubName):
 # if room is being blocked, kick out people who already made a reservation
 # prevent clubs from reserving room again
 def block_room(room, date):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
     kick_out_reserved = "DELETE FROM rooms WHERE room = ? and month = ? and day = ? and year = ? "
@@ -51,7 +50,6 @@ def block_room(room, date):
     db.close()
 
 def unblock_room(room, date):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     c = db.cursor()
 

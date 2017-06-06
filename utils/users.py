@@ -3,6 +3,8 @@ import sqlite3
 import os
 import random
 from approve import sendEmail
+f = os.path.dirname("data/data/db") or '.' 
+f += "/"
 
 def hashp(x):
     h = hashlib.sha256()
@@ -11,7 +13,6 @@ def hashp(x):
 
 def createAccount(user, password, code):
     isAdmin = int(code[-1])
-    f = "data/data.db"
     db = sqlite3.connect(f)
 
     sp = db.cursor()
@@ -28,7 +29,6 @@ Makes sure that the username and password given are valid.
 def checkLogin(usern, pw):
     hashed = hashp(pw)
 
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -49,7 +49,6 @@ def checkLogin(usern, pw):
         return True
 
 def getPass(usern):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -64,7 +63,6 @@ def getPass(usern):
 
 def changePassword(usern,pw):
     hashed = hashp(pw)
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
     s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(hashed,usern)
@@ -79,7 +77,6 @@ If true is returned, that means that the user
 can sign up an account with the given email and code.
 '''
 def checkRegister(email, code):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -101,7 +98,6 @@ def checkRegister(email, code):
     return True
 
 def signup_completed(user):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -135,7 +131,6 @@ website so that clubs can create accounts.
 def storeCode(email, isAdmin):
 	if emailUsed(email):
 		return "email already approved"
-	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	code = generateCode(isAdmin)
@@ -161,7 +156,6 @@ Gets an admin level for a specific user.
 '''
 
 def getAdminLevel(email):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -181,7 +175,6 @@ def getAdminLevel(email):
 Checks if a code was used.
 '''
 def codeUsed(code):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -203,7 +196,6 @@ def codeUsed(code):
     return False
 
 def emailUsed(email):
-    f = "data/data.db"
     db = sqlite3.connect(f)
     sp = db.cursor()
 
@@ -225,7 +217,6 @@ def emailUsed(email):
     return False
 
 def validCred(email,code):
-	f = "data/data.db"
 	db = sqlite3.connect(f)
 	sp = db.cursor()
 	s = "SELECT email, code FROM codes WHERE email = ? and code = ?"
