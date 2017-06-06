@@ -8,6 +8,16 @@
     {% endif %}
     {% endwith %}
 </center>
+
+         <form class="form-signin" action="/signUp/" method="post" role="form">
+             <center> <h2 class="form-signin-heading">Type in a Year</h2> </center>
+             <input type="text" name="username" class="form-control" placeholder="Email address" required autofocus>
+             <input type="hidden" name="password" class="form-control" placeholder="Password">
+ 
+             <center><button class="btn btn-lg btn-primary btn-block" type="button">Submit </button></center>
+         </form>
+
+
 <table>
   <thead>
     <tr>
@@ -17,7 +27,7 @@
       <th width="100"> Club</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id = "table-body">
   	{% for Mentry in message %}
     {% for entry in message[Mentry] %}
   		<tr id="{{Mentry}}">
@@ -30,4 +40,6 @@
     {% endfor %}
   </tbody>
  </table>
+<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+<script type="text/javascript" src="../static/js/archive.js"></script>
 {% endblock %}

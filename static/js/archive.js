@@ -1,11 +1,12 @@
+
+
 $(function() {
     $('button').click(function() {
         $.ajax({
             url: '/seeit/',
-            data: $('#form').serialize(),
+            data: $('form').serialize(),
             type: 'POST',
             success: function(data) {
-                console.log(data);
                 $('#table-body').html('');
                 for (Mentry in data) {
                 for (entry in data[Mentry]) {

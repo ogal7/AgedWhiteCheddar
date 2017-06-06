@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, Response, flash
+from flask import Flask, render_template, request, session, redirect, url_for, Response, flash, jsonify, json
 import hashlib
 import time
 from utils import users, club, room, reserve, myRooms
@@ -295,6 +295,13 @@ def change():
 @app.route('/archive/')
 def seeRooms():
     return render_template('seeRoom.html', message = room.getInfoYear('2017'))
+
+
+@app.route('/seeit/', methods=['POST'])
+def seeit():
+    year =  request.form['username'];
+    return jsonify(room.getInfoYear(year))
+
 
 # =====================
 # log out
