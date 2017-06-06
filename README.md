@@ -11,13 +11,13 @@ The SU Room Reservation website allows clubs to reserve rooms on the 2nd, 3rd, a
 
 ## Installation and run instructions
 
-###To install:
+### To install:
 
 1. Type ```$ git clone https://github.com/ogal7/AgedWhiteCheddar``` into your terminal
 
 2. Alternatively, you can download the repo as a ZIP file and unzip.
 
-###To run:
+### To run:
 
 1. Type ```$ python app.py``` into your terminal.
 
