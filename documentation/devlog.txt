@@ -14,4 +14,14 @@ OGal7@ May 23nd, 2017: 1:47:
  - linked floor buttons with floor maps
  - made blank files for floor maps
  
+ StivenPeter@May 20th, 2017: 17:00: 
+ -Wrote approve.py
+ -Created algorithms for accounts.py
+
+StivenPeter@June 4th, 2017: 12:00: 
+ -Wrote Settings.py 
+ -Made seetings.html
+ -Wrote seeRooms.html 
+ -Wrote ajax for seeRooms
+ -Debugged database entry error 
  
