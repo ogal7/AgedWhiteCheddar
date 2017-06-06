@@ -14,7 +14,7 @@ def getRoomsNow(club):
         d = time.strftime("%d/%m/%Y").split("/")
 
     	for rooms in info:
-                if datetime.date(int(d[2]), int(d[1]), int(d[0])) < datetime.date(rooms[4], rooms[2], rooms[3]):
+                if datetime.date(int(d[2]), int(d[1]), int(d[0])) <= datetime.date(rooms[4], rooms[2], rooms[3]):
                         li.append([rooms[0], rooms[1], rooms[2], rooms[3], rooms[4]])
 
         og.close()
@@ -34,7 +34,7 @@ def getPreviousRooms(club):
         d = time.strftime("%d/%m/%Y").split("/")
 
     	for rooms in info:
-                if datetime.date(int(d[2]), int(d[1]), int(d[0])) >= datetime.date(rooms[4], rooms[2], rooms[3]):
+                if datetime.date(int(d[2]), int(d[1]), int(d[0])) > datetime.date(rooms[4], rooms[2], rooms[3]):
                         li.append([rooms[0], rooms[1], rooms[2], rooms[3], rooms[4]])
 
         og.close()
