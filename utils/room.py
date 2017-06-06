@@ -3,8 +3,7 @@ import sqlite3
 import os
 import time
 import collections
-f = os.path.dirname("data/data/db") or '.' 
-f += "/"
+f = "data/data.db"
 
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy

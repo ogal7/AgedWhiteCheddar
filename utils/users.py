@@ -3,8 +3,7 @@ import sqlite3
 import os
 import random
 from approve import sendEmail
-f = os.path.dirname("data/data/db") or '.' 
-f += "/"
+f = "data/data.db"
 
 def hashp(x):
     h = hashlib.sha256()
@@ -28,7 +27,8 @@ Makes sure that the username and password given are valid.
 '''
 def checkLogin(usern, pw):
     hashed = hashp(pw)
-
+    print f
+    print "hi"
     db = sqlite3.connect(f)
     sp = db.cursor()
 

@@ -1,8 +1,8 @@
 import sqlite3
 import time
+import os
 #date format: mmddyyyy
-f = os.path.dirname("data/data/db") or '.' 
-f += "/"
+f = "data/data.db"
 
 def reserve_room(room, date, clubName):
     db = sqlite3.connect(f)

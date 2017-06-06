@@ -109,10 +109,10 @@
                 <li class = "abc">
                     <a href="/archive/">Archive</a>
                 </li>
+        {% if session.user and not session.admin %}
                 <li class="abc">
                     <a href="/roomSched/">Room Schedule</a>
                 </li>
-		{% if session.user %}
                 <li class="abc">
                     <a href="/myRooms/">My Rooms</a>
                 </li>

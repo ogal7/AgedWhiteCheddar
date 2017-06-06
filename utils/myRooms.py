@@ -1,9 +1,8 @@
 import sqlite3
 import time
 import datetime
-
-f = os.path.dirname("data/data/db") or '.' 
-f += "/"
+import os
+f = "data/data.db"
 
 def getRoomsNow(club):
 	db = sqlite3.connect(f)
