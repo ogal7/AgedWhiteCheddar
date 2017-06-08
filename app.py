@@ -139,6 +139,12 @@ def daySchedule(date):
 
     return render_template("dayRooms.html", message=data)
 
+
+@app.route("/seeClubs/")
+def seeClubs():
+    data = club.getAllClubs()
+    return render_template("SeeClubs.html", message=data)
+
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
     if 'user' not in session:

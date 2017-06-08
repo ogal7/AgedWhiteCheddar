@@ -1,7 +1,7 @@
 
 
 $(function() {
-    $('button').click(function() {
+    $('#year').click(function() {
         $.ajax({
             url: '/seeit/',
             data: $('form').serialize(),

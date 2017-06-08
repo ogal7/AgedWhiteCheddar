@@ -5,39 +5,53 @@ import os
 f = "data/data.db"
 
 def addClub(name, email, advisorName, advisorEmail):
-	db = sqlite3.connect(f)
-	c = db.cursor()
+    db = sqlite3.connect(f)
+    c = db.cursor()
 
-	query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
-	c.execute(query, (name, email, advisorName, advisorEmail))
+    query = "INSERT INTO clubs (name, email, advisor, advisorEmail) VALUES (?, ?, ?, ?)"
+    c.execute(query, (name, email, advisorName, advisorEmail))
 
-	c.close()
-	db.commit()
-	db.close()
+    c.close()
+    db.commit()
+    db.close()
 
 def getClub(username):
-	db = sqlite3.connect(f)
-	c = db.cursor()
+    db = sqlite3.connect(f)
+    c = db.cursor()
 
-	checkUser = "SELECT * FROM users WHERE usern = ?"
-	c.execute(checkUser, (username,))
+    checkUser = "SELECT * FROM clubs WHERE email = ?"
+    c.execute(checkUser, (username,))
 
-	r = c.fetchone()
+    r = c.fetchone()
+    c.close()
+    db.commit()
+    db.close()
 
-        c.close()
-	db.commit()
-	db.close()
-
-	return r
+    return r
 
 def getClubName(username):
-	return getClub(username)[0]
+    return getClub(username)[0]
 
 def getClubEmail(username):
-	return getClub(username)[1]
+    return getClub(username)[1]
 
 def getAdvisor(username):
-	return getClub(username)[2]
+    return getClub(username)[2]
 
 def getAdvisorEmail(username):
-	return getClub(username)[3]
+    return getClub(username)[3]
+
+
+def getAllClubs():
+    db = sqlite3.connect(f)
+    c = db.cursor()
+
+    q = "SELECT * FROM clubs;"
+    c.execute(q)
+
+    r = c.fetchall()
+    c.close()
+    db.commit()
+    db.close()
+
+    return r
