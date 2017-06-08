@@ -2,9 +2,13 @@ import sqlite3
 import time
 import datetime
 import os
-f = "data/data.db"
+
+DIR = os.path.dirname(__file__)
+DIR += '/'
+f = DIR + "../data/data.db"
 
 def getRoomsNow(club):
+        global f
 	db = sqlite3.connect(f)
 	og = db.cursor()
 
@@ -24,6 +28,7 @@ def getRoomsNow(club):
     	return li
 
 def getPreviousRooms(club):
+        global f
 	db = sqlite3.connect(f)
 	og = db.cursor()
 

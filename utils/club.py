@@ -2,9 +2,12 @@ import hashlib
 import sqlite3
 import os
 
-f = "data/data.db"
+DIR = os.path.dirname(__file__)
+DIR += '/'
+f = DIR + "../data/data.db"
 
 def addClub(name, email, advisorName, advisorEmail):
+    global f
     db = sqlite3.connect(f)
     c = db.cursor()
 
@@ -16,6 +19,7 @@ def addClub(name, email, advisorName, advisorEmail):
     db.close()
 
 def getClub(username):
+    global f
     db = sqlite3.connect(f)
     c = db.cursor()
 

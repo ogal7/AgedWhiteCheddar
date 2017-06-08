@@ -11,9 +11,8 @@
 
          <form class="form-signin" action="/archive/" method="post" role="form">
              <center> <h2 class="form-signin-heading">Type in a Year</h2> </center>
-             <input type="text" name="username" class="form-control" placeholder="Year" required autofocus>
-             <input type="hidden" name="password" class="form-control" placeholder="Password">
- 
+             <input style="width: 50%; margin: auto;" type="text" name="year" class="form-control" placeholder="Year" required autofocus>
+
              <center><button type="submit" name="enter" class="button"  id = "year">Submit </button></center>
          </form>
 
@@ -31,7 +30,7 @@
   	{% for Mentry in message %}
     {% for entry in message[Mentry] %}
   		<tr id="{{Mentry}}">
-        <td> {{Mentry}} </td> 
+        <td> {{Mentry}} </td>
   			<td> {{entry[3]}} </td>
   			<td> {{entry[0]}} </td>
         <td> {{entry[1]}} </td>
@@ -41,5 +40,5 @@
   </tbody>
  </table>
 <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-<script type="text/javascript" src="../static/js/archive.js"></script>
+<!-- <script type="text/javascript" src="../static/js/archive.js"></script> -->
 {% endblock %}

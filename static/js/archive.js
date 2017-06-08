@@ -1,5 +1,3 @@
-
-
 $(function() {
     $('#year').click(function() {
         $.ajax({

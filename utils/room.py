@@ -3,7 +3,10 @@ import sqlite3
 import os
 import time
 import collections
-f = "data/data.db"
+
+DIR = os.path.dirname(__file__)
+DIR += '/'
+f = DIR + "../data/data.db"
 
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
@@ -11,8 +14,10 @@ def getMonthName(num):
     return time.strftime('%B', time.struct_time((0, num, 0,)+(0,)*6))
 
 def getInfoMonth(month, year):
+    global f
     db = sqlite3.connect(f)
     og = db.cursor()
+    # print year
     request="SELECT room,club,month,day from rooms WHERE month = ? and year = ? ORDER BY day;"
     info = og.execute(request, (month, year))
     l = []
@@ -27,6 +32,7 @@ def getInfoMonth(month, year):
 
 def getInfoYear(year):
     l = []
+    print year
     for i in range(1,13):
         l.append(getInfoMonth(i,year))
     dic = collections.OrderedDict()
@@ -35,6 +41,7 @@ def getInfoYear(year):
     return dic
 
 def getInfoDate(month,day, year):
+    global f
     db = sqlite3.connect(f)
     og = db.cursor()
     request="SELECT room,club from rooms WHERE month = ? and day = ? and year = ?;"
@@ -66,6 +73,7 @@ def getInfoRangeYear(year1,year2):
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoRoom(room):
+    global f
     db = sqlite3.connect(f)
     og = db.cursor()
     ## dd/mm/yyyy format
@@ -87,6 +95,7 @@ def getInfoRoom(room):
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoClub(clubName):
+    global f
     db = sqlite3.connect(f)
     og = db.cursor()
     date = (time.strftime("%d%m%Y"))

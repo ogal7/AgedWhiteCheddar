@@ -298,16 +298,22 @@ def change():
         return redirect(url_for("main"))
     return render_template("settings.html")
 
-@app.route('/archive/')
+@app.route('/archive/', methods = ["GET", "POST"])
 def seeRooms():
+    if 'year' in request.form:
+        try:
+            year = int(request.form['year'].strip())
+            return render_template('seeRoom.html', message = room.getInfoYear(str(year)))
+        except:
+            return render_template('seeRoom.html', message = room.getInfoYear('2017'))
+
     return render_template('seeRoom.html', message = room.getInfoYear('2017'))
 
 
-@app.route('/seeit/', methods=['POST'])
-def seeit():
-    year =  request.form['username'];
-    return jsonify(room.getInfoYear(year))
-
+# @app.route('/seeit/', methods=['POST'])
+# def seeit():
+#     year =  request.form['username'];
+#     return jsonify(room.getInfoYear(year))
 
 # =====================
 # log out
