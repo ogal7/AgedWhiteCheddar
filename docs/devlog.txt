@@ -16,10 +16,18 @@ StivenPeter@May 17th, 2017: 17:00:
 BrianYang@May 19th, 2017: 12:24:
  -Work on adding clubs to database
 
+GiovanniTopa@May 19th, 2017:
+ -Worked on making functions to return history of room reservations
+ 
 StivenPeter@May 20th, 2017: 17:00:
  -Wrote approve.py
  -Created algorithms for accounts.py
 
+GiovanniTopa@May 21st, 2017:
+ -Worked on register.py
+ -Made funcs to create new registration code and check it
+ -Tested
+ 
 OGal7@ May 23nd, 2017: 1:47:
  - linked floor buttons with floor maps
  - made blank files for floor maps
@@ -31,15 +39,28 @@ BrianYang@May 23rd, 2017: 21:11:
 BrianYang@May 24th, 2017: 19:18:
  -Make login and register work
 
+GiovanniTopa@May 24th, 2017:
+ -Fixed rooms.py
+ -Merged work
+ 
 BrianYang@May 26th, 2017 12:23:
  -Fix calendar formatting
 
+GiovanniTopa@May 29th 2017:
+ -Worked on /reserve/ in app
+ 
 BrianYang@June 1st, 2017: 11:58:
  -Add todo list
 
 BrianYang@June 1st, 2017: 12:31:
  -Add approve functionality
 
+GiovanniTopa@June 1st, 2017:
+ -Updated calls to sql database
+
+GiovanniTopa@June 4th, 2017:
+ -Finished updating sql calls
+ 
 StivenPeter@June 4th, 2017: 12:00:
  -Wrote Settings.py
  -Made seetings.html
