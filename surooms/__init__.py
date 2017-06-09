@@ -13,6 +13,8 @@ app.secret_key = os.urandom(32)
 # =====================
 @app.route('/', methods = ["GET", "POST"])
 def main():
+    print "SESSION: " + str(session)
+
     if 'user' in session:
         if users.signup_completed(session['user']):
             return redirect(url_for("homepage"))
@@ -25,6 +27,8 @@ def main():
 # =====================
 @app.route("/auth/", methods = ["POST"])
 def auth():
+    print "SESSION: " + str(session)
+    
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
@@ -88,6 +92,8 @@ def auth():
 # =====================
 @app.route("/clubInfo/", methods = ["GET", "POST"])
 def enter_club_info():
+    print "SESSION: " + str(session)
+
     if 'user' not in session:
         return redirect(url_for("main"))
 
@@ -110,6 +116,8 @@ def enter_club_info():
 # =====================
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
+    print "SESSION: " + str(session)
+
     if 'user' not in session:
         return redirect(url_for("main"))
 
@@ -129,11 +137,15 @@ def homepage():
 
 @app.route("/roomSched/")
 def schedule():
+    print "SESSION: " + str(session)
+    
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
     return render_template("roomSchedule.html", action = "Rooms Previously or Currently Being Reserved")
 
 @app.route("/roomSched/<date>/")
 def daySchedule(date):
+    print "SESSION: " + str(session)
+
     d2 = date.split("-")
     data = room.getInfoDate(str(int(d2[0]) + 1),d2[1],d2[2])
 
@@ -142,11 +154,15 @@ def daySchedule(date):
 
 @app.route("/seeClubs/")
 def seeClubs():
+    print "SESSION: " + str(session)
+    
     data = club.getAllClubs()
     return render_template("SeeClubs.html", message=data)
 
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
+    print "SESSION: " + str(session)
+
     if 'user' not in session:
         return redirect(url_for("main"))
 
@@ -172,6 +188,8 @@ def find_floor(date):
 
 @app.route("/unreserve/", methods=["POST"])
 def unRes():
+    print "SESSION: " + str(session)
+
     #for i in request.form:
     #    print i + " " + str(request.form[i])
     data = request.form['room']
@@ -191,6 +209,8 @@ def unRes():
 
 @app.route("/unblock/", methods=["POST"])
 def unBlock():
+    print "SESSION: " + str(session)
+
     #for i in request.form:
     #    print i + " " + str(request.form[i])
     data = request.form['room']
@@ -210,6 +230,8 @@ def unBlock():
 
 @app.route('/myRooms/')
 def my_rooms():
+    print "SESSION: " + str(session)
+
     if 'user' in session:
         user = session['user']
         data = myRooms.getRoomsNow(user)
@@ -219,6 +241,8 @@ def my_rooms():
 
 @app.route('/blockRooms/')
 def block_rooms():
+    print "SESSION: " + str(session)
+
     if 'user' not in session or ('admin' not in session and 'master' not in session):
         return redirect(url_for("main"))
     else:
@@ -226,9 +250,10 @@ def block_rooms():
         data = myRooms.getBlockedRooms()
         return render_template("blockedRooms.html", message = data, user=session['user'])
 
-
 @app.route("/reserve/<date>/", methods=["GET"])
 def reserveR(date):
+    print "SESSION: " + str(session)
+
     if 'user' not in session:
         return redirect(url_for("main"))
 
@@ -249,6 +274,8 @@ def reserveR(date):
 
 @app.route("/block/<date>/", methods=["GET"])
 def blockR(date):
+    print "SESSION: " + str(session)
+
     if 'user' not in session:
         return redirect(url_for("main"))
 
@@ -267,10 +294,14 @@ def blockR(date):
 
 @app.route("/addClub/")
 def addClubz():
+    print "SESSION: " + str(session)
+
     return render_template("codes.html")
 
 @app.route('/approve/', methods=["POST"])
 def approve_clubs():
+    print "SESSION: " + str(session)
+
     if 'admin_level' in request.form and 'clubEmail' in request.form:
         users.storeCode(request.form['clubEmail'], request.form['admin_level'])
         flash('User Approved!')
@@ -281,10 +312,14 @@ def approve_clubs():
 
 @app.route('/settings/', methods = ['GET',"POST"])
 def settings():
+    print "SESSION: " + str(session)
+
     return render_template("settings.html")
 
 @app.route('/change/', methods = ["POST"])
 def change():
+    print "SESSION: " + str(session)
+
     loginResponse = request.form
     old =  users.hashp(request.form['oldpass'])
     new = request.form['newpass']
@@ -300,6 +335,8 @@ def change():
 
 @app.route('/archive/', methods = ["GET", "POST"])
 def seeRooms():
+    print "SESSION: " + str(session)
+
     if 'year' in request.form:
         try:
             year = int(request.form['year'].strip())
@@ -309,23 +346,14 @@ def seeRooms():
 
     return render_template('seeRoom.html', message = room.getInfoYear('2017'))
 
-
-# @app.route('/seeit/', methods=['POST'])
-# def seeit():
-#     year =  request.form['username'];
-#     return jsonify(room.getInfoYear(year))
-
 # =====================
 # log out
 # =====================
 @app.route("/logout/")
 def logout():
-    if 'user' in session:
-        session.pop("user")
-    if 'master' in session:
-        session.pop("master")
-    if 'admin' in session:
-        session.pop("admin")
+    session.clear()
+    print "SESSION: " + str(session)
+
     return redirect(url_for("main"))
 
 # =====================
