@@ -15,29 +15,30 @@ app.secret_key = os.urandom(32)
 def main():
     print "SESSION: " + str(session)
 
-    if 'user' in session:
-        if users.signup_completed(session['user']):
+    if 'username' in session:
+        if users.signup_completed(session['username']):
             return redirect(url_for("homepage"))
         else:
             return redirect(url_for("enter_club_info"))
+
     return render_template("entry.html")
 
 # =====================
 # authentication
 # =====================
-@app.route("/auth/", methods = ["POST"])
-def auth():
+@app.route("/authenticate/", methods = ["POST"])
+def authenticate():
     print "SESSION: " + str(session)
+    print "REQUEST: " + str(request.form)
     
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
     formMethod = loginResponse['enter']
-    # print "Form method: " + formMethod
 
     if formMethod == "login":
         if users.checkLogin(username, password):
-            session['user'] = username
+            session['username'] = username
             adminLevel = users.getAdminLevel(username)[-1]
             if adminLevel == '2':
                 session['master'] = True
@@ -63,18 +64,18 @@ def auth():
         if users.validCred(username,code):
             if users.isStudent(code):
                 users.createAccount(username, password, code)
-                session['user'] = username
+                session['username'] = username
                 return redirect(url_for('enter_club_info')) #asks for more info from students running clubs
             else:
                 users.createAccount(username,password,code)
-                session['user']= username
+                session['username']= username
                 adminLevel = users.getAdminLevel(username)[-1]
                 if adminLevel == '2':
                     session['master'] = True
-                    print "Admin level: 2"
+                    # print "Admin level: 2"
                 elif adminLevel == '1':
                     session['admin'] = True
-                    print "Admin level: 1"
+                    # print "Admin level: 1"
                 else:
                     if 'master' in session:
                         session.pop("master")
@@ -94,11 +95,11 @@ def auth():
 def enter_club_info():
     print "SESSION: " + str(session)
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect(url_for("main"))
 
     # Prevents users from completing form twice
-    if 'user' in session and users.signup_completed(session['user']):
+    if 'username' in session and users.signup_completed(session['username']):
         return redirect(url_for("homepage"))
 
     response = request.form
@@ -106,7 +107,7 @@ def enter_club_info():
         clubName = response['clubName']
         adName = response['adName']
         adEmail = response['adEmail']
-        club.addClub(clubName, session['user'], adName, adEmail)
+        club.addClub(clubName, session['username'], adName, adEmail)
         return redirect(url_for("homepage"))
     else:
         return render_template("clubRegister.html")
@@ -116,12 +117,14 @@ def enter_club_info():
 # =====================
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
+    print "WHAT"
     print "SESSION: " + str(session)
 
-    if 'user' not in session:
+    if 'username' not in session:
+        print "ok"
         return redirect(url_for("main"))
 
-    if 'user' in session and not users.signup_completed(session['user']):
+    if 'username' in session and not users.signup_completed(session['username']):
         return redirect(url_for("enter_club_info"))
 
     if 'master' in session:
@@ -151,59 +154,58 @@ def daySchedule(date):
 
     return render_template("dayRooms.html", message=data)
 
-
 @app.route("/seeClubs/")
 def seeClubs():
     print "SESSION: " + str(session)
     
     data = club.getAllClubs()
-    return render_template("SeeClubs.html", message=data)
+    return render_template("seeClubs.html", message=data)
 
 @app.route("/homepage/<date>/", methods = ["GET"])
 def find_floor(date):
     print "SESSION: " + str(session)
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect(url_for("main"))
 
-    if 'user' in session and not users.signup_completed(session['user']):
+    if 'username' in session and not users.signup_completed(session['username']):
         return redirect(url_for("enter_club_info"))
 
     if 'floor' in request.args and ('admin' in session or 'master' in session):
         if request.args['floor'] == '2':
-            return render_template("map2A.html") #, floor = "2", date = date)
+            return render_template("map2A.html")
         if request.args['floor'] == '3':
-            return render_template("map3A.html") #, floor = "3", date = date)
+            return render_template("map3A.html")
         if request.args['floor'] == '4':
-            return render_template("map4A.html") #, floor = "4", date = date)
+            return render_template("map4A.html")
 
     if 'floor' in request.args:
         if request.args['floor'] == '2':
-            return render_template("map2.html") #, floor = "2", date = date)
+            return render_template("map2.html")
         if request.args['floor'] == '3':
-            return render_template("map3.html") #, floor = "3", date = date)
+            return render_template("map3.html")
         if request.args['floor'] == '4':
-            return render_template("map4.html") #, floor = "4", date = date)
+            return render_template("map4.html")
     return render_template("floors.html", message=date)
 
 @app.route("/unreserve/", methods=["POST"])
 def unRes():
     print "SESSION: " + str(session)
+    print "REQUEST: " + str(request.form)
+    
+    if 'room' in request.form and 'username' in session:
+        data = request.form['room']
+        data = data.split("/")
 
-    #for i in request.form:
-    #    print i + " " + str(request.form[i])
-    data = request.form['room']
-    data = data.split("/")
-    #print data
-    if int(data[2]) < 10:
-        data[2] = "0" + data[2]
-    if int(data[1]) < 10:
-        data[1] = "0" + data[1]
+        if int(data[2]) < 10:
+            data[2] = "0" + data[2]
+        if int(data[1]) < 10:
+            data[1] = "0" + data[1]
 
-    date = data[1] + data[2] + data[3]
-    print date
-    #431/5/8/2017
-    reserve.unreserve_room_club(data[0], date, session['user'] )
+        date = data[1] + data[2] + data[3]
+
+        #431/5/8/2017
+        reserve.unreserve_room_club(data[0], date, session['username'])
 
     return redirect(url_for("my_rooms"))
 
@@ -222,7 +224,7 @@ def unBlock():
         data[1] = "0" + data[1]
 
     date = data[1] + data[2] + data[3]
-    print date
+    # print date
     #431/5/8/2017
     reserve.unblock_room(data[0], date)
 
@@ -232,10 +234,11 @@ def unBlock():
 def my_rooms():
     print "SESSION: " + str(session)
 
-    if 'user' in session:
-        user = session['user']
+    if 'username' in session:
+        user = session['username']
         data = myRooms.getRoomsNow(user)
-        return render_template("myRooms.html", message = data, user=session['user'])
+        print data
+        return render_template("myRooms.html", message = data, user = session['username'])
     else:
         return redirect(url_for("main"))
 
@@ -243,21 +246,21 @@ def my_rooms():
 def block_rooms():
     print "SESSION: " + str(session)
 
-    if 'user' not in session or ('admin' not in session and 'master' not in session):
+    if 'username' not in session or ('admin' not in session and 'master' not in session):
         return redirect(url_for("main"))
     else:
-        user = session['user']
+        user = session['username']
         data = myRooms.getBlockedRooms()
-        return render_template("blockedRooms.html", message = data, user=session['user'])
+        return render_template("blockedRooms.html", message = data, user=session['username'])
 
 @app.route("/reserve/<date>/", methods=["GET"])
 def reserveR(date):
     print "SESSION: " + str(session)
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect(url_for("main"))
 
-    if 'user' in session and not users.signup_completed(session['user']):
+    if 'username' in session and not users.signup_completed(session['username']):
         return redirect(url_for("enter_club_info"))
 
     d = date.strip().split("-")
@@ -266,7 +269,7 @@ def reserveR(date):
         d2 += str(i).zfill(2)
 
     room = request.args['room']
-    if (reserve.reserve_room(room, d2 ,session['user'])):
+    if (reserve.reserve_room(room, d2 ,session['username'])):
         flash('Room Sucessfully Reserved')
         return redirect(url_for("my_rooms"))
     flash("Unable to Reserve Room. Please Make Another Selection")
@@ -276,10 +279,10 @@ def reserveR(date):
 def blockR(date):
     print "SESSION: " + str(session)
 
-    if 'user' not in session:
+    if 'username' not in session:
         return redirect(url_for("main"))
 
-    if 'user' in session and not users.signup_completed(session['user']):
+    if 'username' in session and not users.signup_completed(session['username']):
         return redirect(url_for("enter_club_info"))
 
     d = date.strip().split("-")
@@ -324,12 +327,8 @@ def change():
     old =  users.hashp(request.form['oldpass'])
     new = request.form['newpass']
     conf = request.form['confpass']
-    print users.getPass(session['user'])[0]
-    print old
-    print new
-    print conf
-    if users.getPass(session['user'])[0] == old and new == conf:
-        users.changePassword(session['user'],new)
+    if users.getPass(session['username'])[0] == old and new == conf:
+        users.changePassword(session['username'],new)
         return redirect(url_for("main"))
     return render_template("settings.html")
 

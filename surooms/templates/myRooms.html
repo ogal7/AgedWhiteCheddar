@@ -8,7 +8,7 @@
   {% endif %}
   {% endwith %}
 </center>
-<form action="/unreserve/" method="post">
+<form action="/unreserve/" method="POST">
   <table>
     <thead>
       <tr>
@@ -30,13 +30,16 @@
       <tr id="{{entry[0]}}/{{user}}">
   	<td> {{entry[0]}} </td>
   	<td> {{entry[2]}}/{{entry[3]}}/{{entry[4]}} </td>
-        <td> <center> <button type="submit" name="room" value='{{entry[0]}}/{{entry[2]}}/{{entry[3]}}/{{entry[4]}}' class="alert button">Unreserve</button> </center></td>
+        <td>
+	  <center>
+	    <button type="submit" name="room" value="{{entry[0]}}/{{entry[2]}}/{{entry[3]}}/{{entry[4]}}" class="alert button">Unreserve
+	    </button>
+	  </center>
+	</td>
       </tr>
       {% endfor %}
+
     </tbody>
   </table>
 </form>
-
-
-<script type="text/javascript" src="/static/js/myRooms.js"></script>
 {% endblock %}

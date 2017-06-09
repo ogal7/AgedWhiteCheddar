@@ -2,11 +2,11 @@
 
 {% block body %}
 <center>
-{% with message = get_flashed_messages() %}
-    {% if message %}
-    <p style="font-size:15px;">{{ message[0] }}</p>
-    {% endif %}
-    {% endwith %}
+  {% with message = get_flashed_messages() %}
+  {% if message %}
+  <p style="font-size:15px;">{{ message[0] }}</p>
+  {% endif %}
+  {% endwith %}
 </center>
 
 <table>
@@ -19,15 +19,15 @@
     </tr>
   </thead>
   <tbody id = "table-body">
-  	{% for i in message %}
-  		<tr id="{{Mentry}}">
-        <td> {{i[0]}} </td> 
-  			<td> {{i[1]}} </td>
-  			<td> {{i[2]}} </td>
-        <td> {{i[3]}} </td>
-  		</tr>
+    {% for i in message %}
+    <tr id="{{Mentry}}">
+      <td> {{i[0]}} </td> 
+      <td> {{i[1]}} </td>
+      <td> {{i[2]}} </td>
+      <td> {{i[3]}} </td>
+    </tr>
     {% endfor %}
   </tbody>
- </table>
+</table>
 <script type="text/javascript" src="../static/js/jquery.min.js"></script>
 {% endblock %}

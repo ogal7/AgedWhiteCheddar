@@ -126,13 +126,13 @@ margin-bottom: 0;
        <tr id = "4thWeek"> </tr>
        <tr id = "5thWeek"> </tr> 
      </table> -->
-     <br>
+<br>
 <center>
-{% with message = get_flashed_messages() %}
-    {% if message %}
-    <p style="font-size:20px;">{{ message[0] }}</p>
-    {% endif %}
-    {% endwith %}
+  {% with message = get_flashed_messages() %}
+  {% if message %}
+  <p style="font-size:20px;">{{ message[0] }}</p>
+  {% endif %}
+  {% endwith %}
 </center>
 <h5><center> {{action}} </h5> </center>
 <br>
