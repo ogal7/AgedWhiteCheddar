@@ -234,7 +234,7 @@ def my_rooms():
     if 'username' in session:
         user = session['username']
         data = myRooms.getRoomsNow(user)
-        print data
+        # print data
         return render_template("myRooms.html", message = data, user = session['username'])
     else:
         return redirect(url_for("main"))
