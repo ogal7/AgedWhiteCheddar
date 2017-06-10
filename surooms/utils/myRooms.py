@@ -17,14 +17,17 @@ def getRoomsNow(club):
     li = []
 
     d = time.strftime("%d/%m/%Y").split("/")
-
     for rooms in info:
+        # print rooms
+        # print datetime.date(int(d[2]), int(d[1]), int(d[0]))
         if datetime.date(int(d[2]), int(d[1]), int(d[0])) <= datetime.date(rooms[4], rooms[2], rooms[3]):
             li.append([rooms[0], rooms[1], rooms[2], rooms[3], rooms[4]])
 
     og.close()
     db.commit()
     db.close()
+
+    # print "LI: " + str(li)
 
     return li
 
