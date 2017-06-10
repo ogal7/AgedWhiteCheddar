@@ -25,7 +25,9 @@ def getRoomsNow(club):
     og.close()
     db.commit()
     db.close()
+
     return li
+
 
 def getPreviousRooms(club):
     global f

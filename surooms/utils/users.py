@@ -4,8 +4,6 @@ import os
 import random
 from approve import sendEmail
 
-global f
-
 DIR = os.path.dirname(__file__)
 DIR += '/'
 f = DIR + "../data/data.db"
@@ -21,8 +19,8 @@ def createAccount(user, password, code):
     db = sqlite3.connect(f)
 
     sp = db.cursor()
-    insert = "INSERT INTO users VALUES ('%s', '%s', '%d')" % (user, hashp(password), isAdmin)
-    sp.execute(insert)
+    insert = "INSERT INTO users VALUES (?, ?, ?)"
+    sp.execute(insert, (user, hashp(password), isAdmin))
 
     sp.close()
     db.commit()
@@ -34,8 +32,6 @@ Makes sure that the username and password given are valid.
 def checkLogin(usern, pw):
     hashed = hashp(pw)
     global f
-
-    print f
 
     db = sqlite3.connect(f)
     sp = db.cursor()
@@ -61,8 +57,8 @@ def getPass(usern):
     db = sqlite3.connect(f)
     sp = db.cursor()
 
-    s = "SELECT pw FROM users WHERE usern = '%s' "%(usern)
-    t = sp.execute(s).fetchone()
+    s = "SELECT pw FROM users WHERE usern = ?"
+    t = sp.execute(s, (usern,)).fetchone()
 
     sp.close()
     db.commit()
@@ -76,8 +72,8 @@ def changePassword(usern,pw):
     global f
     db = sqlite3.connect(f)
     sp = db.cursor()
-    s = "UPDATE users SET pw = '%s' WHERE usern = '%s'"%(hashed,usern)
-    sp.execute(s)
+    s = "UPDATE users SET pw = ? WHERE usern = ?"
+    sp.execute(s, (hashed,usern))
 
     sp.close()
     db.commit()
@@ -92,8 +88,8 @@ def checkRegister(email, code):
     db = sqlite3.connect(f)
     sp = db.cursor()
 
-    query = "SELECT email, code FROM codes WHERE email = '" + email + "' AND code = '" + code + "';"
-    t = sp.execute(query)
+    query = "SELECT email, code FROM codes WHERE email = ? AND code = ?"
+    t = sp.execute(query, (email, code))
 
     res = t.fetchone()
     if res is None:
@@ -151,8 +147,8 @@ def storeCode(email, isAdmin):
 	while codeUsed(code):
 		code = generateCode(isAdmin)
 
-	insert = "INSERT INTO codes VALUES ('%s', '%s')" % (email, code)
-	sp.execute(insert)
+	insert = "INSERT INTO codes VALUES (?, ?)"
+	sp.execute(insert, (email, code))
 	sp.close()
 	db.commit()
 	db.close()
@@ -174,8 +170,8 @@ def getAdminLevel(email):
     db = sqlite3.connect(f)
     sp = db.cursor()
 
-    s = "SELECT code FROM codes WHERE email ='" + email + "';"
-    t = sp.execute(s)
+    s = "SELECT code FROM codes WHERE email = ?"
+    t = sp.execute(s, (email,))
 
     res = t.fetchall()
 

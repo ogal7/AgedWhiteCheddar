@@ -18,7 +18,7 @@ def getInfoMonth(month, year):
     db = sqlite3.connect(f)
     og = db.cursor()
     # print year
-    request="SELECT room,club,month,day from rooms WHERE month = ? and year = ? ORDER BY day;"
+    request="SELECT room, club, month, day from rooms WHERE month = ? and year = ? ORDER BY day;"
     info = og.execute(request, (month, year))
     l = []
     if info is not None:

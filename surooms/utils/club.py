@@ -33,19 +33,6 @@ def getClub(username):
 
     return r
 
-def getClubName(username):
-    return getClub(username)[0]
-
-def getClubEmail(username):
-    return getClub(username)[1]
-
-def getAdvisor(username):
-    return getClub(username)[2]
-
-def getAdvisorEmail(username):
-    return getClub(username)[3]
-
-
 def getAllClubs():
     db = sqlite3.connect(f)
     c = db.cursor()
@@ -59,3 +46,15 @@ def getAllClubs():
     db.close()
 
     return r
+
+def getClubName(username):
+    return getClub(username)[0]
+
+def getClubEmail(username):
+    return getClub(username)[1]
+
+def getAdvisor(username):
+    return getClub(username)[2]
+
+def getAdvisorEmail(username):
+    return getClub(username)[3]

@@ -5,7 +5,6 @@ from utils import users, club, room, reserve, myRooms
 import os
 
 app = Flask(__name__)
-# app.secret_key = 'agedwhitecheddar'
 app.secret_key = os.urandom(32)
 
 # =====================
@@ -30,7 +29,7 @@ def main():
 def authenticate():
     print "SESSION: " + str(session)
     print "REQUEST: " + str(request.form)
-    
+
     loginResponse = request.form
     username = loginResponse["email"]
     password = loginResponse["pw"]
@@ -117,23 +116,17 @@ def enter_club_info():
 # =====================
 @app.route("/homepage/", methods=["POST","GET"])
 def homepage():
-    print "WHAT"
     print "SESSION: " + str(session)
 
     if 'username' not in session:
-        print "ok"
         return redirect(url_for("main"))
 
     if 'username' in session and not users.signup_completed(session['username']):
         return redirect(url_for("enter_club_info"))
 
-    if 'master' in session:
-        action="Click a Date to Block or Reserve a Room"
-
-    if 'admin' in session:
+    if 'master' in session or 'admin' in session:
         action = "Click a Date to Block or Reserve a Room"
-
-    if 'admin' not in session and 'master' not in session:
+    else:
         action ="Click a Date to Reserve a Room"
 
     return render_template("homepage.html", action = action)
@@ -141,7 +134,7 @@ def homepage():
 @app.route("/roomSched/")
 def schedule():
     print "SESSION: " + str(session)
-    
+
     #return render template of a calendar, calendar days will launch a link to an html where the message is generated from writeSchedule.py
     return render_template("roomSchedule.html", action = "Rooms Previously or Currently Being Reserved")
 
@@ -157,7 +150,7 @@ def daySchedule(date):
 @app.route("/seeClubs/")
 def seeClubs():
     print "SESSION: " + str(session)
-    
+
     data = club.getAllClubs()
     return render_template("seeClubs.html", message=data)
 
@@ -188,11 +181,15 @@ def find_floor(date):
             return render_template("map4.html")
     return render_template("floors.html", message=date)
 
+# =====================
+# reservations
+# =====================
+
 @app.route("/unreserve/", methods=["POST"])
 def unRes():
     print "SESSION: " + str(session)
     print "REQUEST: " + str(request.form)
-    
+
     if 'room' in request.form and 'username' in session:
         data = request.form['room']
         data = data.split("/")
@@ -295,8 +292,12 @@ def blockR(date):
     flash('Room Blocked')
     return redirect(url_for("main"))
 
+# =====================
+# approve clubs
+# =====================
+
 @app.route("/addClub/")
-def addClubz():
+def addClubs():
     print "SESSION: " + str(session)
 
     return render_template("codes.html")
@@ -308,10 +309,14 @@ def approve_clubs():
     if 'admin_level' in request.form and 'clubEmail' in request.form:
         users.storeCode(request.form['clubEmail'], request.form['admin_level'])
         flash('User Approved!')
-        return redirect(url_for('addClubz'))
+        return redirect(url_for('addClubs'))
     else:
         flash("Unable to Approve User")
-        return redirect(url_for('addClubz'))
+        return redirect(url_for('addClubs'))
+
+# =====================
+# change password
+# =====================
 
 @app.route('/settings/', methods = ['GET',"POST"])
 def settings():
@@ -323,14 +328,19 @@ def settings():
 def change():
     print "SESSION: " + str(session)
 
-    loginResponse = request.form
     old =  users.hashp(request.form['oldpass'])
     new = request.form['newpass']
     conf = request.form['confpass']
+
     if users.getPass(session['username'])[0] == old and new == conf:
-        users.changePassword(session['username'],new)
+        users.changePassword(session['username'], new)
         return redirect(url_for("main"))
+
     return render_template("settings.html")
+
+# =====================
+# archive
+# =====================
 
 @app.route('/archive/', methods = ["GET", "POST"])
 def seeRooms():
