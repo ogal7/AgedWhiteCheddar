@@ -5,7 +5,8 @@ from utils import users, club, room, reserve, myRooms
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
+app = 'agedwhitecheddar'
+# app.secret_key = os.urandom(32)
 
 # =====================
 # main page
