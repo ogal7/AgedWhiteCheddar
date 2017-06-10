@@ -32,7 +32,7 @@ def getInfoMonth(month, year):
 
 def getInfoYear(year):
     l = []
-    print year
+    # print year
     for i in range(1,13):
         l.append(getInfoMonth(i,year))
     dic = collections.OrderedDict()
@@ -69,28 +69,7 @@ def getInfoRangeYear(year1,year2):
 '''def getInfoRange(start, end):
     info=[]
     startN=int(start[
-   '''
-#gets all the rooms, clubs, for a specific date
-#date format: mmddyyyy
-def getInfoRoom(room):
-    global f
-    db = sqlite3.connect(f)
-    og = db.cursor()
-    ## dd/mm/yyyy format
-    date = (time.strftime("%d%m%Y"))
-    request="SELECT * from rooms WHERE day = ? and month = ? and year = ? and room = ?;"
-    info=og.execute(request, (int(date[2:4]), int(date[:2]), int(date[4:]), room))
-
-    de()
-    l=[]
-    for thing in info:
-        print thing
-
-    og.close()
-    db.commit()
-    db.close()
-
-    return info
+'''
 
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
