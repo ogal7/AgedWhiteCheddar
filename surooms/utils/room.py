@@ -40,7 +40,7 @@ def getInfoYear(year):
         dic[getMonthName(i)] = l[i-1]
     return dic
 
-def getInfoDate(month,day, year):
+def getInfoDate(month,day,year):
     global f
     db = sqlite3.connect(f)
     og = db.cursor()
@@ -54,6 +54,8 @@ def getInfoDate(month,day, year):
     og.close()
     db.commit()
     db.close()
+    print "L: " 
+    print l
     return l
 
 def getInfoRangeYear(year1,year2):

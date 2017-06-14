@@ -3,7 +3,7 @@ var x = container.getAttribute("width")/2;
 var y = container.getAttribute("height")/2;
 buttonDiv = document.getElementById("roomButtons");
 whichRoom = document.getElementById("whichRoom");
-
+var redRooms = ""
 
 var link = window.location['href']
 console.log(link);
@@ -16,6 +16,20 @@ var date = apple[apple.length-2];
 var actionLink =  "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);
 console.log(actionLink);
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	redRooms += this.responseText;
+    }
+  };
+  xhttp.open("GET", "/redRooms/" + date + "/", true);
+  xhttp.send();
+}
+
+loadDoc()
+console.log(redRooms)
 
 var drawMap = function() {
 	//outgrowth where 411 and 413 are
@@ -40,6 +54,7 @@ var drawMap = function() {
 	roomBox.setAttribute("x", 297)
 	roomBox.setAttribute("y", 10)
 	roomBox.setAttribute("rx", 5)
+	roomBox.setAttribute("id", "313");
 	roomBox.setAttribute("ry", 5)
 	roomBox.setAttribute("width", 50);
 	roomBox.setAttribute("height", 40);
@@ -68,6 +83,7 @@ var drawMap = function() {
 	roomBox1.setAttribute("y", 10)
 	roomBox1.setAttribute("rx", 5)
 	roomBox1.setAttribute("ry", 5)
+	roomBox1.setAttribute("id", "315")
 	roomBox1.setAttribute("width", 50);
 	roomBox1.setAttribute("height", 40);
 	container.appendChild(roomBox1);
@@ -120,6 +136,7 @@ var drawMap = function() {
 	roomBox3.setAttribute("y", 1)
 	roomBox3.setAttribute("rx", 5)
 	roomBox3.setAttribute("ry", 5)
+	roomBox3.setAttribute("id", "303");
 	roomBox3.setAttribute("width", 50);
 	roomBox3.setAttribute("height", 40);
 	container.appendChild(roomBox3);
@@ -140,6 +157,7 @@ var drawMap = function() {
 	roomBox4.setAttribute("y", 1)
 	roomBox4.setAttribute("rx", 5)
 	roomBox4.setAttribute("ry", 5)
+	roomBox4.setAttribute("id", "305")
 	roomBox4.setAttribute("width", 50);
 	roomBox4.setAttribute("height", 40);
 	container.appendChild(roomBox4);
@@ -161,6 +179,7 @@ var drawMap = function() {
 	roomBox6.setAttribute("y", 68)
 	roomBox6.setAttribute("rx", 5)
 	roomBox6.setAttribute("ry", 5)
+	roomBox6.setAttribute("id", "photo")
 	roomBox6.setAttribute("width", 105);
 	roomBox6.setAttribute("height", 40);
 	container.appendChild(roomBox6);
@@ -185,6 +204,7 @@ var drawMap = function() {
 		roomBox3.setAttribute("y", 5)
 		roomBox3.setAttribute("rx", 5)
 		roomBox3.setAttribute("ry", 5)
+		roomBox3.setAttribute("id", starter.toString());
 		roomBox3.setAttribute("width", 45);
 		roomBox3.setAttribute("height", 40);
 		container.appendChild(roomBox3);
@@ -207,6 +227,7 @@ var drawMap = function() {
 	roomBox7.setAttribute("y", 305)
 	roomBox7.setAttribute("rx", 5)
 	roomBox7.setAttribute("ry", 5)
+	roomBox7.setAttribute("id", "351")
 	roomBox7.setAttribute("width", 50);
 	roomBox7.setAttribute("height", 40);
 	container.appendChild(roomBox7);

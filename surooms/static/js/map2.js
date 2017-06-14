@@ -3,7 +3,7 @@ var x1 = container.getAttribute("width")/2;
 var y1 = container.getAttribute("height")/2;
 buttonDiv = document.getElementById("roomButtons");
 whichRoom = document.getElementById("whichRoom");
-
+var redRooms = ""
 
 var link = window.location['href']
 console.log(link);
@@ -15,6 +15,25 @@ console.log(date)
 var actionLink =   "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);
 console.log(actionLink);
+
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	redRooms += this.responseText;
+    	console.log(this.responseText)
+    }
+  };
+  xhttp.open("GET", "/redRooms/" + date + "/", true);
+  xhttp.send();
+}
+
+
+
+loadDoc() 
+
+
 
 
 var drawMap = function() {
@@ -78,6 +97,7 @@ var drawMap = function() {
 		roomBox3.setAttribute("y", 5)
 		roomBox3.setAttribute("rx", 5)
 		roomBox3.setAttribute("ry", 5)
+		roomBox3.setAttribute("id", starter.toString());
 		roomBox3.setAttribute("width", 50);
 		roomBox3.setAttribute("height", 40);
 		container.appendChild(roomBox3);
@@ -101,17 +121,29 @@ var drawMap = function() {
 	roomBox8.setAttribute("y", 305)
 	roomBox8.setAttribute("rx", 5)
 	roomBox8.setAttribute("ry", 5)
+	roomBox8.setAttribute("id", "251");
 	roomBox8.setAttribute("width", 50);
 	roomBox8.setAttribute("height", 40);
 	container.appendChild(roomBox8);
 
 
+	makeRed()
 	//var halfBar = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	//halfBar.setAttribute("d", "M 100 350 q 150 -300 300 0");
 	//halfBar.setAttribute("fill", "green");
 	//container.appendChild(halfBar);
 }
 
+var makeRed = function() {
+	toRed = redRooms.split("*")
+	console.log(toRed)
+	rooms = document.getElementsByTagName("rect")
+	for (i in rooms) {
+		if (i.getAttribute("id") in toRed) {
+			i.setAttribute("fill", "red")
+		}
+	}
+}
 
 
 drawMap();
