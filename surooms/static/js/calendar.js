@@ -1,6 +1,3 @@
-// the previously commented out calendar javascript
-// is in calendar.js.old
-
 // =======================================
 // DATE VARIABLE
 // =======================================
@@ -64,41 +61,6 @@ function weekdays() {
     return dayTags;
 }
 
-// function weekends(startDay, monthLength) {
-//     var weekendList = []
-//     if (startDay == 0){
-// 	var i = 1;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	    i += 6;
-// 	}
-// 	i = 8;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i)
-// 	    i+=6;
-// 	}
-// 	return weekendList; //list of days that are weekends
-//     }
-//     else {
-// 	var i = 7 - startDay;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	    i+=7;
-// 	}
-// 	var i = 8 - startDay;
-// 	while (i <= monthLength) {
-// 	    weekendList.push(i);
-// 	}
-// 	return weekendList;
-//     }
-// }
-
-// function daysInMonth(iMonth, iYear){
-//     d3 = new Date(iYear, iMonth - 1, 32)
-//     x = d3.getDate()
-//     return 32 - x;
-// }
-
 function numDays(year, month) {
     var numTags = "";
     var firstDay = new Date(year, month, 1);
@@ -142,12 +104,28 @@ function manageDates(month, year) {
     var curDate = d.getDate();
     var curMonth = d.getMonth();
 
+    // DISPLAY ALL DATES FOR RESERVING ROOMS
     $('.days li').each(function(){
-	// DISPLAY ALL DATES FOR RESERVING ROOMS
-
 	var monthPadding = "";
 	var datePadding = "";
 
+	// HIGHLIGHT CURRENT DATE
+	if ($(this).text() == curDate && month === curMonth) {
+	    if (month < 10) {
+		monthPadding = "0";
+	    }
+
+            if (parseInt($(this).text()) < 10) {
+		datePadding = "0";
+            }
+
+	    $(this).html('<span class = "active-closed"> <a href="' + monthPadding + month.toString() + "-" + datePadding + ($(this).text()).trim() + "-" + year.toString() + '">' + ($(this).text()) + '</a> </span>\n');
+	}
+
+	monthPadding = "";
+	datePadding = "";
+
+	// COLOR DATE FOR NEXT TWO WEEKS
 	var d2 = new Date(year, month, $(this).text());
 	if ( withinTwoWeeks(d2)) {
 	    if (month < 10) {
@@ -161,60 +139,17 @@ function manageDates(month, year) {
 	    console.log($(this).text());
 
 	    if (parseInt(d2.getDay()) == 0 || parseInt(d2.getDay()) == 6) {
-		$(this).html('<p class="closed" href=' + monthPadding + month.toString() + "-" + datePadding +
-			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</p> </font>\n');
+		if ($(this).text() == curDate && month === curMonth) {
+		    $(this).html('<span class="active">' + $(this).text() + '</span>');
+		} else {
+		    $(this).html('<p class="closed" href=' + monthPadding + month.toString() + "-" + datePadding +
+				 ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</p> </font>\n');
+		}
 	    } else {
 		$(this).html('<a class="open" href=' + monthPadding + month.toString() + "-" + datePadding +
 			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n');
 	    }
 	}
-
-	// HIGHLIGHT CURRENT DATE
-
-	monthPadding = "";
-	datePadding = "";
-
-	if ($(this).text() == curDate && month === curMonth) {
-	    if (month < 10) {
-		monthPadding = "0";
-	    }
-
-            if (parseInt($(this).text()) < 10) {
-		datePadding = "0";
-            }
-
-	    $(this).html('<span class = "active"> <a href="' + monthPadding + month.toString() + "-" + datePadding + ($(this).text()).trim() + "-" + year.toString() + '">' + ($(this).text()) + '</a> </span>\n');
-	}
-
-	// if (month > d.getMonth() || month < d.getMonth()) {
-        //     console.log(month)
-        //     console.log(d.getMonth())
-        //     if (month == d.getMonth() + 1) {
-	// 	//console.log("spill")
-	// 	//if this two week span goes into the next month
-	// 	//onsole.log(daysInMonth(year, d.getMonth()))
-	// 	if (d.getDate() >= daysInMonth(year, d.getMonth()) - 14) {
-
-        //             var daysIntoNewMonth = 14 - (daysInMonth(year, d.getMonth()) - d.getDate());
-        //             console.log($(this).text())
-        //             console.log("days into new month" + daysIntoNewMonth)
-        //             if (parseInt($(this).text()) <= daysIntoNewMonth) {
-	// 		console.log("ugh")
-	// 		$(this).html('<a class="open" href=' + '0' + month.toString() + "-0" +
-	// 			     ($(this).text()) + "-" + year.toString() + '>' + $(this).text() + '</a> </font>\n')
-        //             }
-        //             else {
-	// 		$(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
-        //             }
-	// 	}
-        //     }
-        //     else {
-	// 	$(this).html('<li class="normal">'+ $(this).text() + '</font>\n')
-        //     }
-	// }
-
-
-
     });
 
 

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head1 %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+{% endblock %}
+
+{% block body %}
+<br>
+<center>
+  <svg id="vimage" height="350" width="850" style="border:1px solid;" xmlns="http://www.w3.org/2000/svg"> </svg>
+</center>
+
+
+<center>
+  <br>
+  <h6> Click A Room to Reserve It! </h6>
+  <div id="roomButtons"> <form id="whichRoom" method="get">
+      {% for room_number in reserved_rooms %}
+      <button type="submit" name="room" value="{{room_number}}" class="success button">{{room_number}}</button>
+      {% endfor %}
+    </form>
+  </div>
+</center>
+<br>
+
+{% if session.admin or session.master %}
+<center>
+  <h6> Click A Room to Block It! </h6>
+  <div id="roomButtons">
+    <form id="whichRoomBlock" method="get">
+      {% for room_number in reserved_rooms %}
+      <button type="submit" name="room" value="{{room_number}}" class="success button">{{room_number}}</button>
+      {% endfor %}
+    </form>
+  </div>
+</center>
+<br>
+{% endif %}
+
+{% endblock %}
+
+
+{% block bottom %}
+<script type="text/javascript" src="/static/js/map_base.js"></script>
+
+{% set js_src="/static/js/map" + floor + ".js" %}
+<script type="text/javascript" src="{{js_src}}"></script>
+
+<script>
+  // see map_base.js
+  drawMap();
+  //loadDoc();
+</script>
+
+{% if session.admin or session.master %}
+<script type="text/javascript" src="/static/js/block.js"></script>
+{% endif %}
+
+{% endblock %}

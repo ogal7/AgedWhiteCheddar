@@ -40,12 +40,12 @@ def getInfoYear(year):
         dic[getMonthName(i)] = l[i-1]
     return dic
 
-def getInfoDate(month,day,year):
+def getInfoDate(month, day, year):
     global f
     db = sqlite3.connect(f)
     og = db.cursor()
-    request="SELECT room,club from rooms WHERE month = ? and day = ? and year = ?;"
-    info = og.execute(request, (month,day, year))
+    request="SELECT room, club from rooms WHERE month = ? and day = ? and year = ?;"
+    info = og.execute(request, (month, day, year))
     l = []
     if info is not None:
         for entry in info:
@@ -54,8 +54,24 @@ def getInfoDate(month,day,year):
     og.close()
     db.commit()
     db.close()
-    print "L: " 
-    print l
+
+    return l
+
+def getInfoBlocked(month, day, year):
+    global f
+    db = sqlite3.connect(f)
+    og = db.cursor()
+    request="SELECT room from rooms WHERE month = ? and day = ? and year = ? and club = ?;"
+    info = og.execute(request, (month, day, year, "Not Available"))
+    l = []
+    if info is not None:
+        for entry in info:
+            l.append(entry)
+
+    og.close()
+    db.commit()
+    db.close()
+
     return l
 
 def getInfoRangeYear(year1,year2):
