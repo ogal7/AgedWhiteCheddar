@@ -179,7 +179,7 @@ def getAdminLevel(email):
     db.commit()
     db.close()
 
-    return res[0][-1]
+    return res[0][-1][-1]
 
 
 '''

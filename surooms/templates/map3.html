@@ -21,6 +21,10 @@
   <br>
   <h6> Click A Room to Reserve It! </h6>
   <div id="roomButtons"> <form id="whichRoom" method="get">
+  {% if session.username and not session.master %}
+    <div class="rooms1">
+  {% endif %}
+
       <button type="submit" name="room" value="303" class="success button">303</button>
       <button type="submit" name="room" value="305" class="success button">305</button>
       <button type="submit" name="room" value="313" class="success button">313</button>
@@ -33,6 +37,10 @@
       <button type="submit" name="room" value="335" class="success button">335</button>
       <button type="submit" name="room" value="339" class="success button">339</button>
       <button type="submit" name="room" value="351" class="success button">351</button>
+        {% if session.username and not session.master %}
+      </div>
+      {% endif %}
+
   </div> </form>
   {% block roomblock %}
   {% endblock %}

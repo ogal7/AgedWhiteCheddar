@@ -58,6 +58,8 @@ def getInfoDate(month,day,year):
     print l
     return l
 
+
+
 def getInfoRangeYear(year1,year2):
     dic = collections.OrderedDict()
     yr1 = int(year1)

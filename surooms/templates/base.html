@@ -101,9 +101,17 @@
           <li class="menu-text">
             SU Room Reservations
           </li>
+
+          {% if session.username and not session.admin %}
           <li class = "abc">
             <a href="/">Home</a>
           </li>
+          {% endif %}
+          {% if session.admin %}
+          <li class = "abc">
+            <a href="/roomSched">Home</a>
+          </li>
+          {% endif %}
           <li class = "abc">
             <a href="/archive/">Archive</a>
           </li>
@@ -116,15 +124,16 @@
           </li>
 	  {% if session.master %}
           <li class="abc">
-            <a href="/blockRooms/">Block Rooms</a>
-          </li>
-          <li class="abc">
-            <a href="/seeClubs/">See Clubs</a>
+            <a href="/blockRooms/">Blocked Rooms</a>
           </li>
 	  {% endif %}
-          <li class="abc">
-            {% block head %}
-	    {% if session.master %}
+         <li class="abc">
+            <a href="/seeClubs/">See Clubs</a>
+          </li>
+      {% block head %}
+        {% if session.master %}
+
+           <li class="abc">
             <a href='/addClub/'>Approve a Club</a>
 	    {% endif %}
             {% endblock %}

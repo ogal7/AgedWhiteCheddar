@@ -104,7 +104,7 @@ function manageDates(date, month, year) {
 
     $('.days li').each(function(){
 	if( month < 10) {
-            d1 = new Date(year, month, $(this).text(),);
+            d1 = new Date(year, month, $(this).text());
             //console.log(d1);
             //console.log($(this).text() + " " + d1.getDay());
             if (d1.getDay() != 0 && d1.getDay() != 6) { 
@@ -113,7 +113,7 @@ function manageDates(date, month, year) {
             }
 	}
 	else {
-            d1 = new Date(year, month, $(this).text(),);
+            d1 = new Date(year, month, $(this).text());
             //console.log(d1);
             //console.log($(this).text() + " " + d1.getDay());
             if (d1.getDay() != 0 && d1.getDay() != 6) { 
@@ -123,7 +123,7 @@ function manageDates(date, month, year) {
 	}
 	
 	if ($(this).text() == d.getDate() && month === d.getMonth() && month < 10) {
-            d1 = new Date(year, month, $(this).text(),);
+            d1 = new Date(year, month, $(this).text());
             //console.log(d1);
             //console.log($(this).text() + " " + d1.getDay());
             if (d1.getDay() != 0 && d1.getDay() != 6) { 
@@ -134,7 +134,7 @@ function manageDates(date, month, year) {
 
 	if ($(this).text() == d.getDate() && month === d.getMonth() && month >= 10) {
             console.log("hi");
-            d1 = new Date(year, month, $(this).text(),);
+            d1 = new Date(year, month, $(this).text());
             //console.log(d1);
             //console.log($(this).text() + " " + d1.getDay());
             if (d1.getDay() != 0 && d1.getDay() != 6) { 

@@ -28,8 +28,6 @@ function loadDoc() {
   xhttp.send();
 }
 
-loadDoc()
-console.log(redRooms)
 
 var drawMap = function() {
 	//outgrowth where 411 and 413 are
@@ -254,6 +252,34 @@ var drawMap = function() {
 
 }
 
+var del = function() {
+    $.ajax({
+        url: '/redRooms/' + date + "/",
+        data: $('form').serialize(),
+        type: 'GET',
+        success: function(data) {
+        	p = data.split("*")
+        	console.log(p)
+        	g = $("div.rooms1").find("button");
+        	for (var i = 0; i < g.length; i++) {
+        		console.log(g[i].innerHTML)
+        		if (p.indexOf(g[i].innerHTML) > -1) {
+        			g[i].remove()
+        		}
+            }
+        },
+        error: function(error) {
+           		console.log(error);
+           		} 
+    });
+}
 
 
-drawMap();
+function main() {
+	del();
+	drawMap();
+}
+
+$(document).ready(function () {
+   main();
+});

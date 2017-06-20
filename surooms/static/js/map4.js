@@ -30,13 +30,11 @@ function loadDoc() {
 }
 
 
-loadDoc()
 
 
 
 
 var drawMap = function() {
-	loadDoc()
 	//outgrowth where 411 and 413 are
 	var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
 	line.setAttribute("x1", 340);
@@ -314,7 +312,6 @@ var drawMap = function() {
 	container.appendChild(roomBox9);
 
 
-	makeRed()
 }
 
 var makeRed = function() {
@@ -329,4 +326,35 @@ var makeRed = function() {
 }
 
 
-drawMap();
+var del = function() {
+    $.ajax({
+        url: '/redRooms/' + date + "/",
+        data: $('form').serialize(),
+        type: 'GET',
+        success: function(data) {
+        	p = data.split("*")
+        	console.log(p)
+        	g = $("div.rooms1").find("button");
+        	for (var i = 0; i < g.length; i++) {
+        		console.log(g[i].innerHTML)
+        		if (p.indexOf(g[i].innerHTML) > -1) {
+        			g[i].remove()
+        		}
+            }
+        },
+        error: function(error) {
+           		console.log(error);
+           		} 
+    });
+}
+
+
+function main() {
+	del();
+	drawMap();
+}
+
+
+$(document).ready(function () {
+   main();
+});

@@ -30,7 +30,6 @@ function loadDoc() {
 
 
 $(document).ready(function () {
-   loadDoc();
    main();
 });
 
