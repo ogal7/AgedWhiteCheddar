@@ -33,6 +33,8 @@ function loadDoc() {
 loadDoc()
 
 
+
+
 var drawMap = function() {
 	loadDoc()
 	//outgrowth where 411 and 413 are
@@ -314,8 +316,6 @@ var drawMap = function() {
 
 	makeRed()
 }
-
-
 
 var makeRed = function() {
 	toRed = redRooms.split("*")

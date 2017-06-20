@@ -16,7 +16,6 @@ var actionLink =   "/reserve/" + date + "/"
 whichRoom.setAttribute("action", actionLink);
 console.log(actionLink);
 
-
 function loadDoc() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -30,10 +29,10 @@ function loadDoc() {
 }
 
 
-
-loadDoc() 
-
-
+$(document).ready(function () {
+   loadDoc();
+   main();
+});
 
 
 var drawMap = function() {
@@ -46,6 +45,7 @@ var drawMap = function() {
 	escalator.setAttribute("y", 150)
 	escalator.setAttribute("width", 200);
 	escalator.setAttribute("height", 75);
+	escalator.setAttribute("id", "escalator");
 	container.appendChild(escalator);
 
 	var escalator3 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -54,6 +54,7 @@ var drawMap = function() {
 	escalator3.setAttribute("y", 150)
 	escalator3.setAttribute("width", 90);
 	escalator3.setAttribute("height", 75);
+	escalator3.setAttribute("id", "escalator3");
 	container.appendChild(escalator3);
 
 
@@ -63,6 +64,7 @@ var drawMap = function() {
 	escalator1.setAttribute("y", 110)
 	escalator1.setAttribute("width", 140);
 	escalator1.setAttribute("height", 135);
+	escalator1.setAttribute("id", "escalator1");
 	container.appendChild(escalator1);
 
 	var escalator2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -71,6 +73,7 @@ var drawMap = function() {
 	escalator2.setAttribute("y", 110)
 	escalator2.setAttribute("width", 260);
 	escalator2.setAttribute("height", 135);
+	escalator2.setAttribute("id", "escalator2");
 	container.appendChild(escalator2);
 
 
@@ -127,23 +130,52 @@ var drawMap = function() {
 	container.appendChild(roomBox8);
 
 
-	makeRed()
 	//var halfBar = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	//halfBar.setAttribute("d", "M 100 350 q 150 -300 300 0");
 	//halfBar.setAttribute("fill", "green");
 	//container.appendChild(halfBar);
 }
 
+
 var makeRed = function() {
 	toRed = redRooms.split("*")
-	console.log(toRed)
 	rooms = document.getElementsByTagName("rect")
-	for (i in rooms) {
-		if (i.getAttribute("id") in toRed) {
-			i.setAttribute("fill", "red")
+	console.log(toRed)
+	for (var i = 0; i < rooms.length; i++) {
+		console.log(rooms[i].getAttribute("id"))
+		if ($(rooms[i]).attr("id") in toRed) {
+			$(rooms[i]).attr("fill", "red")
 		}
 	}
 }
 
 
-drawMap();
+var del = function() {
+    $.ajax({
+        url: '/redRooms/' + date + "/",
+        data: $('form').serialize(),
+        type: 'GET',
+        success: function(data) {
+        	p = data.split("*")
+        	console.log(p)
+        	g = $("div.rooms1").find("button");
+        	for (var i = 0; i < g.length; i++) {
+        		console.log(g[i].innerHTML)
+        		if (p.indexOf(g[i].innerHTML) > -1) {
+        			g[i].remove()
+        		}
+            }
+        },
+        error: function(error) {
+           		console.log(error);
+           		} 
+    });
+}
+
+
+function main() {
+	del();
+	drawMap();
+}
+
+
