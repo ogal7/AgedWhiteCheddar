@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, Response, flash, jsonify, json
 import hashlib
 import time
-from utils import users, club, room, reserve, myRooms
+from utils import users, club, rooms_info, reserve, my_rooms
 import os
 
 app = Flask(__name__)
@@ -144,7 +144,7 @@ def daySchedule(date):
     print "SESSION: " + str(session)
 
     d2 = date.split("-")
-    data = room.getInfoDate(str(int(d2[0]) + 1),d2[1],d2[2])
+    data = rooms_info.getInfoDate(str(int(d2[0]) + 1),d2[1],d2[2])
 
     return render_template("dayRooms.html", message=data)
 
@@ -227,7 +227,7 @@ def my_rooms():
 
     if 'username' in session:
         user = session['username']
-        data = myRooms.getRoomsNow(user)
+        data = my_rooms.getRoomsNow(user)
         print data
         return render_template("myRooms.html", message = data, user = session['username'])
     else:
@@ -241,7 +241,7 @@ def block_rooms():
         return redirect(url_for("main"))
     else:
         user = session['username']
-        data = myRooms.getBlockedRooms()
+        data = my_rooms.getBlockedRooms()
         return render_template("blockedRooms.html", message = data, user=session['username'])
 
 @app.route("/reserve/<date>/", methods=["GET"])
@@ -343,11 +343,11 @@ def seeRooms():
     if 'year' in request.form:
         try:
             year = int(request.form['year'].strip())
-            return render_template('seeRoom.html', message = room.getInfoYear(str(year)))
+            return render_template('seeRoom.html', message = rooms_info.getInfoYear(str(year)))
         except:
-            return render_template('seeRoom.html', message = room.getInfoYear('2017'))
+            return render_template('seeRoom.html', message = rooms_info.getInfoYear('2017'))
 
-    return render_template('seeRoom.html', message = room.getInfoYear('2017'))
+    return render_template('seeRoom.html', message = rooms_info.getInfoYear('2017'))
 
 # =====================
 # log out

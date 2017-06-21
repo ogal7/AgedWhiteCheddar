@@ -84,11 +84,6 @@ def getInfoRangeYear(year1,year2):
     dic[year2] = getInfoYear(year2)
     return dic
 
-'''def getInfoRange(start, end):
-    info=[]
-    startN=int(start[
-'''
-
 #gets all the rooms, clubs, for a specific date
 #date format: mmddyyyy
 def getInfoClub(clubName):
