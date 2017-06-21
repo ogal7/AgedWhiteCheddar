@@ -53,11 +53,15 @@ def whatClub(room, date):
 
     search = "SELECT club FROM rooms WHERE room = ? and month = ? and day = ? and year = ?"
     info  = c.execute(search, (room, int(date[0:2]) + 1 , int(date[2:4]), int(date[4:]))).fetchall()
-    p = info[0][0]
+    if info != None:
+        p = info[0][0]
+    else:
+        p = []
+
     c.close()
     db.commit()
     db.close()
-    print p 
+
     return p
 
 # if room is being blocked, kick out people who already made a reservation
